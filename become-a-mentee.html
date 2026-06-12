@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Become a Mentee – L4R</title>
+<meta name="description" content="Are you a refugee student in Rwanda ready to take your future into your own hands? Join L4R's mentee community for academic prep, college counseling, and career guidance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="img/logo.jpg?v=2">
+<link rel="stylesheet" href="theme-style.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:     #0d1b2e;
+    --navy-mid: #162540;
+    --navy-lt:  #1e3258;
+    --gold:     #f0a500;
+    --gold-dk:  #c98a00;
+    --gold-pale:#fff8e6;
+    --white:    #ffffff;
+    --cream:    #f5f0e8;
+    --red:      #c0392b;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--white); overflow-x: hidden; }
+
+  /* SPINNER */
+  #spinner { position: fixed; inset: 0; z-index: 9999; background: var(--white); display: flex; align-items: center; justify-content: center; transition: opacity .4s; }
+  #spinner.hide { opacity: 0; pointer-events: none; }
+  .spin-ring { width: 48px; height: 48px; border-radius: 50%; border: 4px solid #ddd; border-top-color: var(--gold); animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* TOPBAR */
+  #topbar { background: var(--navy); padding: 10px 40px; display: flex; align-items: center; transition: transform .35s ease, opacity .35s ease; }
+  #topbar.hidden { transform: translateY(-100%); opacity: 0; pointer-events: none; position: absolute; width: 100%; }
+  .topbar-inner { display: flex; align-items: center; width: 100%; max-width: 1320px; margin: 0 auto; }
+  .brand { font-family: 'Oswald', sans-serif; font-size: 2rem; color: var(--gold); text-decoration: none; letter-spacing: 1px; }
+  .topbar-contacts { display: flex; gap: 32px; margin-left: auto; }
+  .contact-item { display: flex; align-items: center; gap: 10px; }
+  .contact-icon { width: 36px; height: 36px; background: var(--gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .contact-icon svg { width: 16px; height: 16px; fill: var(--navy); }
+  .contact-text p  { font-size: .75rem; color: var(--gold); font-weight: 600; margin-bottom: 1px; }
+  .contact-text span { font-size: .8rem; color: var(--white); }
+
+  /* NAVBAR */
+  #nav-wrapper { background: var(--navy); padding: 0 40px 12px; position: sticky; top: 0; z-index: 100; transition: padding .35s ease; }
+  #nav-wrapper.stuck { padding: 0; }
+  nav { background: var(--gold); max-width: 1320px; margin: 0 auto; display: flex; align-items: stretch; transition: max-width .35s ease; border-radius: 0 0 4px 4px; position: relative; }
+  #nav-wrapper.stuck nav { max-width: 100%; border-radius: 0; }
+  .nav-links { display: flex; align-items: stretch; list-style: none; }
+  .nav-links a, .nav-links > li > button { display: flex; align-items: center; padding: 14px 20px; color: var(--navy); font-size: .95rem; font-weight: 600; text-decoration: none; background: none; border: none; cursor: pointer; transition: color .2s, background .2s; }
+  .nav-links a:hover, .nav-links > li > button:hover, .nav-links a.active { color: var(--white); background: rgba(0,0,0,.15); border-radius: 10px;}
+  .dropdown { position: relative; }
+  .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: var(--white); min-width: 180px; box-shadow: 0 8px 24px rgba(0,0,0,.18); z-index: 200; }
+  .dropdown:hover .dropdown-menu { display: block; }
+  .dropdown-menu a { display: block; padding: 10px 18px; color: var(--navy); font-size: .9rem; text-decoration: none; transition: background .2s; }
+  .dropdown-menu a:hover { background: var(--gold); color: var(--navy); }
+  .nav-caret { margin-left: 4px; font-size: .7rem; }
+  .nav-socials { margin-left: auto; display: flex; align-items: center; gap: 6px; padding-right: 14px; }
+  .soc-btn { width: 34px; height: 34px; background: var(--navy); display: flex; align-items: center; justify-content: center; border-radius: 2px; text-decoration: none; transition: background .2s; }
+  .soc-btn:hover { background: #1a2d4a; }
+  .soc-btn svg { width: 16px; height: 16px; fill: var(--white); }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 12px 16px; margin-left: auto; }
+  .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--navy); margin: 5px 0; transition: .3s; }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-collapse { display: contents; }
+
+  /* ── PAGE HERO ─────────────────────────────────────────── */
+  .page-hero {
+    background: var(--navy); padding: 80px 40px;
+    position: relative; overflow: hidden; min-height: 440px;
+    display: flex; align-items: center;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; inset: -20px;
+    background-image: url('img/btcp02.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;
+    filter: blur(1px); background-blend-mode: multiply;
+    background-image: linear-gradient(135deg, rgba(240,165,0,.14) 0%, transparent 55%), linear-gradient(rgba(10, 25, 47, 0.75), rgba(10, 25, 47, 0.75)), url('img/btcp02.jpg');
+  }
+  /* decorative star watermark */
+  .page-hero::after {
+    content: '★';
+    position: absolute; right: 5%; bottom: -30px;
+    font-size: 22rem; color: rgba(240,165,0,.05);
+    font-family: 'Oswald', sans-serif; pointer-events: none; z-index: 0;
+    line-height: 1;
+  }
+  .page-hero-inner { max-width: 1320px; margin: 0 auto; width: 100%; position: relative; z-index: 1; display: flex; align-items: center; gap: 60px; flex-wrap: wrap; }
+  .hero-text { flex: 1; min-width: 260px; }
+  .breadcrumb { display: flex; align-items: center; gap: 10px; font-size: .85rem; color: #a8b8cc; margin-bottom: 20px; }
+  .breadcrumb a { color: var(--gold); text-decoration: none; }
+  .breadcrumb span { color: #556; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--navy); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; padding: 5px 14px; margin-bottom: 18px; }
+  .page-hero h1 { font-family: 'Oswald', sans-serif; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 700; color: var(--white); text-transform: uppercase; line-height: 1.05; margin-bottom: 18px; }
+  .page-hero h1 em { color: var(--gold); font-style: normal; }
+  .page-hero .hero-sub { font-size: 1.05rem; color: #a8b8cc; max-width: 560px; line-height: 1.75; margin-bottom: 28px; }
+  .hero-quote { border-left: 4px solid var(--gold); padding: 12px 20px; background: rgba(240,165,0,.07); max-width: 520px; }
+  .hero-quote p { font-style: italic; color: #ccd; font-size: .95rem; line-height: 1.7; }
+  .hero-quote cite { font-size: .82rem; color: var(--gold); font-style: normal; font-weight: 600; display: block; margin-top: 6px; }
+
+  /* hero right: live cohort status card */
+  .hero-status-card {
+    flex-shrink: 0; width: 300px;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(240,165,0,.3);
+    padding: 28px 24px;
+  }
+  .status-badge { display: inline-flex; align-items: center; gap: 8px; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 4px 12px; margin-bottom: 16px; }
+  .status-badge::before { content: ''; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* 🟥 Closed State (Your Original Styles) */
+  .status-badge { background: var(--red); color: var(--white); border-top-left-radius: 20px; border-bottom-right-radius: 20px;}
+  .status-badge::before { background: var(--white); }
+
+  @keyframes premium-pulse { 0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); transform: scale(1); } 70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); transform: scale(1.02); } 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); transform: scale(1); } }
+  .status-badge { display: inline-flex; align-items: center; gap: 8px; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 4px 12px; margin-bottom: 16px; }
+  .status-badge::before { content: ''; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .status-badge { background: var(--red); color: var(--white); }
+  .status-badge::before { background: var(--white); }
+
+  /* 🌟 Glowing & Breathing Gold Badge */
+  .status-badge.is-open, .status-dates.is-open { background: #d4af37; color: #111111; animation: premium-pulse 2s infinite ease-in-out; border: 1px solid rgba(255, 255, 255, 0.3); }
+  .status-badge.is-open::before { background: #111111; }
+  .status-link { display: inline-flex; align-items: center; gap: 8px; background: #d4af37; color: #111111; font-weight: 700; font-size: .85rem; text-decoration: none; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 20px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.2); animation: link-pulse 2s infinite ease-in-out; } .status-link svg { width: 18px; height: 18px; fill: #111111; } @keyframes link-pulse { 0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); transform: scale(1); } 70% { box-shadow: 0 0 0 12px rgba(212, 175, 55, 0); transform: scale(1.03); } 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); transform: scale(1); } }
+
+  .hero-status-card h4 { font-family: 'Oswald', sans-serif; color: var(--white); font-size: 1.15rem; margin-bottom: 10px; }
+  .hero-status-card p { font-size: .88rem; color: #a8b8cc; line-height: 1.6; margin-bottom: 18px; }
+  .status-dates { background: var(--navy-mid); padding: 12px 14px; margin-bottom: 16px; }
+  .status-dates span { font-size: .8rem; color: #a8b8cc; display: block; margin-bottom: 3px; }
+  .status-dates strong { font-size: 1rem; color: var(--gold); font-family: 'Oswald', sans-serif; }
+  .hero-status-card .status-link { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--gold); color: var(--navy); font-size: .9rem; font-weight: 700; padding: 12px; text-decoration: none; transition: background .2s; }
+  .hero-status-card .status-link:hover { background: var(--gold-dk); }
+  .hero-status-card .status-link svg { width: 16px; height: 16px; fill: var(--navy); }
+
+  .hero-accent { height: 6px; background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dk) 50%, var(--navy) 100%); }
+
+
+  /* ── WHAT YOU GAIN ─────────────────────────────────────── */
+  .gains-section { padding: 80px 40px; background: var(--white); }
+  .gains-inner { max-width: 1320px; margin: 0 auto; }
+  .section-label { display: flex; align-items: center; gap: 12px; color: var(--gold); font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 14px; }
+  .section-label::after { content: ''; display: block; width: 50px; height: 2px; background: var(--gold); }
+  .section-label-center { display: flex; align-items: center; justify-content: center; gap: 14px; color: var(--gold); font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 16px; }
+  .section-label-center .lines { display: flex; flex-direction: column; gap: 4px; }
+  .section-label-center .lines span { display: block; width: 36px; height: 2px; background: var(--gold); }
+  .gains-heading { text-align: center; margin-bottom: 56px; }
+  .gains-heading h2 { font-family: 'Oswald', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; color: var(--navy); line-height: 1.15; }
+  .gains-heading p { font-size: .97rem; color: #666; max-width: 600px; margin: 12px auto 0; line-height: 1.75; }
+
+  .gains-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .gain-card { background: var(--cream); padding: 36px 28px; border-top: 4px solid var(--gold); transition: transform .2s, box-shadow .2s; }
+  .gain-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,0,0,.08); }
+  .gain-icon { width: 52px; height: 52px; background: var(--navy); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+  .gain-icon svg { width: 26px; height: 26px; fill: var(--gold); }
+  .gain-card h3 { font-family: 'Oswald', sans-serif; font-size: 1.25rem; color: var(--navy); margin-bottom: 10px; }
+  .gain-card p { font-size: .92rem; color: #555; line-height: 1.75; }
+
+  /* ── COHORT TIMELINE ───────────────────────────────────── */
+  .timeline-section { padding: 80px 40px; background: var(--navy); }
+  .timeline-inner { max-width: 1320px; margin: 0 auto; }
+  .timeline-heading { text-align: center; margin-bottom: 56px; }
+  .timeline-heading h2 { font-family: 'Oswald', sans-serif; font-size: 2.2rem; color: var(--white); }
+  .timeline-heading p { color: #a8b8cc; font-size: .97rem; max-width: 560px; margin: 12px auto 0; line-height: 1.7; }
+
+  .timeline { display: flex; flex-direction: column; gap: 0; max-width: 820px; margin: 0 auto; position: relative; }
+  .timeline::before { content: ''; position: absolute; left: 28px; top: 0; bottom: 0; width: 2px; background: rgba(240,165,0,.2); }
+
+  .timeline-item { display: flex; gap: 28px; align-items: flex-start; padding: 0 0 36px 0; position: relative; }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .tl-dot { width: 58px; height: 58px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 50%; z-index: 1; position: relative; border: 3px solid; }
+  .tl-dot.closed { background: #1a1a2e; border-color: var(--red); }
+  .tl-dot.closed svg { fill: var(--red); width: 22px; height: 22px; }
+  .tl-dot.active { background: var(--gold); border-color: var(--gold); }
+  .tl-dot.active svg { fill: var(--navy); width: 22px; height: 22px; }
+  .tl-dot.upcoming { background: var(--navy-mid); border-color: rgba(240,165,0,.4); }
+  .tl-dot.upcoming svg { fill: rgba(240,165,0,.6); width: 22px; height: 22px; }
+
+  .tl-content { flex: 1; padding-top: 10px; }
+  .tl-tag { display: inline-flex; align-items: center; gap: 6px; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 3px 10px; margin-bottom: 8px; }
+  .tl-tag.closed   { background: rgba(192,57,43,.2); color: #e74c3c; }
+  .tl-tag.active   { background: rgba(240,165,0,.2); color: var(--gold); }
+  .tl-tag.upcoming { background: rgba(255,255,255,.08); color: #a8b8cc; }
+  .tl-content h4 { font-family: 'Oswald', sans-serif; font-size: 1.25rem; color: var(--white); margin-bottom: 6px; }
+  .tl-content .tl-date { font-size: .82rem; color: var(--gold); font-weight: 600; margin-bottom: 10px; display: block; }
+  .tl-content p { font-size: .9rem; color: #a8b8cc; line-height: 1.7; }
+  .tl-content .tl-btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; padding: 10px 22px; font-size: .88rem; font-weight: 700; cursor: pointer; text-decoration: none; border: none; font-family: 'Source Sans 3', sans-serif; transition: all .2s; }
+  .tl-btn.disabled { background: rgba(255,255,255,.07); color: #666; cursor: not-allowed; }
+  .tl-btn.notify   { background: var(--gold); color: var(--navy); }
+  .tl-btn.notify:hover { background: var(--gold-dk); }
+  .tl-btn svg { width: 15px; height: 15px; }
+  .tl-btn.disabled svg { fill: #555; }
+  .tl-btn.notify svg   { fill: var(--navy); }
+
+  /* ── ELIGIBILITY ───────────────────────────────────────── */
+  .eligibility-section { padding: 80px 40px; background: var(--white); }
+  .elig-inner { max-width: 1320px; margin: 0 auto; display: flex; gap: 60px; align-items: flex-start; flex-wrap: wrap; }
+  .elig-left { flex: 1; min-width: 260px; }
+  .elig-left h2 { font-family: 'Oswald', sans-serif; font-size: 2rem; color: var(--navy); margin-bottom: 16px; line-height: 1.15; }
+  .elig-left p { font-size: .97rem; color: #666; line-height: 1.8; margin-bottom: 20px; }
+  .check-item { display: flex; align-items: flex-start; gap: 10px; font-size: .95rem; color: #444; margin-bottom: 12px; line-height: 1.55; }
+  .check-item svg { width: 18px; height: 18px; fill: var(--gold); flex-shrink: 0; margin-top: 2px; }
+  .elig-note { background: var(--gold-pale); border-left: 4px solid var(--gold); padding: 16px 18px; margin-top: 24px; }
+  .elig-note p { font-size: .9rem; color: #555; line-height: 1.65; }
+  .elig-note strong { color: var(--navy); }
+
+  .elig-right { flex: 1; min-width: 260px; }
+  .process-step { display: flex; gap: 18px; align-items: flex-start; margin-bottom: 28px; }
+  .process-num { width: 48px; height: 48px; background: var(--gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Oswald', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--navy); }
+  .process-text h4 { font-family: 'Oswald', sans-serif; font-size: 1.05rem; color: var(--navy); margin-bottom: 4px; }
+  .process-text p  { font-size: .88rem; color: #666; line-height: 1.6; }
+
+  /* ── PROGRAMS PREVIEW ──────────────────────────────────── */
+  .programs-section { padding: 80px 40px; background: var(--cream); }
+  .programs-inner { max-width: 1320px; margin: 0 auto; }
+  .programs-heading { text-align: center; margin-bottom: 52px; }
+  .programs-heading h2 { font-family: 'Oswald', sans-serif; font-size: 2.2rem; color: var(--navy); }
+  .programs-heading p { color: #666; font-size: .97rem; max-width: 580px; margin: 12px auto 0; line-height: 1.7; }
+
+  .programs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .prog-card { background: var(--white); overflow: hidden; border: 1px solid #e8e8e8; transition: transform .2s, box-shadow .2s; }
+  .prog-card:hover { transform: translateY(-6px); box-shadow: 0 14px 36px rgba(0,0,0,.09); }
+  .prog-card-top { background: var(--navy); padding: 28px 24px; display: flex; align-items: flex-start; gap: 16px; }
+  .prog-card-top .prog-icon { width: 48px; height: 48px; background: var(--gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .prog-card-top .prog-icon svg { width: 24px; height: 24px; fill: var(--navy); }
+  .prog-card-top h4 { font-family: 'Oswald', sans-serif; font-size: 1.15rem; color: var(--white); line-height: 1.2; margin-bottom: 4px; }
+  .prog-card-top .prog-status { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+  .prog-status.closed   { color: #e74c3c; }
+  .prog-status.upcoming { color: rgba(240,165,0,.8); }
+  .prog-card-body { padding: 22px 24px; }
+  .prog-card-body p { font-size: .9rem; color: #555; line-height: 1.7; margin-bottom: 16px; }
+  .prog-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .prog-tag { background: var(--cream); color: var(--navy); font-size: .75rem; font-weight: 600; padding: 4px 10px; }
+  .prog-card-footer { padding: 0 24px 22px; }
+  .prog-apply-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px; font-size: .9rem; font-weight: 700; cursor: pointer; border: none; font-family: 'Source Sans 3', sans-serif; text-decoration: none; transition: all .2s; }
+  .prog-apply-btn.closed   { background: rgba(192,57,43,.08); color: #c0392b; cursor: not-allowed; border: 2px solid rgba(192,57,43,.2); }
+  .prog-apply-btn.notify   { background: var(--gold); color: var(--navy); }
+  .prog-apply-btn.notify:hover { background: var(--gold-dk); }
+  .prog-apply-btn svg { width: 15px; height: 15px; }
+  .prog-apply-btn.closed svg { fill: #c0392b; }
+  .prog-apply-btn.notify svg { fill: var(--navy); }
+
+  /* ── STAY TUNED BAND ───────────────────────────────────── */
+  .staytund-section { background: var(--navy); padding: 80px 40px; }
+  .staytund-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+  .pulse-ring {
+    width: 80px; height: 80px; background: var(--gold); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 28px; position: relative;
+  }
+  .pulse-ring::before, .pulse-ring::after {
+    content: ''; position: absolute; inset: -12px; border-radius: 50%;
+    border: 2px solid rgba(240,165,0,.3); animation: pulse 2s infinite;
+  }
+  .pulse-ring::after { animation-delay: 1s; }
+  @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
+  .pulse-ring svg { width: 36px; height: 36px; fill: var(--navy); }
+  .staytund-inner h2 { font-family: 'Oswald', sans-serif; font-size: 2.4rem; color: var(--white); margin-bottom: 14px; }
+  .staytund-inner h2 em { color: var(--gold); font-style: normal; }
+  .staytund-inner p { font-size: 1rem; color: #a8b8cc; line-height: 1.8; max-width: 600px; margin: 0 auto 36px; }
+  .notify-form { display: flex; gap: 0; max-width: 520px; margin: 0 auto 20px; }
+  .notify-form input { flex: 1; padding: 15px 20px; border: none; font-size: .95rem; font-family: 'Source Sans 3', sans-serif; color: var(--navy); outline: none; }
+  .notify-form button { padding: 15px 28px; background: var(--gold); border: none; cursor: pointer; font-size: .95rem; font-weight: 700; color: var(--navy); font-family: 'Source Sans 3', sans-serif; transition: background .2s; flex-shrink: 0; }
+  .notify-form button:hover { background: var(--gold-dk); }
+  .notify-small { font-size: .8rem; color: #556; }
+  .coming-tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 36px; }
+  .coming-tag { background: rgba(240,165,0,.1); border: 1px solid rgba(240,165,0,.25); color: var(--gold); font-size: .82rem; font-weight: 600; padding: 7px 16px; display: flex; align-items: center; gap: 6px; }
+  .coming-tag svg { width: 14px; height: 14px; fill: var(--gold); }
+
+  /* ── STUDENT VOICE ─────────────────────────────────────── */
+  .voices-section { padding: 80px 40px; background: var(--cream); }
+  .voices-inner { max-width: 1320px; margin: 0 auto; }
+  .voices-heading { text-align: center; margin-bottom: 52px; }
+  .voices-heading h2 { font-family: 'Oswald', sans-serif; font-size: 2.2rem; color: var(--navy); }
+  .voices-heading p  { color: #666; font-size: .97rem; max-width: 520px; margin: 12px auto 0; line-height: 1.7; }
+  .voices-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .voice-card { background: var(--white); padding: 32px 26px; border: 1px solid #e8e8e8; position: relative; }
+  .voice-card::before { content: '\201C'; font-family: 'Oswald', sans-serif; font-size: 5rem; color: var(--gold); line-height: .8; display: block; margin-bottom: 8px; }
+  .voice-card p { font-size: .93rem; color: #555; line-height: 1.8; font-style: italic; margin-bottom: 20px; }
+  .voice-attr { display: flex; align-items: center; gap: 12px; }
+  .voice-avatar { width: 42px; height: 42px; background: var(--navy); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .voice-avatar svg { width: 22px; height: 22px; fill: var(--gold); }
+  .voice-name strong { display: block; font-size: .88rem; color: var(--navy); font-weight: 700; }
+  .voice-name span   { font-size: .78rem; color: #999; }
+  .voice-stars { display: flex; gap: 3px; margin-bottom: 14px; }
+  .voice-stars svg { width: 16px; height: 16px; fill: var(--gold); }
+
+  /* ── FAQ TEASER ────────────────────────────────────────── */
+  .faq-teaser { padding: 60px 40px; background: var(--white); }
+  .faq-teaser-inner { max-width: 820px; margin: 0 auto; }
+  .faq-teaser h2 { font-family: 'Oswald', sans-serif; font-size: 2rem; color: var(--navy); margin-bottom: 28px; }
+  .faq-mini-item { border-bottom: 1px solid #eee; padding: 18px 0; }
+  .faq-mini-item:first-of-type { border-top: 1px solid #eee; }
+  .faq-mini-q { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .faq-mini-q span { font-size: 1.2rem; color: var(--gold); transition: transform .3s; }
+  .faq-mini-q.open span { transform: rotate(45deg); }
+  .faq-mini-a { font-size: .93rem; color: #666; line-height: 1.75; max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+  .faq-mini-a.open { max-height: 300px; }
+  .faq-teaser-cta { margin-top: 28px; text-align: center; }
+  .faq-teaser-cta a { color: var(--gold); font-weight: 700; text-decoration: none; font-size: .95rem; display: inline-flex; align-items: center; gap: 6px; }
+  .faq-teaser-cta a svg { width: 16px; height: 16px; fill: var(--gold); }
+  .faq-teaser-cta a:hover { text-decoration: underline; }
+
+  /* ── CTA BAND ──────────────────────────────────────────── */
+  .cta-band { background: var(--gold); padding: 70px 40px; text-align: center; }
+  .cta-band h2 { font-family: 'Oswald', sans-serif; font-size: 2.4rem; color: var(--navy); margin-bottom: 12px; }
+  .cta-band p { color: var(--navy-mid); font-size: 1rem; max-width: 540px; margin: 0 auto 32px; line-height: 1.7; }
+  .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-navy { padding: 14px 30px; font-size: .95rem; font-weight: 700; cursor: pointer; border: none; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: var(--white); transition: background .2s, transform .15s; }
+  .btn-navy:hover { background: var(--navy-mid); transform: translateY(-2px); }
+  .btn-navy svg { width: 16px; height: 16px; fill: var(--gold); }
+  .btn-outline { padding: 14px 30px; font-size: .95rem; font-weight: 700; cursor: pointer; border: 2px solid var(--navy); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--navy); transition: all .2s; }
+  .btn-outline:hover { background: var(--navy); color: var(--white); }
+
+  /* FOOTER */
+  footer { background: var(--navy); padding: 60px 40px 0; color: #a8b8cc; font-size: .92rem; line-height: 1.75; }
+  .footer-grid { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,.1); }
+  .footer-col h4 { color: var(--white); font-size: 1.1rem; font-weight: 600; margin-bottom: 18px; }
+  .footer-col p { margin-bottom: 6px; display: flex; align-items: flex-start; gap: 10px; }
+  .footer-col p svg { width: 15px; height: 15px; fill: var(--gold); flex-shrink: 0; margin-top: 4px; }
+  .footer-links { display: flex; flex-direction: column; gap: 4px; }
+  .footer-links a { color: #a8b8cc; text-decoration: none; padding: 3px 0; display: flex; align-items: center; gap: 8px; transition: color .2s, padding-left .2s; }
+  .footer-links a::before { content: '›'; color: var(--gold); font-size: 1.1rem; }
+  .footer-links a:hover { color: var(--gold); padding-left: 4px; }
+  .ft-gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .ft-gallery-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; transition: opacity .2s; }
+  .ft-gallery-grid img:hover { opacity: .75; }
+  .ft-gallery-grid .gal-ph { width: 100%; aspect-ratio: 1; background: var(--navy-lt); display: block; }
+  .footer-socials { display: flex; gap: 8px; margin-top: 16px; }
+  .fsoc { width: 36px; height: 36px; background: var(--gold); display: flex; align-items: center; justify-content: center; text-decoration: none; transition: background .2s; }
+  .fsoc:hover { background: var(--gold-dk); }
+  .fsoc svg { width: 15px; height: 15px; fill: var(--navy); }
+  .copyright { max-width: 1320px; margin: 0 auto; padding: 20px 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; font-size: .85rem; color: #7a8fa6; }
+  .copyright a { color: var(--gold); text-decoration: none; }
+  .copyright a:hover { text-decoration: underline; }
+
+  /* BACK TO TOP */
+  #back-top { position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px; background: var(--gold); display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; z-index: 500; opacity: 0; pointer-events: none; transition: opacity .3s, transform .2s; }
+  #back-top.show { opacity: 1; pointer-events: auto; }
+  #back-top:hover { background: var(--gold-dk); transform: translateY(-3px); }
+  #back-top svg { width: 20px; height: 20px; fill: var(--navy); }
+
+  /* NOTIFY TOAST */
+  #toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--navy); color: var(--white); padding: 14px 28px; font-size: .92rem; font-weight: 600; opacity: 0; pointer-events: none; transition: all .4s; z-index: 1000; border-left: 4px solid var(--gold); }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) { .gains-grid { grid-template-columns: repeat(2, 1fr); } .programs-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 1024px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 900px) {
+    .topbar-contacts { display: none; }
+    #topbar { padding: 10px 16px; }
+    .page-hero { padding: 50px 20px; min-height: unset; }
+    .page-hero-inner { flex-direction: column; gap: 32px; }
+    .hero-status-card { width: 100%; }
+    .gains-section, .eligibility-section, .programs-section, .voices-section, .timeline-section, .staytund-section, .faq-teaser, .cta-band { padding: 50px 20px; }
+    .elig-inner { flex-direction: column; gap: 36px; }
+    .voices-grid { grid-template-columns: 1fr; }
+    .notify-form { flex-direction: column; }
+    .notify-form button { width: 100%; }
+  }
+  @media (max-width: 768px) {
+    #nav-wrapper { padding: 0; }
+    nav { flex-wrap: wrap; border-radius: 0; }
+    .nav-brand-mobile { font-family: 'Oswald', sans-serif; font-size: 1.3rem; color: var(--navy); font-weight: 700; padding: 12px 16px; display: flex; align-items: center; }
+    .nav-toggle { display: flex; flex-direction: column; }
+    .nav-collapse { display: none; width: 100%; flex-direction: column; background: var(--navy-mid); contents: unset; }
+    .nav-collapse.open { display: flex; }
+    .nav-links { flex-direction: column; width: 100%; }
+    .nav-links a, .nav-links > li > button { color: var(--white); padding: 12px 20px; width: 100%; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .nav-links a:hover, .nav-links > li > button:hover { background: rgba(255,255,255,.08); color: var(--gold); }
+    .nav-links a.active { color: var(--gold); background: rgba(255,255,255,.06); }
+    .dropdown-menu { position: static; box-shadow: none; background: rgba(0,0,0,.2); }
+    .dropdown-menu a { color: #ccc; padding-left: 36px; }
+    .dropdown-menu a:hover { color: var(--gold); background: transparent; }
+    .dropdown:hover .dropdown-menu { display: none; }
+    .dropdown.open .dropdown-menu { display: block; }
+    .nav-socials { display: none; }
+    footer { padding: 40px 16px 0; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .copyright { flex-direction: column; text-align: center; }
+    #back-top { bottom: 16px; right: 16px; }
+    .gains-grid { grid-template-columns: 1fr; }
+    .programs-grid { grid-template-columns: 1fr; }
+    .cta-btns { flex-direction: column; align-items: center; }
+    .timeline::before { left: 22px; }
+    .tl-dot { width: 46px; height: 46px; }
+  }
+   /* Logo css*/
+   .brand-logo{
+  height: 70px;
+  width: auto;
+  display: block;
+  }
+  /*For L4R Menu*/
+@media (min-width: 769px) {
+  .nav-brand-mobile { display: none; }
+}
+@media (max-width: 768px) {
+  .nav-brand-mobile{font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--navy);font-weight:700;padding:12px 16px;display:flex;align-items:center}
+}
+</style>
+</head>
+<body id="top">
+<div id="global-scroll-bar"></div>
+<div id="spinner"><div class="spin-ring"></div></div>
+<div id="toast">✓ You're on the list! We'll notify you when applications open.</div>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><img src="img/logocolored.png" alt="Light 4 Refugee" class="brand-logo"></a>
+    <div class="topbar-contacts">
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+        </div>
+        <div class="contact-text"><p>Call Us</p><span>+250 792 052 725</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </div>
+        <div class="contact-text"><p>Mail Us</p><span>info@light4refugee.org</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+        <div class="contact-text"><p>Location</p><span>Mahama Camp, Kirehe, Rwanda</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<div id="nav-wrapper">
+  <nav>
+    <span class="nav-brand-mobile">L4R Menu</span>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <div class="nav-collapse" id="nav-collapse">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">About Us<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="about-us.html">About What We Do</a>
+            <a href="team.html">About Our Team</a>
+            <a href="gallery.html">About L4R Gallery</a>
+            <a href="testimonies.html">Testimonials</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')" class="active">Programs<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="programs.html">Light Club & iSpeakLead</a>
+            <a href="applications-hub.html">Applications Hub</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">Get Involved<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="become-a-mentee.html" style="color:var(--gold);font-weight:700;">Become a Mentee</a>
+            <a href="become-a-mentor.html">Become a Mentor</a>
+            <a href="partners.html">Partners</a>
+          </div>
+        </li>
+        <li><a href="news-stories.html">News &amp; Stories</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact-us.html">Contact</a></li>
+        <li><a href="donate.html" style="background:var(--navy);color:var(--gold);font-weight:700; border-radius:5px;">Donate</a></li>
+      </ul>
+      <div class="nav-socials">
+        <button id="theme-toggle" aria-label="Toggle Theme Mode"></button>
+        <a class="soc-btn" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="soc-btn" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="var(--white)"/></svg></a>
+        <a class="soc-btn" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="hero-text">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a><span>›</span><span style="color:#fff;">Become a Mentee</span>
+      </div>
+      <div class="hero-eyebrow">
+        <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:var(--navy)"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+        Join the L4R Family
+      </div>
+      <h1>Your Future Starts<br><em>Here, With Us</em></h1>
+      <p class="hero-sub">Are you a refugee student in Rwanda, ready to take your future into your own hands? Light 4 Refugee is your community — where your dreams are nurtured, your voice is heard, and your success is a shared mission.</p>
+      <div class="hero-quote">
+        <p>"Education is the most powerful weapon which you can use to change the world."</p>
+        <cite>— Nelson Mandela</cite>
+      </div>
+    </div>
+
+    <!-- COHORT STATUS CARD -->
+    <div class="hero-status-card">
+      <div class="status-badge is-open">Applications Open</div>
+      <div class="status-dates" style="margin-bottom:16px;">
+        <span>Cohort 2 Applications</span>
+        <strong>Open Now — Till 30th June!</strong>
+      </div>
+      <a href="https://forms.gle/dnaBVnt7qv4Jik4r6" class="status-link"><!-- <a href="#stay-tuned" class="status-link">-->
+        <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+        Apply here for Cohort 2
+      </a><br>
+      <div class="status-badge">Applications Closed</div>
+      <h4>Cohort 1 — Field Week</h4>
+      <p>Our first cohort completed its Field Week from 21–25 July 2025. Online mentoring continues for current mentees.</p>
+      <div class="status-dates">
+        <span>Field Week Dates</span>
+        <strong>21 – 25 July 2025</strong>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="hero-accent"></div>
+
+<!-- WHAT YOU GAIN -->
+<div class="gains-section">
+  <div class="gains-inner">
+    <div class="gains-heading">
+      <div class="section-label-center">
+        <div class="lines"><span></span><span></span></div>
+        What You'll Gain
+        <div class="lines"><span></span><span></span></div>
+      </div>
+      <h2>Everything You Need to Go Further</h2>
+      <p>As an L4R mentee, you get access to programs, mentors, and a community that believes in your potential unconditionally.</p>
+    </div>
+
+    <div class="gains-grid">
+      <div class="gain-card">
+        <div class="gain-icon"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg></div>
+        <h3>Intensive Academic Preparation</h3>
+        <p>Sharpen your English language skills and critical thinking through a rigorous, refugee-informed curriculum designed to close the gap between your potential and your opportunities.</p>
+      </div>
+      <div class="gain-card">
+        <div class="gain-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg></div>
+        <h3>Personalised College Counseling</h3>
+        <p>One-on-one guidance through university applications, personal statement writing, scholarship searches, and recommendation letters — so no door closes simply because you didn't know how to knock.</p>
+      </div>
+      <div class="gain-card">
+        <div class="gain-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.86.18-1a3 3 0 0 0-6 0c0 .14.11.56.18 1H10C8.9 6 8 6.9 8 8v12c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div>
+        <h3>Career Guidance &amp; Mentorship</h3>
+        <p>Be matched with a professional mentor who shares your field of interest. Build a clear, confident path from school to career — with CV coaching, mock interviews, and real-world professional advice.</p>
+      </div>
+      <div class="gain-card">
+        <div class="gain-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
+        <h3>A Vibrant Global Network</h3>
+        <p>Connect with fellow refugee students, international mentors, partner organisations, and alumni who have walked your path and are now changing the world — from Kigali to London to New York.</p>
+      </div>
+      <div class="gain-card">
+        <div class="gain-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div>
+        <h3>Free, Fully Supported Programs</h3>
+        <p>Every L4R program is 100% free to eligible students. No hidden fees, no financial barriers. Your only investment is your commitment, curiosity, and willingness to grow.</p>
+      </div>
+      <div class="gain-card">
+        <div class="gain-icon"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+        <h3>A Community That Sees You</h3>
+        <p>At L4R, you're not a statistic. You're a person with a story, potential, and a future worth investing in. Every mentor, every session, every program is built around you thriving — not just surviving.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COHORT TIMELINE -->
+<div class="timeline-section" id="cohorts">
+  <div class="timeline-inner">
+    <div class="timeline-heading">
+      <div class="section-label-center" style="justify-content:center;">
+        <div class="lines" style="display:flex;flex-direction:column;gap:4px;"><span style="display:block;width:36px;height:2px;background:var(--gold);"></span><span style="display:block;width:36px;height:2px;background:var(--gold);"></span></div>
+        <span style="color:var(--gold);font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;">Cohort History</span>
+        <div class="lines" style="display:flex;flex-direction:column;gap:4px;"><span style="display:block;width:36px;height:2px;background:var(--gold);"></span><span style="display:block;width:36px;height:2px;background:var(--gold);"></span></div>
+      </div>
+      <h2>Where We've Been &amp; Where We're Going</h2>
+      <p>Every cohort is a new chapter. Here's a transparent look at our journey — from our first Field Week to the programs we're building next.</p>
+    </div>
+
+    <div class="timeline">
+
+      <!-- Cohort 1 — CLOSED -->
+      <div class="timeline-item">
+        <div class="tl-dot closed">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+        </div>
+        <div class="tl-content">
+          <span class="tl-tag closed">● Applications Closed</span>
+          <h4>Cohort 1 — Academic Preparation &amp; Mentorship Field Week</h4>
+          <span class="tl-date">Field Week: 21 – 25 July 2025 · Ongoing online mentoring</span>
+          <p>Our inaugural cohort brought together refugee students from across Rwanda's camps for an intensive week of in-person academic sessions, English preparation, and college readiness workshops. Online mentoring continued after Field Week, with mentors and mentees connecting weekly to keep the momentum going.</p>
+          <a class="tl-btn disabled" style="pointer-events:none;">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 5h2v6h-2zm0 8h2v2h-2z"/></svg>
+            Applications Closed
+          </a>
+        </div>
+      </div>
+
+      <!-- Cohort 2 — COMING SOON --> 
+      <div class="timeline-item">
+        <div class="tl-dot upcoming">
+          <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+        </div>
+        <div class="tl-content">
+          <span class="status-badge is-open">⏳ Open Now</span>
+          <h4>College Readiness Bootcamp 2026 — Intensive Scholarship Preparation</h4>
+          <span class="tl-date">Dates are counted — 1 -30 June, 2026</span>
+          <p>Cohort 2 is in open. Application was announced on our website and social media channels when we opened. If you are a refugee student at secondary level in Rwanda, make sure you are follow our social media platforms so you don't miss it.</p>
+          <a href="https://forms.gle/dnaBVnt7qv4Jik4r6" class="status-link">
+            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+            Open Now - Apply Here
+          </a>
+        </div>
+      </div>
+
+      <!-- Career Lighting Paths — UPCOMING 
+      <div class="timeline-item">
+        <div class="tl-dot upcoming">
+          <svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.86.18-1a3 3 0 0 0-6 0c0 .14.11.56.18 1H10C8.9 6 8 6.9 8 8v12c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
+        </div>
+        <div class="tl-content">
+          <span class="tl-tag upcoming">⏳ Upcoming Program</span>
+          <h4>Career Lighting Paths — 11-Week Career Guidance Cohort</h4>
+          <span class="tl-date">For current university students · Launching soon</span>
+          <p>Our 11-week career development programme for refugee university students. Covering career mapping, CV and LinkedIn building, professional communication, mock interviews, networking, and job placement support. Open to current university students with refugee status in Rwanda.</p>
+          <a href="#stay-tuned" class="tl-btn notify">
+            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+            Notify Me When Open
+          </a>
+        </div>
+      </div> -->
+
+      <!-- Bootcamp — UPCOMING 
+      <div class="timeline-item">
+        <div class="tl-dot upcoming">
+          <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+        </div>
+        <div class="tl-content">
+          <span class="tl-tag upcoming">⏳ Upcoming Program</span>
+          <h4>College Readiness Bootcamp — Intensive Scholarship Preparation</h4>
+          <span class="tl-date">For Senior 4–6 students · Details coming soon</span>
+          <p>An intensive bootcamp designed for top-performing refugee students at Secondary 4–6 level. Focused on scholarship research, personal statement mastery, application strategy, and interview simulation — giving students every tool they need to access higher education globally.</p>
+          <a href="#stay-tuned" class="tl-btn notify">
+            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+            Notify Me When Open
+          </a>
+        </div>
+      </div> -->
+
+    </div>
+  </div>
+</div>
+
+<!-- ELIGIBILITY -->
+<div class="eligibility-section">
+  <div class="elig-inner">
+    <div class="elig-left">
+      <div class="section-label">Who Can Apply</div>
+      <h2>Are You Eligible to Become an L4R Mentee?</h2>
+      <p>Our programs are designed specifically for refugee students in Rwanda. We work hard to make sure the right students get the right support at the right time.</p>
+      <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>You must have refugee status in Rwanda</div>
+      <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>For Academic Prep &amp; College Counseling: Senior 4 (S4) secondary students</div>
+      <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>For Career Guidance &amp; Lighting Paths: current university students</div>
+      <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Willing to commit to sessions and engage actively in the program</div>
+      <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Access to a phone or device that can connect to the internet (for online sessions)</div>
+      <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Resident in one of Rwanda's refugee camps or urban refugee communities</div>
+      <div class="elig-note">
+        <p><strong>Don't perfectly match every criterion?</strong> Apply anyway when applications open — we assess every student holistically and with empathy. What matters most is your commitment and your desire to grow.</p>
+      </div>
+    </div>
+
+    <div class="elig-right">
+      <div class="section-label">How It Works</div>
+      <h2 style="font-family:'Oswald',sans-serif;font-size:1.8rem;color:var(--navy);margin-bottom:28px;line-height:1.15;">From Application to Graduation — Your Journey</h2>
+      <div class="process-step">
+        <div class="process-num">01</div>
+        <div class="process-text">
+          <h4>Watch for Announcements</h4>
+          <p>Follow us on Facebook and Instagram, or add your email below. We announce new cohort openings on our website and social channels first.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">02</div>
+        <div class="process-text">
+          <h4>Submit Your Application</h4>
+          <p>When applications open, fill out the Google Form with your background, goals, and which program you're applying for. The form is straightforward and takes about 10 minutes.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">03</div>
+        <div class="process-text">
+          <h4>Selection &amp; Notification</h4>
+          <p>Our team reviews every application personally. Selected students are notified by email and phone within 2 weeks of the application deadline.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">04</div>
+        <div class="process-text">
+          <h4>Onboarding &amp; Matching</h4>
+          <p>You'll be welcomed into your cohort, matched with a mentor, and briefed on your program schedule, expectations, and resources.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num" style="background:var(--navy);color:var(--gold);">05</div>
+        <div class="process-text">
+          <h4>Learn, Grow &amp; Shine</h4>
+          <p>Attend sessions, engage with your mentor, build skills, and take steps toward your academic and career goals — one week at a time.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRAMS PREVIEW -->
+<div class="programs-section">
+  <div class="programs-inner">
+    <div class="programs-heading">
+      <div class="section-label-center">
+        <div class="lines"><span></span><span></span></div>
+        Our Programs
+        <div class="lines"><span></span><span></span></div>
+      </div>
+      <h2>Find the Program That Fits You</h2>
+      <p>Different stages, different needs. Here's every program we offer — and what's coming next.</p>
+    </div>
+
+    <div class="programs-grid">
+      <!-- Academic Prep -->
+      <div class="prog-card">
+        <div class="prog-card-top">
+          <div class="prog-icon"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg></div>
+          <div>
+            <h4>L4R Bootcamp 2025</h4>
+            <span class="prog-status closed">● Cohort 1 Closed</span>
+          </div>
+        </div>
+        <div class="prog-card-body">
+          <p>Intensive English language immersion and academic skills training for Senior 4 refugee students. Designed to close the critical language gap that stands between talented students and higher education.</p>
+          <div class="prog-tags">
+            <span class="prog-tag">English Immersion</span>
+            <span class="prog-tag">Critical Thinking</span>
+            <span class="prog-tag">S4 Students</span>
+            <span class="prog-tag">Free</span>
+          </div>
+        </div>
+        <div class="prog-card-footer">
+          <a class="prog-apply-btn closed" style="pointer-events:none;">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 5h2v6h-2zm0 8h2v2h-2z"/></svg>
+            Cohort 1 Applications Closed
+          </a>
+        </div>
+      </div>
+
+      <!-- College Counseling -->
+      <div class="prog-card">
+        <div class="prog-card-top">
+          <div class="prog-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg></div>
+          <div>
+            <h4>L4R Bootcamp 2026</h4>
+            <span class="prog-status upcoming">⏳ Cohort 2 — Application Open Now</span>
+          </div>
+        </div>
+        <div class="prog-card-body">
+          <p>Personalised guidance on university applications, personal statements, scholarship searches, and recommendation letters. Helping refugee students compete for higher education locally and internationally.</p>
+          <div class="prog-tags">
+            <span class="prog-tag">University Applications</span>
+            <span class="prog-tag">Scholarships</span>
+            <span class="prog-tag">Only S6 Students &amp; High School Graduates</span>
+            <span class="prog-tag">Free</span>
+          </div>
+        </div>
+        <div class="prog-card-footer"><!--
+          <a href="#stay-tuned" class="prog-apply-btn notify">
+            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+            Notify Me When Open
+          </a> -->
+          <a href="https://forms.gle/dnaBVnt7qv4Jik4r6" class="status-link">
+            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+            Open Now - Apply Here
+          </a>
+        </div>
+      </div>
+
+      <!-- Career Lighting Paths -->
+      <div class="prog-card">
+        <div class="prog-card-top">
+          <div class="prog-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.86.18-1a3 3 0 0 0-6 0c0 .14.11.56.18 1H10C8.9 6 8 6.9 8 8v12c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div>
+          <div>
+            <h4>Career Lighting Paths</h4>
+            <span class="prog-status upcoming">⏳ Launching Soon</span>
+          </div>
+        </div>
+        <div class="prog-card-body">
+          <p>An 11-week intensive career guidance program for refugee university students. From career mapping and CV writing to mock interviews and job placement — everything a graduate needs to launch their professional life.</p>
+          <div class="prog-tags">
+            <span class="prog-tag">11 Weeks</span>
+            <span class="prog-tag">University Students</span>
+            <span class="prog-tag">Job Readiness</span>
+            <span class="prog-tag">Free</span>
+          </div>
+        </div>
+        <div class="prog-card-footer">
+          <a href="#stay-tuned" class="prog-apply-btn notify">
+            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+            Notify Me When Open
+          </a>
+        </div>
+      </div>
+
+      <!-- College Readiness Bootcamp -->
+      <div class="prog-card">
+        <div class="prog-card-top" style="background:var(--navy-lt);">
+          <div class="prog-icon"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"/></svg></div>
+          <div>
+            <h4>College Readiness Bootcamp</h4>
+            <span class="prog-status upcoming">⏳ Coming Soon</span>
+          </div>
+        </div>
+        <div class="prog-card-body">
+          <p>An intensive scholarship preparation bootcamp for high-performing S4–S6 refugee students. Deep dives into personal statement mastery, scholarship research, application strategy, and interview simulation.</p>
+          <div class="prog-tags">
+            <span class="prog-tag">Scholarships</span>
+            <span class="prog-tag">Interview Prep</span>
+            <span class="prog-tag">S4–S6 Students</span>
+            <span class="prog-tag">Free</span>
+          </div>
+        </div>
+        <div class="prog-card-footer">
+          <a href="#stay-tuned" class="prog-apply-btn notify">
+            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+            Notify Me When Open
+          </a>
+        </div>
+      </div>
+
+      <!-- Personal Mentorship -->
+      <div class="prog-card">
+        <div class="prog-card-top" style="background:var(--navy-lt);">
+          <div class="prog-icon"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+          <div>
+            <h4>Personal Mentorship Sessions</h4>
+            <span class="prog-status upcoming">⏳ Integrated in Cohorts</span>
+          </div>
+        </div>
+        <div class="prog-card-body">
+          <p>One-on-one mentoring covering life skills, confidence building, goal setting, and emotional resilience. All mentees in active cohorts are matched with a personal mentor from our global network.</p>
+          <div class="prog-tags">
+            <span class="prog-tag">Life Skills</span>
+            <span class="prog-tag">Confidence</span>
+            <span class="prog-tag">All Levels</span>
+            <span class="prog-tag">Free</span>
+          </div>
+        </div>
+        <div class="prog-card-footer">
+          <a href="#stay-tuned" class="prog-apply-btn notify">
+            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+            Apply via a Cohort
+          </a>
+        </div>
+      </div>
+
+      <!-- Light Club -->
+      <div class="prog-card">
+        <div class="prog-card-top" style="background:var(--navy-lt);">
+          <div class="prog-icon"><svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg></div>
+          <div>
+            <h4>Light Club — Student Community</h4>
+            <span class="prog-status upcoming">⏳ Growing &amp; Active</span>
+          </div>
+        </div>
+        <div class="prog-card-body">
+          <p>The Light Club is our thriving student community — a space for current and alumni mentees to share updates, celebrate milestones, and support each other. Follow our Light Club Updates to stay in the loop.</p>
+          <div class="prog-tags">
+            <span class="prog-tag">Community</span>
+            <span class="prog-tag">Alumni Network</span>
+            <span class="prog-tag">Peer Support</span>
+          </div>
+        </div>
+        <div class="prog-card-footer">
+          <a href="https://light4refugee.org/light-club-updates" target="_blank" class="prog-apply-btn notify">
+            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+            See Light Club Updates
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STAY TUNED -->
+<div class="staytund-section" id="stay-tuned">
+  <div class="staytund-inner">
+    <div class="pulse-ring">
+      <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+    </div>
+    <h2>Stay Tuned for <em>Cohort 3</em></h2>
+    <p>Applications for Cohort 3 and our upcoming programs — including Career Lighting Paths and the College Readiness Bootcamp — are coming soon. Drop your email below and we'll notify you the moment applications open. Be first. Don't miss it.</p>
+    <div class="notify-form" id="notify-form">
+      <input type="email" id="notify-email" placeholder="Enter your email address — we'll notify you first">
+      <button onclick="submitNotify()">Notify Me</button>
+    </div>
+    <p class="notify-small">We respect your privacy. No spam, ever. Just one email when applications open.</p>
+    <div class="coming-tags">
+      <span class="coming-tag"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg> College Counseling — Cohort 3</span>
+      <span class="coming-tag"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.86.18-1a3 3 0 0 0-6 0c0 .14.11.56.18 1H10C8.9 6 8 6.9 8 8v12c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg> Career Lighting Paths</span>
+      <span class="coming-tag"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"/></svg> College Readiness Bootcamp</span>
+      <span class="coming-tag"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg> Academic Prep — Cohort 3</span>
+    </div>
+  </div>
+</div>
+
+<!-- STUDENT VOICES -->
+<div class="voices-section">
+  <div class="voices-inner">
+    <div class="voices-heading">
+      <div class="section-label-center">
+        <div class="lines"><span></span><span></span></div>
+        Student Voices
+        <div class="lines"><span></span><span></span></div>
+      </div>
+      <h2>Words From Our Community</h2>
+      <p>Hear from students whose journeys were changed by a single decision to apply — and the community that showed up for them.</p>
+    </div>
+    <div class="voices-grid">
+      <div class="voice-card">
+        <div class="voice-stars">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p>"Before L4R, I didn't believe university was possible for someone like me. After the Field Week, I had a personal statement draft, two scholarships shortlisted, and — more than anything — I believed in myself again."</p>
+        <div class="voice-attr">
+          <div class="voice-avatar"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+          <div class="voice-name"><strong>Aimée K.</strong><span>Cohort 1 Mentee · Mahama Camp</span></div>
+        </div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-stars">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p>"My English was always my weakness. The sessions were intense but the mentors were patient and encouraging. After just a few weeks I could write essays I was proud of. L4R doesn't give up on you."</p>
+        <div class="voice-attr">
+          <div class="voice-avatar"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+          <div class="voice-name"><strong>Jean-Pierre M.</strong><span>Cohort 1 Mentee · Kigeme Camp</span></div>
+        </div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-stars">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p>"What surprised me most was the community. I wasn't just getting training — I was joining a family of people who genuinely wanted to see me succeed. That feeling of being seen is something I'd never had before."</p>
+        <div class="voice-attr">
+          <div class="voice-avatar"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+          <div class="voice-name"><strong>Clarisse N.</strong><span>Cohort 1 Mentee · Mugombwa Camp</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ TEASER -->
+<div class="faq-teaser">
+  <div class="faq-teaser-inner">
+    <h2>Mentee Questions — Answered</h2>
+
+    <div class="faq-mini-item">
+      <div class="faq-mini-q" onclick="toggleFaq(this)">Are L4R programs really free? <span>+</span></div>
+      <div class="faq-mini-a">Yes — 100% free. All L4R programs are completely free to eligible and selected refugee students. We believe financial barriers should never stand in the way of education and opportunity.</div>
+    </div>
+    <div class="faq-mini-item">
+      <div class="faq-mini-q" onclick="toggleFaq(this)">I don't have reliable internet — can I still participate? <span>+</span></div>
+      <div class="faq-mini-a">We do our best to accommodate students with limited connectivity. Our Field Week sessions are in-person, which helps. For online sessions, we work with mentees on scheduling and format to make participation as accessible as possible. Reach out to us and we'll figure it out together.</div>
+    </div>
+    <div class="faq-mini-item">
+      <div class="faq-mini-q" onclick="toggleFaq(this)">What if applications are closed when I check? <span>+</span></div>
+      <div class="faq-mini-a">Add your email to our notification list on this page. When a new cohort opens — whether it's Cohort 2, the Career Lighting Paths programme, or the College Readiness Bootcamp — you'll be among the very first to know.</div>
+    </div>
+    <div class="faq-mini-item">
+      <div class="faq-mini-q" onclick="toggleFaq(this)">I'm not at S4 level — can I still apply? <span>+</span></div>
+      <div class="faq-mini-a">Different programs serve different levels. The Career Lighting Paths programme is for current university students. Keep an eye on upcoming cohort announcements — we plan to expand our programs over time and criteria may vary per cohort.</div>
+    </div>
+    <div class="faq-mini-item">
+      <div class="faq-mini-q" onclick="toggleFaq(this)">How long do programs run? <span>+</span></div>
+      <div class="faq-mini-a">It varies by program. The Academic Prep Field Week is 5 days in-person followed by ongoing weekly online mentoring. The Career Lighting Paths programme runs for 11 weeks. The College Readiness Bootcamp duration will be announced when launched.</div>
+    </div>
+
+    <div class="faq-teaser-cta">
+      <a href="faq.html">
+        View all FAQs
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <h2>Your Moment Starts Now</h2>
+  <p>You don't need to wait until the next cohort opens to take action. Add your email, follow us on social media, and make sure you're ready when your moment comes.</p>
+  <div class="cta-btns">
+    <a class="btn-navy" href="#stay-tuned">
+      <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+      Get Notified
+    </a>
+    <a class="btn-outline" href="about-us.html">Learn About L4R?</a>
+    <a class="btn-outline" href="programs.html" target="_blank">Join the Light Club</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Our Operational Locations</h4>
+      <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Mahama &amp; Kiziba Refugee Camps,<br> Kirehe &amp; Karongi Districts, Rwanda</p>
+      <p><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>+250 792 052 725</p>
+      <p><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>info@light4refugee.org</p>
+      <div class="footer-socials">
+        <a class="fsoc" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="fsoc" href="https://www.youtube.com/channel/UCKFczxvUGOmq7e7tJQ65HxA" target="_blank" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+        <a class="fsoc" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="var(--navy)" stroke-width="2"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="var(--navy)" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="var(--navy)" stroke-width="2"/></svg></a>
+        <a class="fsoc" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div><br>
+      <a class="brand" href="index.html"><img src="img/logo.png" alt="Light 4 Refugee" class="brand-logo"></a>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="team.html">Our Team</a>
+        <a href="news-stories.html">News &amp; Stories</a>
+        <a href="applications-hu.html">Applications Hub</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact-us.html">Contact Us</a>
+        <a href="donate.html">Donate</a>
+        <a href="testimonies.html">Testimonials</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Our Programs</h4>
+      <div class="footer-links">
+        <a href="about-us.html">Academic Preparation</a>
+        <a href="about-us.html">College Counseling</a>
+        <a href="about-us.html">Career Guidance</a><br>
+        <h4>Get Involved</h4>
+        <a href="programs.html">Light Club (ECP &amp; ISEP)</a>
+        <a href="become-a-mentor.html">Become a Mentor</a>
+        <a href="become-a-mentee.html">Become a Mentee</a>
+        <a href="partners.html">Partner With Us</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>From the Gallery</h4>
+      <div class="ft-gallery-grid">
+        <a href="gallery.html"><img src="img/gallery-1.jpg"    alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-2.jpg"       alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-3.jpg"    alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-6.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-4.jpg"     alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-5.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">
+    <span>&copy; 2026 <a href="https://light4refugee.org" target="_blank">Light 4 Refugee</a>, All Rights Reserved.</span>
+      <span style="display:inline-flex; gap:12px;">
+      <a href="terms-conditions.html" target="_blank" style="color:#2e6d04;">Terms/Conditions</a> |
+      <a href="privacy-policy.html" target="_blank" style="color:#2e6d04;">Privacy Policy</a>
+      </span>
+    <span>Designed By <a href="https://yvesnickylirf.com" target="_blank">Yves Nicky Lirf</a></span>
+  </div>
+</footer>
+
+<button id="back-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+</button>
+<script src="theme-logic.js"></script>
+<script>
+  /* Spinner */
+  window.addEventListener('load', () => {
+    const sp = document.getElementById('spinner');
+    sp.classList.add('hide');
+    setTimeout(() => sp.remove(), 500);
+  });
+
+  /* Sticky nav */
+  const topbar  = document.getElementById('topbar');
+  const navWrap = document.getElementById('nav-wrapper');
+  const tbH     = topbar.offsetHeight;
+  window.addEventListener('scroll', () => {
+    const s = window.scrollY > tbH;
+    topbar.classList.toggle('hidden', s);
+    navWrap.classList.toggle('stuck', s);
+    document.getElementById('back-top').classList.toggle('show', window.scrollY > 300);
+  }, { passive: true });
+
+  /* Mobile nav */
+  document.getElementById('nav-toggle').addEventListener('click', function() {
+    this.classList.toggle('open');
+    document.getElementById('nav-collapse').classList.toggle('open');
+  });
+  function toggleDD(id) {
+    if (window.innerWidth > 768) return;
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  /* Notify me */
+  function submitNotify() {
+    // Brand new dedicated URL link pointing to your separate Mentee Waitlist Sheet script
+    const scriptUrl = 'https://script.google.com/macros/s/AKfycbzreeMTGtqHiJbXs6tU-EBztrN-dhNo4ZUCtIpp2GV4ZiX01UQMjwq_mfvZNoGMvxl8/exec';
+    const emailInput = document.getElementById('notify-email');
+    const email = emailInput.value.trim();
+    const btn = document.querySelector('.notify-form button');
+    
+    if (!email || !email.includes('@')) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    // Prevent double submissions
+    btn.disabled = true;
+    btn.innerText = 'Sending...';
+
+    fetch(scriptUrl + '?email=' + encodeURIComponent(email), { method: 'POST' })
+      .then(response => response.json())
+      .then(data => {
+        if (data.result === 'success') {
+          /* Show toast on success */
+          const toast = document.getElementById('toast');
+          toast.classList.add('show');
+          setTimeout(() => toast.classList.remove('show'), 4000);
+          emailInput.value = '';
+        } else {
+          alert('Something went wrong. Please try again later.');
+        }
+      })
+      .catch(error => {
+        console.error('Error!', error.message);
+        alert('Subscription failed. Please check your internet connection.');
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.innerText = 'Notify Me';
+      });
+  }
+
+  /* Enter key on notify input */
+  document.getElementById('notify-email').addEventListener('keydown', e => {
+    if (e.key === 'Enter') submitNotify();
+  });
+
+
+  /* Mini FAQ accordion */
+  function toggleFaq(el) {
+    const ans = el.nextElementSibling;
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.faq-mini-q').forEach(q => {
+      q.classList.remove('open');
+      q.nextElementSibling.classList.remove('open');
+    });
+    if (!isOpen) { el.classList.add('open'); ans.classList.add('open'); }
+  }
+</script>
+</body>
+</html>

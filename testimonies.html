@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Testimonials – L4R</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="img/logo.jpg?v=2">
+<link rel="stylesheet" href="theme-style.css">
+<script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=hcxDN9RdHhl0SYftUyOYW6YRHwQMothlSIW1kCS8vsZtqD4Qus6LcjRVi-dLah-vLc5W5lma4W5yf58c6CoCfkESVMWubOxY8anvTPm65Rx3xWFlWW3UT0G6eF_b3oIJHGXZrw9_HeTEBrl7oMZy-z3OnkabV649f4HhH5C2XW1tOSRx0MPaYvE9TDL35mt60CEPCrbVwSWLc0CVgaWZ2rLJsmedu1oLoFBTBCKLbOM" charset="UTF-8"></script><style>
+/* ── EXACT VARS FROM YOUR SITE ──────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy:     #0d1b2e;
+  --navy-mid: #162540;
+  --navy-lt:  #1e3258;
+  --gold:     #f0a500;
+  --gold-dk:  #c98a00;
+  --white:    #ffffff;
+  --cream:    #f5f0e8;
+  --text:     #1a1a1a;
+  --footer-bg:#0d1b2e;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Source Sans 3', sans-serif; background: var(--cream); overflow-x: hidden; }
+
+/* ── SPINNER ──────────────────────────────────────────── */
+#spinner {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity .4s;
+}
+#spinner.hide { opacity: 0; pointer-events: none; }
+.spin-ring {
+  width: 48px; height: 48px; border-radius: 50%;
+  border: 4px solid #ddd; border-top-color: var(--gold);
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── TOPBAR ───────────────────────────────────────────── */
+#topbar {
+  background: var(--navy);
+  padding: 10px 40px;
+  display: flex; align-items: center;
+  transition: transform .35s ease, opacity .35s ease;
+}
+#topbar.hidden { transform: translateY(-100%); opacity: 0; pointer-events: none; position: absolute; width: 100%; }
+.topbar-inner { display: flex; align-items: center; width: 100%; max-width: 1320px; margin: 0 auto; }
+.brand { font-family: 'Oswald', sans-serif; font-size: 2rem; color: var(--gold); text-decoration: none; letter-spacing: 1px; }
+.topbar-contacts { display: flex; gap: 32px; margin-left: auto; }
+.contact-item { display: flex; align-items: center; gap: 10px; }
+.contact-icon { width: 36px; height: 36px; background: var(--gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.contact-icon svg { width: 16px; height: 16px; fill: var(--navy); }
+.contact-text p  { font-size: .75rem; color: var(--gold); font-weight: 600; margin-bottom: 1px; }
+.contact-text span { font-size: .8rem; color: var(--white); }
+.brand-logo { height: 70px; width: auto; display: block; }
+
+/* ── NAVBAR ───────────────────────────────────────────── */
+#nav-wrapper { background: var(--navy); padding: 0 40px 12px; position: sticky; top: 0; z-index: 100; transition: padding .35s ease; }
+#nav-wrapper.stuck { padding: 0; }
+nav { background: var(--gold); max-width: 1320px; margin: 0 auto; display: flex; align-items: stretch; transition: max-width .35s ease, border-radius .35s ease; border-radius: 0 0 4px 4px; position: relative; }
+#nav-wrapper.stuck nav { max-width: 100%; border-radius: 0; }
+.nav-links { display: flex; align-items: stretch; list-style: none; }
+.nav-links a, .nav-links > li > button { display: flex; align-items: center; padding: 14px 20px; color: var(--navy); font-family: 'Source Sans 3', sans-serif; font-size: .95rem; font-weight: 600; text-decoration: none; background: none; border: none; cursor: pointer; transition: color .2s, background .2s; }
+.nav-links a:hover, .nav-links > li > button:hover, .nav-links a.active { color: var(--white); background: rgba(0,0,0,.15); border-radius: 10px;}
+.dropdown { position: relative; }
+.dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: var(--white); min-width: 180px; box-shadow: 0 8px 24px rgba(0,0,0,.18); z-index: 200; }
+.dropdown:hover .dropdown-menu { display: block; }
+.dropdown-menu a { display: block; padding: 10px 18px; color: var(--text); font-size: .9rem; font-weight: 400; transition: background .2s, color .2s; text-decoration: none; }
+.dropdown-menu a:hover { background: var(--gold); color: var(--navy); }
+.nav-caret { margin-left: 4px; font-size: .7rem; }
+.nav-socials { margin-left: auto; display: flex; align-items: center; gap: 6px; padding-right: 14px; }
+.soc-btn { width: 34px; height: 34px; background: var(--navy); display: flex; align-items: center; justify-content: center; border-radius: 2px; cursor: pointer; transition: background .2s; text-decoration: none; }
+.soc-btn:hover { background: #1a2d4a; }
+.soc-btn svg { width: 16px; height: 16px; fill: var(--white); }
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 12px 16px; margin-left: auto; }
+.nav-toggle span { display: block; width: 22px; height: 2px; background: var(--navy); margin: 5px 0; transition: .3s; }
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav-collapse { display: contents; }
+
+/* ── PAGE HERO ────────────────────────────────────────── */
+.page-hero {
+  background: var(--navy);
+  padding: 72px 40px 64px;
+  position: relative;
+  overflow: hidden;
+}
+/* diagonal gold slash */
+.page-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; right: -60px;
+  width: 340px; height: 100%;
+  background: var(--gold);
+  transform: skewX(-12deg);
+  opacity: .07;
+}
+/* second accent */
+.page-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 6px;
+  background: var(--gold);
+}
+.page-hero-inner {
+  max-width: 1320px; margin: 0 auto;
+  position: relative; z-index: 1;
+}
+.page-hero-eyebrow {
+  font-size: .75rem; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.page-hero-eyebrow::before {
+  content: ''; display: block;
+  width: 32px; height: 2px; background: var(--gold);
+}
+.page-hero h1 {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 18px;
+  letter-spacing: .02em;
+}
+.page-hero h1 span { color: var(--gold); }
+.page-hero-sub {
+  font-size: 1.05rem; color: #a8b8cc;
+  max-width: 560px; line-height: 1.75;
+}
+/* breadcrumb */
+.breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-size: .78rem; color: #7a8fa6;
+  margin-top: 32px;
+}
+.breadcrumb a { color: var(--gold); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb .sep { color: #3a4f68; }
+
+/* ── STATS BAR ────────────────────────────────────────── */
+.stats-bar {
+  background: var(--gold);
+  padding: 0 40px;
+}
+.stats-bar-inner {
+  max-width: 1320px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  divide-x: 1px solid rgba(0,0,0,.1);
+}
+.stat-item {
+  padding: 28px 20px;
+  border-right: 1px solid rgba(0,0,0,.1);
+  text-align: center;
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Oswald', sans-serif;
+  font-size: 2.2rem; font-weight: 700;
+  color: var(--navy); line-height: 1;
+}
+.stat-lbl {
+  font-size: .75rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--navy-lt); margin-top: 6px;
+}
+
+/* ── TESTIMONIALS SECTION ─────────────────────────────── */
+.testi-section { padding: 80px 40px 100px; max-width: 1320px; margin: 0 auto; }
+.section-tag { display: flex; align-items: center; gap: 12px; font-size: .75rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; } .section-tag::before { content: ''; display: block; width: 32px; height: 2px; background: var(--gold); }
+.section-h2 { font-family: 'Oswald', sans-serif; font-size: clamp(1.8rem, 3vw, 2.7rem); font-weight: 700; color: var(--navy); line-height: 1.15; margin-bottom: 12px; } .section-h2 span { color: var(--gold); }
+.section-lead { font-size: 1rem; color: #5a6a7a; max-width: 580px; line-height: 1.75; margin-bottom: 56px; }
+
+
+/* ── CARD GRID ────────────────────────────────────────── */
+.testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.testi-card { background: var(--white); border-bottom: 4px solid var(--gold); box-shadow: 0 2px 12px rgba(13,27,46,.07); display: flex; flex-direction: column; position: relative; overflow: hidden; transition: transform .3s ease, box-shadow .3s ease; } .testi-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(13,27,46,.14); }
+.testi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); } .testi-card::after { content: '\201C'; position: absolute; top: 10px; right: 16px; font-family: 'Oswald', sans-serif; font-size: 8rem; line-height: 1; color: var(--gold); opacity: .08; pointer-events: none; }
+.testi-card.featured { grid-column: span 2; flex-direction: row; } .testi-card.featured .card-photo-wrap { width: 280px; min-width: 280px; aspect-ratio: unset; height: auto; } .testi-card.featured .card-body { padding: 36px 32px; } .testi-card.featured .card-quote { font-size: 1.05rem; }
+
+
+/* photo strip at top */
+.card-photo-wrap { width: 100%; aspect-ratio: 4 / 3; overflow: hidden; background: var(--navy-lt); position: relative; } .card-photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform .5s ease; } .testi-card:hover .card-photo-wrap img { transform: scale(1.04); }
+.card-photo-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, var(--navy-lt) 0%, var(--navy-mid) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; } .card-photo-placeholder svg { width: 48px; height: 48px; fill: rgba(240,165,0,.35); } .card-photo-placeholder span { font-size: .7rem; color: rgba(255,255,255,.3); letter-spacing: .1em; text-transform: uppercase; }
+.card-badge { position: absolute; bottom: 0; left: 0; background: var(--gold); color: var(--navy); font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 5px 12px; }
+
+
+/* card body */
+.card-body { padding: 28px 26px 24px; flex: 1; display: flex; flex-direction: column; }
+.card-quote { font-size: .95rem; line-height: 1.8; color: #3a4a5a; flex: 1; margin-bottom: 24px; position: relative; padding-left: 16px; } .card-quote::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 3px; background: var(--gold); border-radius: 2px; }
+.card-author { display: flex; align-items: center; gap: 14px; padding-top: 20px; border-top: 1px solid #e8e0d0; }
+.card-avatar { width: 52px; height: 52px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid var(--gold); background: var(--navy-lt); } .card-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; } .avatar-placeholder { width: 100%; height: 100%; background: var(--navy); display: flex; align-items: center; justify-content: center; } .avatar-placeholder svg { width: 26px; height: 26px; fill: rgba(240,165,0,.5); }
+.card-author-info { flex: 1; min-width: 0; } .card-name { font-family: 'Oswald', sans-serif; font-size: 1rem; font-weight: 600; color: var(--navy); line-height: 1.2; } .card-role { font-size: .78rem; color: #7a8fa6; margin-top: 2px; } .card-role strong { color: var(--gold); }
+.card-stars { display: flex; gap: 2px; margin-left: auto; flex-shrink: 0; } .card-stars span { color: var(--gold); font-size: .85rem; }
+
+
+/* ── FEATURED (WIDE) CARD ─────────────────────────────── */
+.testi-card.cta-card { background: var(--navy); border-bottom-color: var(--gold); align-items: center; justify-content: center; text-align: center; padding: 40px 32px; min-height: 320px; } .testi-card.cta-card::after { color: rgba(240,165,0,.06); }
+.cta-icon { width: 64px; height: 64px; background: var(--gold); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; } .cta-icon svg { width: 28px; height: 28px; fill: var(--navy); }
+.cta-card h3 { font-family: 'Oswald', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--white); margin-bottom: 12px; } .cta-card p { font-size: .88rem; color: #7a8fa6; line-height: 1.7; margin-bottom: 24px; }
+.cta-btn { display: inline-block; background: var(--gold); color: var(--navy); font-family: 'Source Sans 3', sans-serif; font-size: .85rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 12px 28px; text-decoration: none; transition: background .2s; } .cta-btn:hover { background: var(--gold-dk); }
+
+
+/* ── SUBMIT SECTION ───────────────────────────────────── */
+.submit-section { background: var(--navy-mid); padding: 80px 40px; } .submit-inner { max-width: 800px; margin: 0 auto; text-align: center; } .submit-inner .section-tag { justify-content: center; } .submit-inner .section-tag::before { display: none; } .submit-inner .section-h2 { color: var(--white); margin-bottom: 12px; } .submit-inner .section-lead { color: #7a8fa6; margin: 0 auto 48px; }
+.submit-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; text-align: left; } .form-group { display: flex; flex-direction: column; gap: 6px; } .form-group.full { grid-column: span 2; }
+.form-group label { font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
+.form-group input, .form-group textarea, .form-group select { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); color: var(--white); padding: 12px 16px; font-family: 'Source Sans 3', sans-serif; font-size: .92rem; outline: none; transition: border-color .2s; } .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--gold); }
+.form-group textarea { min-height: 120px; resize: vertical; } .form-group select option { background: var(--navy); }
+.form-collapse, .form-submit { grid-column: span 2; margin-top: 8px; display: flex; align-items: center; gap: 16px; } .submit-btn { background: var(--gold); color: var(--navy); font-family: 'Source Sans 3', sans-serif; font-size: .9rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 14px 36px; border: none; cursor: pointer; transition: background .2s; } .submit-btn:hover { background: var(--gold-dk); } .submit-note { font-size: .8rem; color: #5a6a7a; line-height: 1.6; }
+
+/* ── CRITICAL RESPONSIVE RECONSTRUCTION FOR TESTIMONIALS ────────────────────────────────── */
+@media (max-width: 1250px) { .testi-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+@media (max-width: 992px) { .testi-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; } .testi-section, .submit-section { padding: 60px 20px; } }
+@media (max-width: 768px) { .testi-grid { grid-template-columns: 1fr !important; gap: 24px; max-width: 100%; width: 100%; box-sizing: border-box; } .testi-card { grid-column: span 1 !important; width: 100% !important; max-width: 100% !important; flex-direction: column !important; box-sizing: border-box; } .testi-card.featured { grid-column: span 1 !important; flex-direction: column !important; } .testi-card.featured .card-photo-wrap { width: 100% !important; min-width: unset !important; aspect-ratio: 4 / 3 !important; height: auto !important; } .card-photo-wrap { width: 100% !important; height: auto !important; aspect-ratio: 4 / 3 !important; } .card-author { flex-direction: row; flex-wrap: wrap; gap: 10px; } .card-stars { margin-left: 0; width: 100%; margin-top: 4px; } }
+@media (max-width: 580px) { .testi-section { padding: 40px 16px; } .submit-section { padding: 40px 16px; } .submit-form { grid-template-columns: 1fr !important; gap: 14px; } .form-group.full, .form-submit { grid-column: span 1 !important; } .form-submit { flex-direction: column; align-items: stretch; gap: 12px; } .submit-btn { width: 100%; } }
+
+/* ── FOOTER ───────────────────────────────────────────── */
+footer { background: var(--navy); padding: 60px 40px 0; color: #a8b8cc; font-size: .92rem; line-height: 1.75; }
+.footer-grid { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,.1); }
+.footer-col h4 { font-family: 'Source Sans 3', sans-serif; color: var(--white); font-size: 1.1rem; font-weight: 600; margin-bottom: 18px; }
+.footer-col p { margin-bottom: 6px; display: flex; align-items: flex-start; gap: 10px; }
+.footer-col p svg { width: 15px; height: 15px; fill: var(--gold); flex-shrink: 0; margin-top: 4px; }
+.footer-links { display: flex; flex-direction: column; gap: 4px; }
+.footer-links a { color: #a8b8cc; text-decoration: none; padding: 3px 0; transition: color .2s; display: flex; align-items: center; gap: 8px; }
+.footer-links a::before { content: '›'; color: var(--gold); font-size: 1.1rem; }
+.footer-links a:hover { color: var(--gold); padding-left: 4px; }
+.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.gallery-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; transition: opacity .2s; }
+.gallery-grid img:hover { opacity: .75; }
+.gallery-grid .gal-placeholder { width: 100%; aspect-ratio: 1; background: var(--navy-lt); display: block; }
+.footer-socials { display: flex; gap: 8px; margin-top: 16px; }
+.fsoc { width: 36px; height: 36px; background: var(--gold); display: flex; align-items: center; justify-content: center; text-decoration: none; transition: background .2s; }
+.fsoc:hover { background: var(--gold-dk); }
+.fsoc svg { width: 15px; height: 15px; fill: var(--navy); }
+.copyright { max-width: 1320px; margin: 0 auto; padding: 20px 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center; font-size: .85rem; color: #7a8fa6; }
+.copyright a { color: var(--gold); text-decoration: none; }
+.copyright a:hover { text-decoration: underline; }
+
+/* ── BACK TO TOP ──────────────────────────────────────── */
+#back-top { position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px; background: var(--gold); display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; z-index: 500; opacity: 0; pointer-events: none; transition: opacity .3s, transform .2s; }
+#back-top.show { opacity: 1; pointer-events: auto; }
+#back-top:hover { background: var(--gold-dk); transform: translateY(-3px); }
+#back-top svg { width: 20px; height: 20px; fill: var(--navy); }
+
+/* ── RESPONSIVE ───────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .testi-grid { grid-template-columns: repeat(2, 1fr); }
+  .testi-card.featured { grid-column: span 2; }
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-bar-inner { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .topbar-contacts { display: none; }
+  #topbar { padding: 10px 16px; }
+  nav { width: 100%; }
+  #nav-wrapper { padding: 0; }
+  nav { flex-wrap: wrap; border-radius: 0; }
+  .nav-toggle { display: flex; flex-direction: column; }
+  .nav-collapse { display: none; width: 100%; flex-direction: column; background: var(--navy-mid); contents: unset; }
+  .nav-collapse.open { display: flex; }
+  .nav-links { flex-direction: column; width: 100%; }
+  .nav-links a, .nav-links > li > button { color: var(--white); padding: 12px 20px; width: 100%; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .nav-links a:hover, .nav-links > li > button:hover { background: rgba(255,255,255,.08); color: var(--gold); }
+  .nav-links a.active { color: var(--gold); background: rgba(255,255,255,.06); }
+  .dropdown-menu { position: static; box-shadow: none; background: rgba(0,0,0,.2); }
+  .dropdown-menu a { color: #ccc; padding-left: 36px; }
+  .dropdown-menu a:hover { color: var(--gold); background: transparent; }
+  .dropdown:hover .dropdown-menu { display: none; }
+  .dropdown.open .dropdown-menu { display: block; }
+  .nav-socials { display: none; }
+  .page-hero { padding: 48px 20px 40px; }
+  .testi-section { padding: 50px 20px 70px; }
+  .testi-grid { grid-template-columns: 1fr; }
+  .testi-card.featured { flex-direction: column; }
+  .testi-card.featured .card-photo-wrap { width: 100%; min-width: unset; height: 220px; }
+  .submit-section { padding: 50px 20px; }
+  .submit-form { grid-template-columns: 1fr; }
+  .form-group.full, .form-submit { grid-column: span 1; }
+  footer { padding: 40px 16px 0; }
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  .copyright { flex-direction: column; text-align: center; }
+  .stats-bar { padding: 0 20px; }
+  .stats-bar-inner { grid-template-columns: repeat(2, 1fr); }
+  #back-top { bottom: 16px; right: 16px; }
+}
+/* ── COMPREHENSIVE SITE RESPONSIVE SYSTEM ───────────────────────────────────────── */
+@media (max-width: 1250px) { .testi-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } .footer-grid { gap: 24px; } }
+@media (max-width: 1024px) { .testi-grid { grid-template-columns: repeat(2, 1fr); } .testi-card.featured { grid-column: span 2; } .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; } .stats-bar-inner { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px) { .topbar-contacts { display: none; } #topbar { padding: 10px 16px; } nav { width: 100%; } #nav-wrapper { padding: 0; } nav { flex-wrap: wrap; border-radius: 0; } .nav-toggle { display: flex; flex-direction: column; } .nav-collapse { display: none; width: 100%; flex-direction: column; background: var(--navy-mid); contents: unset; } .nav-collapse.open { display: flex; } .nav-links { flex-direction: column; width: 100%; } .nav-links a, .nav-links > li > button { color: var(--white); padding: 12px 20px; width: 100%; border-bottom: 1px solid rgba(255,255,255,.06); } .nav-links a:hover, .nav-links > li > button:hover { background: rgba(255,255,255,.08); color: var(--gold); } .nav-links a.active { color: var(--gold); background: rgba(255,255,255,.06); } .dropdown-menu { position: static; box-shadow: none; background: rgba(0,0,0,.2); } .dropdown-menu a { color: #ccc; padding-left: 36px; } .dropdown-menu a:hover { color: var(--gold); background: transparent; } .dropdown:hover .dropdown-menu { display: none; } .dropdown.open .dropdown-menu { display: block; } .nav-socials { display: none; } .page-hero { padding: 48px 20px 40px; } .testi-section { padding: 50px 20px 70px; } .testi-grid { grid-template-columns: 1fr !important; gap: 24px; max-width: 100%; width: 100%; box-sizing: border-box; } .testi-card { grid-column: span 1 !important; width: 100% !important; max-width: 100% !important; flex-direction: column !important; box-sizing: border-box; } .testi-card.featured { flex-direction: column !important; } .testi-card.featured .card-photo-wrap { width: 100% !important; min-width: unset !important; height: auto !important; aspect-ratio: 4 / 3 !important; } .card-photo-wrap { width: 100% !important; height: auto !important; aspect-ratio: 4 / 3 !important; } .submit-section { padding: 50px 20px; } .submit-form { grid-template-columns: 1fr !important; } .form-group.full, .form-submit { grid-column: span 1 !important; } .form-submit { flex-direction: column; align-items: stretch; gap: 12px; } .submit-btn { width: 100%; } footer { padding: 40px 20px 0; } .footer-grid { grid-template-columns: 1fr !important; gap: 36px; padding-bottom: 36px; } .copyright { flex-direction: column; text-align: center; gap: 12px; padding: 24px 0; } .stats-bar { padding: 0 20px; } .stats-bar-inner { grid-template-columns: repeat(2, 1fr); } #back-top { bottom: 16px; right: 16px; } }
+@media (max-width: 480px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; } .footer-col h4 { margin-bottom: 14px; } }
+
+   /* Logo css*/
+   .brand-logo{
+  height: 70px;
+  width: auto;
+  display: block;
+  }
+  /*For L4R Menu*/
+@media (min-width: 769px) {
+  .nav-brand-mobile { display: none; }
+}
+@media (max-width: 768px) {
+  .nav-brand-mobile{font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--navy);font-weight:700;padding:12px 16px;display:flex;align-items:center}
+}
+</style>
+</head>
+<body id="top">
+<div id="global-scroll-bar"></div>
+<div id="spinner"><div class="spin-ring"></div></div>
+
+<!-- ── TOPBAR (unchanged from your site) ─────────────── -->
+<div id="topbar">
+  <div class="topbar-inner">
+    <a href="index.html"><img src="img/Logocolored.png" alt="Light 4 Refugee" class="brand-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-family:'Oswald',sans-serif;font-size:1.5rem;color:var(--gold);font-weight:700;text-decoration:none">Light 4 Refugee</span></a>
+    <div class="topbar-contacts">
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+        </div>
+        <div class="contact-text"><p>Call Us</p><span>+250 792 052 725</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </div>
+        <div class="contact-text"><p>Mail Us</p><span>info@light4refugee.org</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+        <div class="contact-text"><p>Address</p><span>Kigali, Kirehe, Rwanda</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── NAVBAR (unchanged from your site) ─────────────── -->
+<div id="nav-wrapper">
+  <nav>
+    <span class="nav-brand-mobile">L4R Menu</span>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <div class="nav-collapse" id="nav-collapse">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">About Us<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="about-us.html">About What We Do</a>
+            <a href="team.html">About Our Team</a>
+            <a href="gallery.html">About L4R Gallery</a>
+            <a href="testimonies.html" style="color:var(--gold);font-weight:700;">Testimonials</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">Programs<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="programs.html">Light Club & iSpeakLead</a>
+            <a href="applications-hub.html">Applications Hub</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">Get Involved<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="become-a-mentor.html">Become a Mentor</a>
+            <a href="become-a-mentee.html">Become a Mentee</a>
+            <a href="partners.html">Partners</a>
+          </div>
+        </li>
+        <li><a href="news-stories.html">News &amp; Stories</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact-us.html">Contact</a></li>
+        <li><a href="donate.html" style="background:var(--navy);color:var(--gold);font-weight:700; border-radius:5px;">Donate</a></li>
+      </ul>
+      <div class="nav-socials">
+        <button id="theme-toggle" aria-label="Toggle Theme Mode"></button>
+        <a class="soc-btn" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="soc-btn" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="var(--white)" stroke-width="2"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="var(--white)" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="var(--white)" stroke-width="2"/></svg></a>
+        <a class="soc-btn" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE CONTENT BEGINS HERE
+═══════════════════════════════════════════════════════ -->
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-eyebrow">Real Stories · Real Change</div>
+    <h1>Voices of <span>Hope</span><br>&amp; Transformation</h1>
+    <p class="page-hero-sub">Every story here belongs to a real person whose life has been touched by education, mentorship, and community. These are the reasons we do what we do.</p>
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="sep">›</span>
+      <span>Testimonials</span>
+    </div>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-bar-inner">
+    <div class="stat-item">
+      <div class="stat-num">200+</div>
+      <div class="stat-lbl">Lives Impacted</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">2</div>
+      <div class="stat-lbl">Refugee Camps</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">94%</div>
+      <div class="stat-lbl">College Acceptance</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">15+</div>
+      <div class="stat-lbl">Partner Mentors</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TESTIMONIALS GRID ───────────────────────────────── -->
+<div class="testi-section">
+  <div class="section-tag">What They Say</div>
+  <h2 class="section-h2">Stories That <span>Move Us</span> Forward</h2>
+  <p class="section-lead">From Mahama to Kiziba — every card below represents a journey.<br><code style="background:#eee;padding:2px 6px;font-size:.85em">We work to bring skills, hope, and a brighter future to those whose voices are often unheard</code></p>
+
+  <div class="testi-grid">
+
+    <!-- ── FEATURED CARD (wide) ─ Card 1 ─────────────── -->
+    <div class="testi-card featured">
+      <div class="card-photo-wrap">
+        <!-- REPLACE src with your image, e.g. src="img/testimonial-1.jpg" -->
+        <img src="img/testimonial-1.jpg" alt="Testimonial photo"
+          onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'card-photo-placeholder',innerHTML:'<svg viewBox=\'0 0 24 24\'><path d=\'M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z\'/></svg><span>Add photo</span>'}))">
+        <div class="card-badge">Featured Story</div>
+      </div>
+      <div class="card-body">
+        <p class="card-quote">
+          <!-- REPLACE this text with the real testimonial quote -->
+          "Add the full testimonial quote here. This featured card is wider so it works best for your longest, most impactful story — perhaps a student who made it to university or a mentor who changed a life."
+        </p>
+        <div class="card-author">
+          <div class="card-avatar">
+            <!-- REPLACE src with avatar crop, e.g. src="img/avatar-1.jpg" -->
+            <img src="img/avatar-1.jpg" alt=""
+              onerror="this.parentElement.innerHTML='<div class=\'avatar-placeholder\'><svg viewBox=\'0 0 24 24\'><path d=\'M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z\'/></svg></div>'">
+          </div>
+          <div class="card-author-info">
+            <div class="card-name">Full Name Here</div><!-- REPLACE -->
+            <div class="card-role">Program: <strong>College Counseling</strong> · Mahama Camp</div><!-- REPLACE -->
+          </div>
+          <div class="card-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CARD 2 ──────────────────────────────────────── -->
+    <div class="testi-card">
+      <div class="card-photo-wrap">
+        <img src="img/testimonial-1.jpg" alt="Testimonial photo"
+          onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'card-photo-placeholder',innerHTML:'<svg viewBox=\'0 0 24 24\'><path d=\'M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z\'/></svg><span>Add photo</span>'}))">
+        <div class="card-badge">College Counseling</div>
+      </div>
+      <div class="card-body">
+        <p class="card-quote">"Before joining Light4Refugee, I lacked confidence and was afraid of making mistakes when speaking. I also didn't know how to write an essay. Through L4R, I gained confidence and learned how to write clear, compelling essays."</p><!-- REPLACE -->
+        <div class="card-author">
+          <div class="card-avatar">
+            <img src="img/avatar-2.jpg" alt=""
+              onerror="this.parentElement.innerHTML='<div class=\'avatar-placeholder\'><svg viewBox=\'0 0 24 24\'><path d=\'M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z\'/></svg></div>'">
+          </div>
+          <div class="card-author-info">
+            <div class="card-name">Sandrine UWINEZA</div><!-- REPLACE -->
+            <div class="card-role">Program: <strong>College Counseling</strong> · Mahama Refugee Camp</div><!-- REPLACE -->
+          </div>
+          <div class="card-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CARD 3 ──────────────────────────────────────── -->
+    <div class="testi-card">
+      <div class="card-photo-wrap">
+        <img src="img/testimonial-3.jpg" alt=""
+          onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'card-photo-placeholder',innerHTML:'<svg viewBox=\'0 0 24 24\'><path d=\'M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z\'/></svg><span>Add photo</span>'}))">
+        <div class="card-badge">College Counseling</div>
+      </div>
+      <div class="card-body">
+        <p class="card-quote">"Add testimonial quote here for card 3."</p><!-- REPLACE -->
+        <div class="card-author">
+          <div class="card-avatar">
+            <img src="img/avatar-3.jpg" alt=""
+              onerror="this.parentElement.innerHTML='<div class=\'avatar-placeholder\'><svg viewBox=\'0 0 24 24\'><path d=\'M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z\'/></svg></div>'">
+          </div>
+          <div class="card-author-info">
+            <div class="card-name">Full Name Here</div><!-- REPLACE -->
+            <div class="card-role">Program: <strong>Career Guidance</strong> · Mahama Camp</div><!-- REPLACE -->
+          </div>
+          <div class="card-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CARD 4 ──────────────────────────────────────── -->
+    <div class="testi-card">
+      <div class="card-photo-wrap">
+        <img src="img/testimonial-4.jpg" alt=""
+          onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'card-photo-placeholder',innerHTML:'<svg viewBox=\'0 0 24 24\'><path d=\'M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z\'/></svg><span>Add photo</span>'}))">
+        <div class="card-badge">Mentorship</div>
+      </div>
+      <div class="card-body">
+        <p class="card-quote">"Add testimonial quote here for card 4."</p><!-- REPLACE -->
+        <div class="card-author">
+          <div class="card-avatar">
+            <img src="img/avatar-4.jpg" alt=""
+              onerror="this.parentElement.innerHTML='<div class=\'avatar-placeholder\'><svg viewBox=\'0 0 24 24\'><path d=\'M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z\'/></svg></div>'">
+          </div>
+          <div class="card-author-info">
+            <div class="card-name">Full Name Here</div><!-- REPLACE -->
+            <div class="card-role">Program: <strong>Mentorship</strong> · Kigeme Camp</div><!-- REPLACE -->
+          </div>
+          <div class="card-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CARD 5 ──────────────────────────────────────── -->
+    <div class="testi-card">
+      <div class="card-photo-wrap">
+        <img src="img/testimonial-5.jpg" alt=""
+          onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'card-photo-placeholder',innerHTML:'<svg viewBox=\'0 0 24 24\'><path d=\'M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z\'/></svg><span>Add photo</span>'}))">
+        <div class="card-badge">College Counseling</div>
+      </div>
+      <div class="card-body">
+        <p class="card-quote">"Add testimonial quote here for card 5."</p><!-- REPLACE -->
+        <div class="card-author">
+          <div class="card-avatar">
+            <img src="img/avatar-5.jpg" alt=""
+              onerror="this.parentElement.innerHTML='<div class=\'avatar-placeholder\'><svg viewBox=\'0 0 24 24\'><path d=\'M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z\'/></svg></div>'">
+          </div>
+          <div class="card-author-info">
+            <div class="card-name">Full Name Here</div><!-- REPLACE -->
+            <div class="card-role">Program: <strong>College Counseling</strong> · Mahama Camp</div><!-- REPLACE -->
+          </div>
+          <div class="card-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CTA CARD (always last) ─────────────────────── -->
+    <div class="testi-card cta-card">
+      <div class="cta-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+      </div>
+      <h3>Want to Share Your Story?</h3>
+      <p>If Light 4 Refugee has made a difference in your life, we would love to hear from you. Your voice inspires the next generation.</p>
+      <a href="contact-us.html" class="cta-btn">Share Your Story</a>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+         ADD MORE CARDS HERE — just copy one of the
+         .testi-card blocks above and update:
+           src="img/testimonial-N.jpg"
+           src="img/avatar-N.jpg"
+           The quote text
+           The name, program, and camp
+         The grid handles layout automatically.
+    ══════════════════════════════════════════════════ -->
+
+  </div><!-- end .testi-grid -->
+</div><!-- end .testi-section -->
+
+<!-- ── SUBMIT A STORY FORM ─────────────────────────────── -->
+<div class="submit-section">
+  <div class="submit-inner">
+    <div class="section-tag">Share With Us</div>
+    <h2 class="section-h2">Your Story <span>Matters</span></h2>
+    <p class="section-lead">Been part of L4R? Submit your testimonial below and we'll feature it here after review.</p>
+    <div class="submit-form">
+      <div class="form-group">
+        <label for="t-name">Full Name</label>
+        <input type="text" id="t-name" placeholder="Your full name" required>
+      </div>
+      <div class="form-group">
+        <label for="t-year">Email</label>
+        <input type="email" id="sub-email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="t-program">Program</label>
+        <select id="t-program">
+          <option value="">Select a program</option>
+          <option>Academic Preparation</option>
+          <option>College Counseling</option>
+          <option>Career Guidance</option>
+          <option>Mentorship</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="t-camp">Camp / Location</label>
+        <input type="text" id="t-camp" placeholder="e.g. Mahama Camp" required>
+      </div>
+      <div class="form-group full">
+        <label for="t-quote">Your Testimonial</label>
+        <textarea id="t-quote" placeholder="Tell us how Light 4 Refugee made a difference in your life..."></textarea>
+      </div>
+      <div class="form-submit">
+        <button class="submit-btn">Submit Testimonial</button>
+        <p class="submit-note">All submissions are reviewed before publishing. We may edit for length with your permission.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER (unchanged from your site) ────────────────── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Our Operational Locations</h4>
+      <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Mahama &amp; Kiziba Refugee Camps, Kirehe &amp; Karongi Districts, Rwanda</p>
+      <p><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>+250 792 052 725</p>
+      <p><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>info@light4refugee.org</p>
+      <div class="footer-socials">
+        <a class="fsoc" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="fsoc" href="https://www.youtube.com/channel/UCKFczxvUGOmq7e7tJQ65HxA" target="_blank" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+        <a class="fsoc" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="var(--navy)" stroke-width="2"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="var(--navy)" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="var(--navy)" stroke-width="2"/></svg></a>
+        <a class="fsoc" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+    </div>
+<div class="footer-col">
+      <h4>Quick Links</h4>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="team.html">About our Team</a>
+        <a href="news-stories.html">News &amp; Stories</a>
+        <a href="applications-hu.html">Applications Hub</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact-us.html">Contact Us</a>
+        <a href="donate.html">Donate</a>
+        <a href="testimonies.html">Testimonials</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Our Programs</h4>
+      <div class="footer-links">
+        <a href="about-us.html">Academic Preparation</a>
+        <a href="about-us.html">College Counseling</a>
+        <a href="about-us.html">Career Guidance</a><br>
+        <h4>Get Involved</h4>
+        <a href="programs.html">Light Club (ECP &amp; ISEP)</a>
+        <a href="become-a-mentor.html">Become a Mentor</a>
+        <a href="become-a-mentee.html">Become a Mentee</a>
+        <a href="partners.html">Partner With Us</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Gallery</h4>
+      <div class="gallery-grid">
+        <a href="gallery.html"><img src="img/gallery-1.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-2.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-3.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-4.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-5.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-6.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">
+    <span>&copy; 2026 <a href="https://light4refugee.org" target="_blank">Light 4 Refugee</a>, All Rights Reserved.</span>
+      <span style="display:inline-flex; gap:12px;">
+      <a href="terms-conditions.html" target="_blank" style="color:#2e6d04;">Terms/Conditions</a> |
+      <a href="privacy-policy.html" target="_blank" style="color:#2e6d04;">Privacy Policy</a>
+      </span>
+    <span>Designed By <a href="https://yvesnickylirf.com" target="_blank">Yves Nicky Lirf</a></span>
+  </div>
+</footer>
+
+<button id="back-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+</button>
+<script src="theme-logic.js"></script>
+<script>
+  /* Spinner */
+  document.addEventListener('DOMContentLoaded', () => {
+    const sp = document.getElementById('spinner');
+    sp.classList.add('hide');
+    setTimeout(() => sp.remove(), 500);
+  });
+
+  /* Sticky nav + hide topbar */
+  const topbar  = document.getElementById('topbar');
+  const navWrap = document.getElementById('nav-wrapper');
+  let tbH = topbar.offsetHeight;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > tbH) {
+      topbar.classList.add('hidden');
+      navWrap.classList.add('stuck');
+    } else {
+      topbar.classList.remove('hidden');
+      navWrap.classList.remove('stuck');
+    }
+    document.getElementById('back-top').classList.toggle('show', window.scrollY > 300);
+  }, { passive: true });
+
+  /* Mobile nav toggle */
+  document.getElementById('nav-toggle').addEventListener('click', function() {
+    this.classList.toggle('open');
+    document.getElementById('nav-collapse').classList.toggle('open');
+  });
+
+  /* Mobile dropdown */
+  function toggleDD(id) {
+    if (window.innerWidth > 768) return;
+    document.getElementById(id).classList.toggle('open');
+  }
+
+
+  document.querySelector('.submit-btn').addEventListener('click', function(e) {
+  e.preventDefault();
+  
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxx_TrwLTTRHgiq2pjtRgeTuLIN5uHw9osAe0JhLfbw-wfe4nKoPJSH2RQLVqiixI6Z/exec';
+  const submitButton = this;
+  
+  // Read target fields
+  const nameVal  = document.getElementById('t-name').value;
+  const emailVal = document.getElementById('sub-email').value;
+  const progVal  = document.getElementById('t-program').value;
+  const campVal  = document.getElementById('t-camp').value;
+  const quoteVal = document.getElementById('t-quote').value;
+
+  if (!nameVal || !emailVal || !quoteVal) {
+    alert('Please fill out your Name, Email, and Testimonial text fields.');
+    return;
+  }
+
+  submitButton.disabled = true;
+  submitButton.innerText = 'Submitting Story...';
+
+  const formData = new URLSearchParams();
+  formData.append('name', nameVal);
+  formData.append('email', emailVal);
+  formData.append('program', progVal);
+  formData.append('camp', campVal);
+  formData.append('testimonial', quoteVal);
+
+  fetch(scriptURL, {
+    method: 'POST',
+    body: formData,
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.result === 'success') {
+      alert('Thank you! Your story has been submitted and a confirmation has been sent to your email.');
+      // Flush fields
+      document.getElementById('t-name').value = '';
+      document.getElementById('sub-email').value = '';
+      document.getElementById('t-program').value = '';
+      document.getElementById('t-camp').value = '';
+      document.getElementById('t-quote').value = '';
+    } else {
+      alert('Submission error: ' + data.error);
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('Network error. Check your connection.');
+  })
+  .finally(() => {
+    submitButton.disabled = false;
+    submitButton.innerText = 'Submit Testimonial';
+  });
+});
+
+</script>
+</body>
+</html>

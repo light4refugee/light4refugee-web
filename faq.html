@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ – L4R</title>
+<meta name="description" content="Everything you need to know about Light4Refugee — our programs, eligibility, how to apply, partnerships, and our vision for refugee youth in Rwanda.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="img/logo.jpg?v=2">
+<link rel="stylesheet" href="theme-style.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:     #0d1b2e;
+    --navy-mid: #162540;
+    --navy-lt:  #1e3258;
+    --gold:     #f0a500;
+    --gold-dk:  #c98a00;
+    --gold-pale:#fff8e6;
+    --white:    #ffffff;
+    --cream:    #f5f0e8;
+    --text:     #1a1a1a;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--white); overflow-x: hidden; }
+
+  /* ── SPINNER ──────────────────────────────────────────── */
+  #spinner { position: fixed; inset: 0; z-index: 9999; background: var(--white); display: flex; align-items: center; justify-content: center; transition: opacity .4s; }
+  #spinner.hide { opacity: 0; pointer-events: none; }
+  .spin-ring { width: 48px; height: 48px; border-radius: 50%; border: 4px solid #ddd; border-top-color: var(--gold); animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── TOPBAR ───────────────────────────────────────────── */
+  #topbar { background: var(--navy); padding: 10px 40px; display: flex; align-items: center; transition: transform .35s ease, opacity .35s ease; }
+  #topbar.hidden { transform: translateY(-100%); opacity: 0; pointer-events: none; position: absolute; width: 100%; }
+  .topbar-inner { display: flex; align-items: center; width: 100%; max-width: 1320px; margin: 0 auto; }
+  .brand { font-family: 'Oswald', sans-serif; font-size: 2rem; color: var(--gold); text-decoration: none; letter-spacing: 1px; }
+  .topbar-contacts { display: flex; gap: 32px; margin-left: auto; }
+  .contact-item { display: flex; align-items: center; gap: 10px; }
+  .contact-icon { width: 36px; height: 36px; background: var(--gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .contact-icon svg { width: 16px; height: 16px; fill: var(--navy); }
+  .contact-text p  { font-size: .75rem; color: var(--gold); font-weight: 600; margin-bottom: 1px; }
+  .contact-text span { font-size: .8rem; color: var(--white); }
+
+  /* ── NAVBAR ───────────────────────────────────────────── */
+  #nav-wrapper { background: var(--navy); padding: 0 40px 12px; position: sticky; top: 0; z-index: 100; transition: padding .35s ease; }
+  #nav-wrapper.stuck { padding: 0; }
+  nav { background: var(--gold); max-width: 1320px; margin: 0 auto; display: flex; align-items: stretch; transition: max-width .35s ease; border-radius: 0 0 4px 4px; position: relative; }
+  #nav-wrapper.stuck nav { max-width: 100%; border-radius: 0; }
+  .nav-links { display: flex; align-items: stretch; list-style: none; }
+  .nav-links a, .nav-links > li > button { display: flex; align-items: center; padding: 14px 20px; color: var(--navy); font-size: .95rem; font-weight: 600; text-decoration: none; background: none; border: none; cursor: pointer; transition: color .2s, background .2s; }
+  .nav-links a:hover, .nav-links > li > button:hover, .nav-links a.active { color: var(--white); background: rgba(0,0,0,.15); border-radius: 10px;}
+  .dropdown { position: relative; }
+  .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: var(--white); min-width: 180px; box-shadow: 0 8px 24px rgba(0,0,0,.18); z-index: 200; }
+  .dropdown:hover .dropdown-menu { display: block; }
+  .dropdown-menu a { display: block; padding: 10px 18px; color: var(--text); font-size: .9rem; text-decoration: none; transition: background .2s; }
+  .dropdown-menu a:hover { background: var(--gold); color: var(--navy); }
+  .nav-caret { margin-left: 4px; font-size: .7rem; }
+  .nav-socials { margin-left: auto; display: flex; align-items: center; gap: 6px; padding-right: 14px; }
+  .soc-btn { width: 34px; height: 34px; background: var(--navy); display: flex; align-items: center; justify-content: center; border-radius: 2px; text-decoration: none; transition: background .2s; }
+  .soc-btn:hover { background: #1a2d4a; }
+  .soc-btn svg { width: 16px; height: 16px; fill: var(--white); }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 12px 16px; margin-left: auto; }
+  .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--navy); margin: 5px 0; transition: .3s; }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-collapse { display: contents; }
+
+  /* ── PAGE HERO ────────────────────────────────────────── */
+  .page-hero { background: var(--navy); padding: 80px 40px; position: relative; overflow: hidden; }
+  .page-hero::before {
+    content: ''; position: absolute; inset: -20px;
+    background-image: url('img/GIF.gif'); background-size: cover; background-position: center; background-repeat: no-repeat;
+    filter: blur(1px); background-blend-mode: multiply;
+    background-image: linear-gradient(135deg, rgba(240,165,0,.13) 0%, transparent 55%), linear-gradient(rgba(10, 25, 47, 0.75), rgba(10, 25, 47, 0.75)), url('img/GIF.gif');
+  }
+  /* decorative big question mark watermark */
+  .page-hero::after {
+    content: '?';
+    position: absolute; right: 8%; top: 50%; transform: translateY(-50%);
+    font-family: 'Oswald', sans-serif; font-size: 18rem; font-weight: 700;
+    color: rgba(240,165,0,.07); line-height: 1; pointer-events: none; z-index: 0;
+  }
+  .page-hero-inner { max-width: 1320px; margin: 0 auto; position: relative; z-index: 1; }
+  .breadcrumb { display: flex; align-items: center; gap: 10px; font-size: .85rem; color: #a8b8cc; margin-bottom: 20px; }
+  .breadcrumb a { color: var(--gold); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb span { color: #556; }
+  .page-hero h1 { font-family: 'Oswald', sans-serif; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 700; color: var(--white); text-transform: uppercase; line-height: 1.05; margin-bottom: 16px; }
+  .page-hero h1 em { color: var(--gold); font-style: normal; }
+  .page-hero p { font-size: 1.05rem; color: #a8b8cc; max-width: 620px; line-height: 1.7; }
+  .hero-accent { height: 6px; background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dk) 50%, var(--navy) 100%); }
+
+
+  /* ── FAQ LAYOUT ───────────────────────────────────────── */
+  .faq-section { padding: 80px 40px; background: var(--white); }
+  .faq-inner { max-width: 1320px; margin: 0 auto; display: flex; gap: 60px; align-items: flex-start; }
+
+  /* LEFT: sticky tab nav */
+  .faq-sidebar {
+    flex-shrink: 0; width: 240px;
+    position: sticky; top: 90px;
+  }
+  .faq-sidebar h3 {
+    font-family: 'Oswald', sans-serif; font-size: 1rem; font-weight: 700;
+    color: var(--navy); text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: 16px; padding-bottom: 10px;
+    border-bottom: 2px solid var(--gold);
+  }
+  .faq-tabs { display: flex; flex-direction: column; gap: 4px; }
+  .faq-tab {
+    padding: 11px 16px; border: none; background: var(--cream);
+    color: #555; font-size: .92rem; font-weight: 600;
+    cursor: pointer; text-align: left; border-left: 3px solid transparent;
+    transition: all .2s; font-family: 'Source Sans 3', sans-serif;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .faq-tab svg { width: 16px; height: 16px; fill: #999; flex-shrink: 0; transition: fill .2s; }
+  .faq-tab:hover { background: var(--gold-pale); color: var(--navy); border-left-color: var(--gold); }
+  .faq-tab:hover svg { fill: var(--gold); }
+  .faq-tab.active { background: var(--navy); color: var(--gold); border-left-color: var(--gold); }
+  .faq-tab.active svg { fill: var(--gold); }
+
+  /* quick-stats below tabs */
+  .faq-sidebar-stat {
+    margin-top: 28px; background: var(--navy); padding: 22px 18px;
+  }
+  .faq-sidebar-stat p { font-size: .82rem; color: #a8b8cc; line-height: 1.6; margin-bottom: 14px; }
+  .faq-sidebar-stat a {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--gold); color: var(--navy); padding: 10px 18px;
+    font-size: .88rem; font-weight: 700; text-decoration: none;
+    transition: background .2s;
+  }
+  .faq-sidebar-stat a svg { width: 15px; height: 15px; fill: var(--navy); }
+  .faq-sidebar-stat a:hover { background: var(--gold-dk); }
+
+  /* RIGHT: accordion groups */
+  .faq-content { flex: 1; min-width: 0; }
+
+  .faq-group { display: none; }
+  .faq-group.active { display: block; }
+
+  .faq-group-title {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 28px;
+  }
+  .faq-group-title .group-icon {
+    width: 52px; height: 52px; background: var(--gold);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .faq-group-title .group-icon svg { width: 26px; height: 26px; fill: var(--navy); }
+  .faq-group-title h2 {
+    font-family: 'Oswald', sans-serif; font-size: 1.8rem;
+    font-weight: 700; color: var(--navy); line-height: 1.1;
+  }
+  .faq-group-title span { font-size: .85rem; color: #888; display: block; margin-top: 4px; }
+
+  /* accordion item */
+  .acc-item {
+    border-bottom: 1px solid #e8e8e8;
+    overflow: hidden;
+  }
+  .acc-item:first-of-type { border-top: 1px solid #e8e8e8; }
+  .acc-trigger {
+    width: 100%; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; padding: 20px 0; background: none; border: none; cursor: pointer;
+    text-align: left; font-family: 'Source Sans 3', sans-serif;
+    transition: color .2s;
+  }
+  .acc-trigger:hover .acc-q { color: var(--gold); }
+  .acc-trigger.open .acc-q { color: var(--navy); }
+  .acc-q {
+    font-size: 1rem; font-weight: 700; color: var(--navy); line-height: 1.4;
+    transition: color .2s; flex: 1;
+  }
+  .acc-icon {
+    width: 32px; height: 32px; background: var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background .25s, transform .3s;
+  }
+  .acc-trigger.open .acc-icon { background: var(--gold); transform: rotate(45deg); }
+  .acc-icon svg { width: 16px; height: 16px; fill: var(--navy); }
+
+  .acc-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height .38s cubic-bezier(.4,0,.2,1), padding .3s;
+    padding: 0;
+  }
+  .acc-body.open { max-height: 600px; padding-bottom: 22px; }
+  .acc-body-inner { padding-right: 50px; }
+  .acc-body-inner p { font-size: .97rem; color: #555; line-height: 1.8; margin-bottom: 10px; }
+  .acc-body-inner ul { margin: 8px 0 10px 18px; }
+  .acc-body-inner ul li { font-size: .95rem; color: #555; line-height: 1.7; margin-bottom: 4px; }
+  .acc-body-inner strong { color: var(--navy); }
+  .acc-body-inner .note {
+    background: var(--gold-pale); border-left: 3px solid var(--gold);
+    padding: 10px 14px; font-size: .88rem; color: #555; margin-top: 10px;
+  }
+  .acc-body-inner a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .acc-body-inner a:hover { text-decoration: underline; }
+
+  /* ── STILL HAVE QUESTIONS BAND ────────────────────────── */
+  .still-questions {
+    background: var(--cream); padding: 70px 40px;
+  }
+  .still-questions-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; align-items: center; gap: 60px; flex-wrap: wrap;
+  }
+  .sq-text { flex: 1; min-width: 240px; }
+  .sq-text h2 { font-family: 'Oswald', sans-serif; font-size: 2rem; color: var(--navy); margin-bottom: 12px; }
+  .sq-text p { color: #666; font-size: .97rem; line-height: 1.75; margin-bottom: 20px; }
+  .sq-text .quote {
+    border-left: 4px solid var(--gold); padding: 10px 16px;
+    font-style: italic; color: #777; font-size: .93rem;
+    background: rgba(240,165,0,.06);
+  }
+  .sq-card {
+    flex-shrink: 0; background: var(--navy); padding: 36px 32px;
+    display: flex; flex-direction: column; gap: 16px; min-width: 280px;
+  }
+  .sq-card h4 { font-family: 'Oswald', sans-serif; font-size: 1.2rem; color: var(--gold); margin-bottom: 4px; }
+  .sq-link {
+    display: flex; align-items: center; gap: 12px;
+    color: #a8b8cc; font-size: .92rem; text-decoration: none;
+    padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.08);
+    transition: color .2s;
+  }
+  .sq-link:last-child { border-bottom: none; }
+  .sq-link svg { width: 18px; height: 18px; fill: var(--gold); flex-shrink: 0; }
+  .sq-link:hover { color: var(--gold); }
+
+  /* ── VISION BAND ──────────────────────────────────────── */
+  .vision-band { background: var(--navy); padding: 70px 40px; }
+  .vision-band-inner { max-width: 1320px; margin: 0 auto; display: flex; gap: 60px; align-items: flex-start; flex-wrap: wrap; }
+  .vision-left { flex: 1; min-width: 260px; }
+  .vision-left .section-label { display: flex; align-items: center; gap: 12px; color: var(--gold); font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 14px; }
+  .vision-left .section-label::after { content: ''; display: block; width: 50px; height: 2px; background: var(--gold); }
+  .vision-left h2 { font-family: 'Oswald', sans-serif; font-size: 2rem; color: var(--white); margin-bottom: 16px; line-height: 1.15; }
+  .vision-left p { color: #a8b8cc; font-size: .97rem; line-height: 1.8; }
+  .vision-right { flex: 1.4; min-width: 260px; display: flex; flex-direction: column; gap: 16px; }
+  .vision-card { background: var(--navy-mid); padding: 22px 24px; border-left: 4px solid var(--gold); }
+  .vision-card h4 { font-family: 'Oswald', sans-serif; font-size: 1.05rem; color: var(--gold); margin-bottom: 6px; }
+  .vision-card p { font-size: .9rem; color: #a8b8cc; line-height: 1.7; }
+
+  /* ── FOOTER ───────────────────────────────────────────── */
+  footer { background: var(--navy); padding: 60px 40px 0; color: #a8b8cc; font-size: .92rem; line-height: 1.75; }
+  .footer-grid { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,.1); }
+  .footer-col h4 { color: var(--white); font-size: 1.1rem; font-weight: 600; margin-bottom: 18px; }
+  .footer-col p { margin-bottom: 6px; display: flex; align-items: flex-start; gap: 10px; }
+  .footer-col p svg { width: 15px; height: 15px; fill: var(--gold); flex-shrink: 0; margin-top: 4px; }
+  .footer-links { display: flex; flex-direction: column; gap: 4px; }
+  .footer-links a { color: #a8b8cc; text-decoration: none; padding: 3px 0; display: flex; align-items: center; gap: 8px; transition: color .2s, padding-left .2s; }
+  .footer-links a::before { content: '›'; color: var(--gold); font-size: 1.1rem; }
+  .footer-links a:hover { color: var(--gold); padding-left: 4px; }
+  .hours-row { margin-bottom: 10px; }
+  .hours-row p { color: #a8b8cc; margin-bottom: 2px; display: block; }
+  .hours-row h6 { color: var(--white); font-size: .9rem; font-weight: 600; margin: 0; }
+  .ft-gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .ft-gallery-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; transition: opacity .2s; }
+  .ft-gallery-grid img:hover { opacity: .75; }
+  .ft-gallery-grid .gal-ph { width: 100%; aspect-ratio: 1; background: var(--navy-lt); display: block; }
+  .footer-socials { display: flex; gap: 8px; margin-top: 16px; }
+  .fsoc { width: 36px; height: 36px; background: var(--gold); display: flex; align-items: center; justify-content: center; text-decoration: none; transition: background .2s; }
+  .fsoc:hover { background: var(--gold-dk); }
+  .fsoc svg { width: 15px; height: 15px; fill: var(--navy); }
+  .copyright { max-width: 1320px; margin: 0 auto; padding: 20px 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; font-size: .85rem; color: #7a8fa6; }
+  .copyright a { color: var(--gold); text-decoration: none; }
+  .copyright a:hover { text-decoration: underline; }
+
+  /* BACK TO TOP */
+  #back-top { position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px; background: var(--gold); display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; z-index: 500; opacity: 0; pointer-events: none; transition: opacity .3s, transform .2s; }
+  #back-top.show { opacity: 1; pointer-events: auto; }
+  #back-top:hover { background: var(--gold-dk); transform: translateY(-3px); }
+  #back-top svg { width: 20px; height: 20px; fill: var(--navy); }
+
+  /* FAQ SEARCH */
+  #faq-search-input:focus { border-color: var(--gold) !important; background: var(--white) !important; box-shadow: 0 4px 12px rgba(13,27,46,0.06); }
+  .acc-item.search-hidden { display: none !important; } .faq-group-title.search-hidden { display: none !important; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 900px) {
+    .faq-inner { flex-direction: column; gap: 36px; }
+    .faq-sidebar { width: 100%; position: static; }
+    .faq-tabs { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+    .faq-tab { border-left: none; border-bottom: 3px solid transparent; flex: 1; min-width: 120px; justify-content: center; text-align: center; }
+    .faq-tab:hover, .faq-tab.active { border-left: none; border-bottom-color: var(--gold); }
+    .acc-body-inner { padding-right: 0; }
+    .faq-section { padding: 50px 20px; }
+    .still-questions { padding: 50px 20px; }
+    .vision-band { padding: 50px 20px; }
+    .topbar-contacts { display: none; }
+    #topbar { padding: 10px 16px; }
+    .page-hero { padding: 50px 20px; }
+    .page-hero::after { font-size: 10rem; right: 2%; }
+  }
+  @media (max-width: 768px) {
+    #nav-wrapper { padding: 0; }
+    nav { flex-wrap: wrap; border-radius: 0; }
+    .nav-brand-mobile { font-family: 'Oswald', sans-serif; font-size: 1.3rem; color: var(--navy); font-weight: 700; padding: 12px 16px; display: flex; align-items: center; }
+    .nav-toggle { display: flex; flex-direction: column; }
+    .nav-collapse { display: none; width: 100%; flex-direction: column; background: var(--navy-mid); contents: unset; }
+    .nav-collapse.open { display: flex; }
+    .nav-links { flex-direction: column; width: 100%; }
+    .nav-links a, .nav-links > li > button { color: var(--white); padding: 12px 20px; width: 100%; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .nav-links a:hover, .nav-links > li > button:hover { background: rgba(255,255,255,.08); color: var(--gold); }
+    .nav-links a.active { color: var(--gold); background: rgba(255,255,255,.06); }
+    .dropdown-menu { position: static; box-shadow: none; background: rgba(0,0,0,.2); }
+    .dropdown-menu a { color: #ccc; padding-left: 36px; }
+    .dropdown-menu a:hover { color: var(--gold); background: transparent; }
+    .dropdown:hover .dropdown-menu { display: none; }
+    .dropdown.open .dropdown-menu { display: block; }
+    .nav-socials { display: none; }
+    footer { padding: 40px 16px 0; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .copyright { flex-direction: column; text-align: center; }
+    #back-top { bottom: 16px; right: 16px; }
+    .still-questions-inner { flex-direction: column; gap: 32px; }
+    .sq-card { min-width: unset; width: 100%; }
+  }
+     /* Logo css*/
+   .brand-logo{
+  height: 70px;
+  width: auto;
+  display: block;
+  }
+  /*For L4R Menu*/
+@media (min-width: 769px) {
+  .nav-brand-mobile { display: none; }
+}
+@media (max-width: 768px) {
+  .nav-brand-mobile{font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--navy);font-weight:700;padding:12px 16px;display:flex;align-items:center}
+}
+</style>
+</head>
+<body id="top">
+<div id="global-scroll-bar"></div>
+<div id="spinner"><div class="spin-ring"></div></div>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="topbar-inner">
+    <a href="index.html"><img src="img/Logocolored.png" alt="Light 4 Refugee" class="brand-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-family:'Oswald',sans-serif;font-size:1.5rem;color:var(--gold);font-weight:700;text-decoration:none">Light 4 Refugee</span></a>
+    <div class="topbar-contacts">
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+        </div>
+        <div class="contact-text"><p>Call Us</p><span>+250 792 052 725</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </div>
+        <div class="contact-text"><p>Mail Us</p><span>info@light4refugee.org</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+        <div class="contact-text"><p>Location</p><span>Mahama Camp, Kirehe, Rwanda</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<div id="nav-wrapper">
+  <nav>
+    <span class="nav-brand-mobile">L4R Menu</span>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <div class="nav-collapse" id="nav-collapse">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">About Us<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="about-us.html">About What We Do</a>
+            <a href="team.html">About Our Team</a>
+            <a href="gallery.html">About L4R Gallery</a>
+            <a href="testimonies.html">Testimonials</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">Programs<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="programs.html">Light Club & iSpeakLead</a>
+            <a href="applications-hub.html">Applications Hub</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">Get Involved<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="become-a-mentor.html">Become a Mentor</a>
+            <a href="become-a-mentee.html">Become a Mentee</a>
+            <a href="partners.html">Partners</a>
+          </div>
+        </li>
+        <li><a href="news-stories.html">News &amp; Stories</a></li>
+        <li><a href="faq.html"  class="active">FAQ</a></li>
+        <li><a href="contact-us.html">Contact</a></li>
+        <li><a href="donate.html" style="background:var(--navy);color:var(--gold);font-weight:700; border-radius:5px;">Donate</a></li>
+      </ul>
+      <div class="nav-socials">
+        <button id="theme-toggle" aria-label="Toggle Theme Mode"></button>
+        <a class="soc-btn" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="soc-btn" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="var(--white)"/></svg></a>
+        <a class="soc-btn" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a><span>›</span><span style="color:#fff;">FAQ</span>
+    </div>
+    <h1>Got <em>Questions?</em><br>We Have Answers.</h1>
+    <p>Everything you need to know about Light 4 Refugee — our programs, eligibility, how to support us, and our five-year vision for refugee youth across Rwanda.</p>
+  </div>
+</div>
+<div class="hero-accent"></div>
+
+<!-- FAQ MAIN SECTION -->
+<div class="faq-section">
+  <div class="faq-inner">
+
+    <!-- SIDEBAR TABS -->
+    <div class="faq-sidebar">
+      <h3>Browse By Topic</h3>
+      <div class="faq-tabs">
+        <button class="faq-tab active" data-group="all">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+          All Questions
+        </button>
+        <button class="faq-tab" data-group="about">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          About L4R
+        </button>
+        <button class="faq-tab" data-group="programs">
+          <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm-8 7.18L12 16l8-4.82V9L12 6 4 10.18z"/></svg>
+          Programs
+        </button>
+        <button class="faq-tab" data-group="support">
+          <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          Support &amp; Partnership
+        </button>
+      </div>
+
+      <div class="faq-sidebar-stat">
+        <p>Can't find your answer? Reach out directly — we reply within 48 hours.</p>
+        <a href="mailto:info@light4refugee.org">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          Email Us
+        </a>
+      </div>
+    </div>
+
+    <!-- ACCORDION CONTENT -->
+    <div class="faq-content">
+
+          <!-- PREMIUM FAQ LIVE SEARCH BAR -->
+          <div class="faq-search-wrapper" style="margin-bottom: 32px;">
+            <div style="position: relative; display: flex; align-items: center;">
+              <input type="text" id="faq-search-input" placeholder="Search questions or keywords (e.g., Mahama, scholarship, free)..." 
+                    style="width: 100%; padding: 14px 16px 14px 44px; font-family: 'Source Sans 3', sans-serif; font-size: 1rem; border: 2px solid var(--cream); background: var(--cream); color: var(--navy); outline: none; border-radius: 4px; transition: all .25s;">
+              <svg viewBox="0 0 24 24" style="position: absolute; left: 16px; width: 18px; height: 18px; fill: #888; pointer-events: none;">
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+              </svg>
+            </div>
+            <!-- Hidden No Results Alert -->
+            <div id="faq-no-results" style="display: none; padding: 30px; text-align: center; background: var(--gold-pale); border-left: 4px solid var(--gold); margin-top: 16px;">
+              <h4 style="font-family: 'Oswald', sans-serif; font-size: 1.2rem; color: var(--navy); margin-bottom: 4px;">No Matching Questions Found</h4>
+              <p style="font-size: .95rem; color: #666;">Try searching for different keywords or browse topics using the sidebar.</p>
+            </div>
+          </div>
+
+      <!-- ── ALL QUESTIONS (shown by default, contains everything) ── -->
+      <div class="faq-group active" id="group-all">
+
+        <!-- ABOUT L4R BLOCK -->
+        <div class="faq-group-title">
+          <div class="group-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div>
+          <div><h2>About Light 4 Refugee</h2><span>Who we are, where we work, and what makes us different</span></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger">
+            <span class="acc-q">What is Light 4 Refugee (L4R)?</span>
+            <span class="acc-icon"><svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></span>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <p>Light4Refugee (L4R) is a <strong>refugee youth-led organisation</strong> dedicated to empowering refugee students through academic preparation, university accessibility, and career guidance. Our mission is to break the cycle of poverty — often resulting from displacement — by empowering refugee youth to access quality education, build sustainable careers, and live lives of dignity.</p>
+            <p>We operate from the conviction that true and lasting change always comes from within: our team is made up of refugees who have lived the experience and are committed to building the path for those who follow.</p>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger">
+            <span class="acc-q">Where does L4R operate?</span>
+            <span class="acc-icon"><svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></span>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <p>L4R currently operates in <strong>Rwanda</strong>, serving students from different refugee camps — mainly <strong>Mahama</strong> and <strong>Kiziba</strong> Refugee Camps — as well as urban refugee communities. We are actively working to stretch our impact to all refugee camps across Rwanda.</p>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger">
+            <span class="acc-q">Who founded L4R and why?</span>
+            <span class="acc-icon"><svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></span>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <p>L4R was founded by <strong>young refugees</strong> who witnessed firsthand the urgency of targeted interventions for sustainable transformation in refugee communities. Our lived experiences inspired a grassroots solution designed to bridge the critical educational and opportunity gaps that hinder the potential of refugee youth.</p>
+            <p>We work from the premise that <em>"true and lasting change always comes from within."</em></p>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger">
+            <span class="acc-q">How are L4R's programs different from other educational initiatives?</span>
+            <span class="acc-icon"><svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></span>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <p>L4R is <strong>developed by refugees, for refugees</strong>. What truly sets our programs apart is a contextualized, blended learning model that:</p>
+            <ul>
+              <li>Integrates academic excellence with targeted mentorship</li>
+              <li>Builds practical, real-world skills alongside classroom knowledge</li>
+              <li>Is informed by a profound, firsthand understanding of the barriers refugee students encounter</li>
+              <li>Delivers holistic, sustained support — not just short-term fixes</li>
+            </ul>
+            <p>We empower students not just to succeed, but to emerge as <strong>leaders</strong>.</p>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger">
+            <span class="acc-q">What is L4R's vision for the next 5 years?</span>
+            <span class="acc-icon"><svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></span>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <p>Light4Refugee envisions <strong>a world where displacement does not define destiny.</strong> We see a future where refugee youth are not only accessing transformative educational opportunities, but are empowered to become confident leaders, innovators, and trailblazers who actively shape their own lives and enrich their host communities.</p>
+            <p>Our three commitments for the next five years:</p>
+            <ul>
+              <li><strong>Expand Our Reach:</strong> Bring our proven programs to more refugee camps and urban communities across Rwanda.</li>
+              <li><strong>Elevate Student Outcomes:</strong> Increase the number of students securing prestigious scholarships locally and internationally and transitioning into meaningful employment.</li>
+              <li><strong>Forge Powerful Alliances:</strong> Cultivate strategic partnerships with educational institutions, employers, and support organisations to provide students with essential resources and networks.</li>
+            </ul>
+          </div></div>
+        </div>
+
+        <!-- PROGRAMS BLOCK -->
+        <div class="faq-group-title" style="margin-top:48px;">
+          <div class="group-icon"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm-8 7.18L12 16l8-4.82V9L12 6 4 10.18z"/></svg></div>
+          <div><h2>Our Programs</h2><span>Eligibility, applications, scholarships and what to expect</span></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger">
+            <span class="acc-q">What kinds of support does L4R provide to refugee students?</span>
+            <span class="acc-icon"><svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></span>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <p>L4R provides a comprehensive range of support across three core programs:</p>
+            <ul>
+              <li><strong>Academic Preparation:</strong> Intensive English language training to close the proficiency gap that stands between talent and university access.</li>
+              <li><strong>College Counseling:</strong> Personalised guidance on college essays, scholarship applications, recommendation letters, and interview preparation.</li>
+              <li><strong>Career Guidance:</strong> An 11-week professional development programme covering career mapping, CV writing, soft skills, mock interviews, and job placement support.</li>
+            </ul>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger">
+            <span class="acc-q">Are these programs free for participants?</span>
+            <span class="acc-icon"><svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></span>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <p><strong>Yes — 100%.</strong> All L4R programs are completely free to eligible and selected refugee students. We believe financial barriers should never stand in the way of education and opportunity.</p>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger">
+            <span class="acc-q">How can I apply to join an L4R program?</span>
+            <span class="acc-icon"><svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></span>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <p>Students can apply by filling out an application form when recruitment is announced. Details are shared on our <a href="https://light4refugee.org/applications-hub" target="_blank">Applications Hub</a>, social media channels, and through community channels inside the camps.</p>
+            <div class="note">💡 <strong>Tip:</strong> Follow us on Facebook and Instagram to be the first to know when applications open for new cohorts.</div>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger">
+            <span class="acc-q">What are the eligibility requirements for students?</span>
+            <span class="acc-icon"><svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></span>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <p>While specific eligibility criteria can vary for each L4R program, the following general requirements apply:</p>
+            <ul>
+              <li>Most applicants must have a <strong>refugee background</strong>.</li>
+              <li>For <strong>Academic Preparation</strong> and <strong>College Counseling</strong> programs, applicants typically need to be Senior Four students.</li>
+              <li>For the <strong>Career Guidance</strong> program, applicants should be current university students.</li>
+            </ul>
+            <div class="note">📋 Check the detailed requirements when specific program applications are announced via our website — criteria may vary per cohort.</div>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger">
+            <span class="acc-q">Can L4R help me apply for scholarships abroad?</span>
+            <span class="acc-icon"><svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></span>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <p><strong>Absolutely.</strong> A core focus of our College Counseling team is to equip students with the support and guidance needed to successfully compete for scholarships and higher education programs, both within Rwanda and internationally.</p>
+            <p>While college placement is not guaranteed, our team provides everything a student needs to submit their strongest possible application.</p>
+          </div></div>
+        </div>
+
+        <!-- SUPPORT & PARTNERSHIP BLOCK -->
+        <div class="faq-group-title" style="margin-top:48px;">
+          <div class="group-icon"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+          <div><h2>Support &amp; Partnership</h2><span>Donations, partnerships, and how to stay connected</span></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger">
+            <span class="acc-q">How can I partner with L4R as an individual or organisation?</span>
+            <span class="acc-icon"><svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></span>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <p>We welcome partnerships that support our mission through funding, resources, mentorship, or expertise. Reach out to us via <a href="mailto:info@light4refugee.org">info@light4refugee.org</a> or through the <a href="https://light4refugee.org/partner-with-us" target="_blank">Partner With Us</a> page on our website.</p>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger">
+            <span class="acc-q">How are donations used?</span>
+            <span class="acc-icon"><svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></span>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <p>Donations go <strong>directly</strong> toward supporting our programs, including:</p>
+            <ul>
+              <li>Curriculum materials and learning resources</li>
+              <li>Internet access for students inside camps</li>
+              <li>Student support and welfare during programs</li>
+              <li>Training sessions and workshops</li>
+              <li>Staff development and capacity building</li>
+            </ul>
+            <p>We are committed to full transparency about how every dollar is used.</p>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger">
+            <span class="acc-q">How do I know my contribution is making a difference?</span>
+            <span class="acc-icon"><svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></span>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <p>We share updates through newsletters, social media stories, and our annual impact report — so you can see directly how your generosity changes lives. Every student story, every scholarship won, every career breakthrough is tracked and shared with our community of supporters.</p>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger">
+            <span class="acc-q">Where can I follow L4R on social media?</span>
+            <span class="acc-icon"><svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></span>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <p>Follow us and stay connected with our work and students on:</p>
+            <ul>
+              <li><a href="https://www.facebook.com/61574731480102" target="_blank">Facebook — Light 4 Refugee</a></li>
+              <li><a href="https://instagram.com/light4refugee" target="_blank">Instagram — @light4refugee</a></li>
+              <li><a href="https://www.youtube.com/channel/UCKFczxvUGOmq7e7tJQ65HxA" target="_blank">YouTube Channel</a></li>
+              <li><a href="https://linkedin.com/company/light4refugee/posts" target="_blank">LinkedIn — Light 4 Refugee</a></li>
+            </ul>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger">
+            <span class="acc-q">How do I contact L4R for more information?</span>
+            <span class="acc-icon"><svg viewBox="0 0 24 24"><path d="M19 13H13v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></span>
+          </button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <p>You can reach us at <a href="mailto:info@light4refugee.org"><strong>info@light4refugee.org</strong></a> or through the contact form on our website at <a href="contact.html">light4refugee.org/contact-us</a>. We aim to respond within 48 hours.</p>
+          </div></div>
+        </div>
+
+      </div>
+
+      <!-- ── ABOUT GROUP (filtered view) ── -->
+      <div class="faq-group" id="group-about">
+        <div class="faq-group-title">
+          <div class="group-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div>
+          <div><h2>About Light 4 Refugee</h2><span>Who we are, where we work, and what makes us different</span></div>
+        </div>
+        <!-- items cloned via JS -->
+      </div>
+
+      <!-- ── PROGRAMS GROUP (filtered view) ── -->
+      <div class="faq-group" id="group-programs">
+        <div class="faq-group-title">
+          <div class="group-icon"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm-8 7.18L12 16l8-4.82V9L12 6 4 10.18z"/></svg></div>
+          <div><h2>Our Programs</h2><span>Eligibility, applications, scholarships and what to expect</span></div>
+        </div>
+      </div>
+
+      <!-- ── SUPPORT GROUP (filtered view) ── -->
+      <div class="faq-group" id="group-support">
+        <div class="faq-group-title">
+          <div class="group-icon"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+          <div><h2>Support &amp; Partnership</h2><span>Donations, partnerships, and how to stay connected</span></div>
+        </div>
+      </div>
+
+    </div><!-- /faq-content -->
+  </div><!-- /faq-inner -->
+</div><!-- /faq-section -->
+
+<!-- STILL HAVE QUESTIONS -->
+<div class="still-questions">
+  <div class="still-questions-inner">
+    <div class="sq-text">
+      <h2>Still Have Questions?</h2>
+      <p>We're here to help. Whether you're a prospective student, a potential partner, a donor, or just someone who wants to understand the refugee education crisis better — reach out. We'll get back to you as soon as possible.</p>
+      <div class="quote">"For many, becoming a refugee feels like the end. But with a second chance, they can rewrite their story and turn the impossible into possible." — Light 4 Refugee</div>
+    </div>
+    <div class="sq-card">
+      <h4>Get in Touch</h4>
+      <a class="sq-link" href="mailto:info@light4refugee.org">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        info@light4refugee.org
+      </a>
+      <a class="sq-link" href="contact.html">
+        <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+        Contact Form
+      </a>
+      <a class="sq-link" href="https://light4refugee.org/become-a-mentor" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        Become a Mentor
+      </a>
+      <a class="sq-link" href="donate.html">
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        Donate Now
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- 5-YEAR VISION BAND -->
+<div class="vision-band">
+  <div class="vision-band-inner">
+    <div class="vision-left">
+      <div class="section-label">Our Vision</div>
+      <h2>Where We're Headed in the Next 5 Years</h2>
+      <p>Light4Refugee envisions a world where displacement does not define destiny — where refugee youth sit at the global decision-making and innovation table. These are our three commitments to get there.</p>
+    </div>
+    <div class="vision-right">
+      <div class="vision-card">
+        <h4>01 — Expand Our Reach</h4>
+        <p>Bring our proven programs to more refugee camps and urban communities across Rwanda, reaching a greater number of deserving students.</p>
+      </div>
+      <div class="vision-card">
+        <h4>02 — Elevate Student Outcomes</h4>
+        <p>Increase the number of students securing prestigious university scholarships — locally and internationally — and transitioning into meaningful, sustainable employment.</p>
+      </div>
+      <div class="vision-card">
+        <h4>03 — Forge Powerful Alliances</h4>
+        <p>Cultivate strategic partnerships with educational institutions, employers, and support organisations to provide students with the resources, networks, and tools they need.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Our Operational Locations</h4>
+      <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Mahama &amp; Kiziba Refugee Camps, <br>Kirehe &amp; Karongi Districts, Rwanda</p>
+      <p><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>+250 792 052 725</p>
+      <p><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>info@light4refugee.org</p>
+      <div class="footer-socials">
+        <a class="fsoc" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="fsoc" href="https://www.youtube.com/channel/UCKFczxvUGOmq7e7tJQ65HxA" target="_blank" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+        <a class="fsoc" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="var(--navy)" stroke-width="2"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="var(--navy)" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="var(--navy)" stroke-width="2"/></svg></a>
+        <a class="fsoc" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div><br>
+      <a class="brand" href="index.html"><img src="img/logo.png" alt="Light 4 Refugee" class="brand-logo"></a>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="team.html">Our Team</a>
+        <a href="news-stories.html">News &amp; Stories</a>
+        <a href="applications-hu.html">Applications Hub</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact-us.html">Contact Us</a>
+        <a href="donate.html">Donate</a>
+        <a href="testimonies.html">Testimonials</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Our Programs</h4>
+      <div class="footer-links">
+        <a href="about-us.html">Academic Preparation</a>
+        <a href="about-us.html">College Counseling</a>
+        <a href="about-us.html">Career Guidance</a><br>
+        <h4>Get Involved</h4>
+        <a href="programs.html">Light Club (ECP &amp; ISEP)</a>
+        <a href="become-a-mentor.html">Become a Mentor</a>
+        <a href="become-a-mentee.html">Become a Mentee</a>
+        <a href="partners.html">Partner With Us</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>From the Gallery</h4>
+      <div class="ft-gallery-grid">
+        <a href="gallery.html"><img src="img/gallery-1.jpg"    alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-2.jpg"       alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-3.jpg"    alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-6.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-4.jpg"     alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-5.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">
+    <span>&copy; 2026 <a href="https://light4refugee.org" target="_blank">Light 4 Refugee</a>, All Rights Reserved.</span>
+      <span style="display:inline-flex; gap:12px;">
+      <a href="terms-conditions.html" target="_blank" style="color:#2e6d04;">Terms/Conditions</a> |
+      <a href="privacy-policy.html" target="_blank" style="color:#2e6d04;">Privacy Policy</a>
+      </span>
+    <span>Designed By <a href="https://yvesnickylirf.com" target="_blank">Yves Nicky Lirf</a></span>
+  </div>
+</footer>
+
+<button id="back-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+</button>
+<script src="theme-logic.js"></script>
+<script>
+  /* Spinner */
+  window.addEventListener('load', () => {
+    const sp = document.getElementById('spinner');
+    sp.classList.add('hide');
+    setTimeout(() => sp.remove(), 500);
+  });
+
+  /* Sticky nav */
+  const topbar  = document.getElementById('topbar');
+  const navWrap = document.getElementById('nav-wrapper');
+  const tbH     = topbar.offsetHeight;
+  window.addEventListener('scroll', () => {
+    const s = window.scrollY > tbH;
+    topbar.classList.toggle('hidden', s);
+    navWrap.classList.toggle('stuck', s);
+    document.getElementById('back-top').classList.toggle('show', window.scrollY > 300);
+  }, { passive: true });
+
+  /* Mobile nav */
+  document.getElementById('nav-toggle').addEventListener('click', function() {
+    this.classList.toggle('open');
+    document.getElementById('nav-collapse').classList.toggle('open');
+  });
+  function toggleDD(id) {
+    if (window.innerWidth > 768) return;
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  /* Accordion */
+  document.querySelectorAll('.acc-trigger').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const body    = btn.nextElementSibling;
+      const isOpen  = btn.classList.contains('open');
+      /* close all in this group */
+      btn.closest('.faq-group, #group-all').querySelectorAll('.acc-trigger').forEach(b => {
+        b.classList.remove('open');
+        b.nextElementSibling.classList.remove('open');
+      });
+      if (!isOpen) {
+        btn.classList.add('open');
+        body.classList.add('open');
+      }
+    });
+  });
+
+  /* Category tabs — show/hide groups and populate filtered groups */
+  const allItems = document.querySelectorAll('#group-all .acc-item');
+
+  /* Map: which items belong to which category (by index in #group-all) */
+  const catMap = {
+    about:    [0, 1, 2, 3, 4],       /* indices in #group-all .acc-item */
+    programs: [5, 6, 7, 8, 9],
+    support:  [10, 11, 12, 13, 14]
+  };
+
+  function populateGroup(groupId, indices) {
+    const target = document.getElementById(groupId);
+    /* remove previously cloned items */
+    target.querySelectorAll('.acc-item').forEach(i => i.remove());
+    indices.forEach(idx => {
+      const clone = allItems[idx].cloneNode(true);
+      /* re-attach accordion listener */
+      clone.querySelector('.acc-trigger').addEventListener('click', function() {
+        const body   = this.nextElementSibling;
+        const isOpen = this.classList.contains('open');
+        target.querySelectorAll('.acc-trigger').forEach(b => {
+          b.classList.remove('open');
+          b.nextElementSibling.classList.remove('open');
+        });
+        if (!isOpen) { this.classList.add('open'); body.classList.add('open'); }
+      });
+      target.appendChild(clone);
+    });
+  }
+
+  document.querySelectorAll('.faq-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.faq-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const cat = tab.dataset.group;
+      document.querySelectorAll('.faq-group').forEach(g => g.classList.remove('active'));
+      if (cat === 'all') {
+        document.getElementById('group-all').classList.add('active');
+      } else {
+        populateGroup('group-' + cat, catMap[cat]);
+        document.getElementById('group-' + cat).classList.add('active');
+      }
+    });
+  });
+
+  /* ── FAQS INTERACTIVE LIVE-FILTER SEARCH ENGINE ───────────────────────────── */
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('faq-search-input');
+  const noResultsBlock = document.getElementById('faq-no-results');
+  
+  if (!searchInput) return;
+
+  searchInput.addEventListener('input', function() {
+    const query = this.value.toLowerCase().trim();
+    const accItems = document.querySelectorAll('.acc-item');
+    const groupTitles = document.querySelectorAll('.faq-group-title');
+    let totalVisible = 0;
+
+    // 1. Loop through accordion items and compare text bounds
+    accItems.forEach(function(item) {
+      const questionText = item.querySelector('.acc-q').textContent.toLowerCase();
+      const bodyContainer = item.querySelector('.acc-body-inner');
+      const bodyText = bodyContainer ? bodyContainer.textContent.toLowerCase() : '';
+      
+      // Matches query against either the question heading or paragraph body details
+      if (questionText.includes(query) || bodyText.includes(query)) {
+        item.classList.remove('search-hidden');
+        totalVisible++;
+        
+        // If user is searching actively, automatically expand the matching drawer for comfort
+        const bodyBlock = item.querySelector('.acc-body');
+        const trigger = item.querySelector('.acc-trigger');
+        if (query.length > 2 && bodyBlock && !bodyBlock.classList.contains('open')) {
+          bodyBlock.classList.add('open');
+          bodyBlock.style.maxHeight = '600px';
+          if (trigger) trigger.classList.add('open');
+        }
+      } else {
+        item.classList.add('search-hidden');
+        
+        // Collapse hidden ones if they were open before
+        const bodyBlock = item.querySelector('.acc-body');
+        const trigger = item.querySelector('.acc-trigger');
+        if (query.length === 0 && bodyBlock) {
+          bodyBlock.classList.remove('open');
+          bodyBlock.style.maxHeight = '0px';
+          if (trigger) trigger.classList.remove('open');
+        }
+      }
+    });
+
+    // 2. Hide category titles if all nested items below it are hidden
+    groupTitles.forEach(function(title) {
+      // Look forward to find adjacent accordion items up to the next title
+      let sibling = title.nextElementSibling;
+      let hasVisibleSibling = false;
+      
+      while (sibling && !sibling.classList.contains('faq-group-title')) {
+        if (sibling.classList.contains('acc-item') && !sibling.classList.contains('search-hidden')) {
+          hasVisibleSibling = true;
+          break;
+        }
+        sibling = sibling.nextElementSibling;
+      }
+      
+      if (hasVisibleSibling || query.length === 0) {
+        title.classList.remove('search-hidden');
+      } else {
+        title.classList.add('search-hidden');
+      }
+    });
+
+    // 3. Trigger No-Results Fallback Box if count sits at zero
+    if (totalVisible === 0 && query.length > 0) {
+      noResultsBlock.style.display = 'block';
+    } else {
+      noResultsBlock.style.display = 'none';
+    }
+  });
+});
+
+</script>
+</body>
+</html>

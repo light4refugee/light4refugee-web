@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Become a Mentor – L4R</title>
+<meta name="description" content="Join Light4Refugee as a mentor and walk alongside refugee youth as they rebuild their futures through education, career guidance, and personal growth.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="img/logo.jpg?v=2">
+<link rel="stylesheet" href="theme-style.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:     #0d1b2e;
+    --navy-mid: #162540;
+    --navy-lt:  #1e3258;
+    --gold:     #f0a500;
+    --gold-dk:  #c98a00;
+    --gold-pale:#fff8e6;
+    --white:    #ffffff;
+    --cream:    #f5f0e8;
+    --text:     #1a1a1a;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--white); overflow-x: hidden; }
+
+  /* SPINNER */
+  #spinner { position: fixed; inset: 0; z-index: 9999; background: var(--white); display: flex; align-items: center; justify-content: center; transition: opacity .4s; }
+  #spinner.hide { opacity: 0; pointer-events: none; }
+  .spin-ring { width: 48px; height: 48px; border-radius: 50%; border: 4px solid #ddd; border-top-color: var(--gold); animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* TOPBAR */
+  #topbar { background: var(--navy); padding: 10px 40px; display: flex; align-items: center; transition: transform .35s ease, opacity .35s ease; }
+  #topbar.hidden { transform: translateY(-100%); opacity: 0; pointer-events: none; position: absolute; width: 100%; }
+  .topbar-inner { display: flex; align-items: center; width: 100%; max-width: 1320px; margin: 0 auto; }
+  .brand { font-family: 'Oswald', sans-serif; font-size: 2rem; color: var(--gold); text-decoration: none; letter-spacing: 1px; }
+  .topbar-contacts { display: flex; gap: 32px; margin-left: auto; }
+  .contact-item { display: flex; align-items: center; gap: 10px; }
+  .contact-icon { width: 36px; height: 36px; background: var(--gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .contact-icon svg { width: 16px; height: 16px; fill: var(--navy); }
+  .contact-text p  { font-size: .75rem; color: var(--gold); font-weight: 600; margin-bottom: 1px; }
+  .contact-text span { font-size: .8rem; color: var(--white); }
+
+  /* NAVBAR */
+  #nav-wrapper { background: var(--navy); padding: 0 40px 12px; position: sticky; top: 0; z-index: 100; transition: padding .35s ease; }
+  #nav-wrapper.stuck { padding: 0; }
+  nav { background: var(--gold); max-width: 1320px; margin: 0 auto; display: flex; align-items: stretch; transition: max-width .35s ease; border-radius: 0 0 4px 4px; position: relative; }
+  #nav-wrapper.stuck nav { max-width: 100%; border-radius: 0; }
+  .nav-links { display: flex; align-items: stretch; list-style: none; }
+  .nav-links a, .nav-links > li > button { display: flex; align-items: center; padding: 14px 20px; color: var(--navy); font-size: .95rem; font-weight: 600; text-decoration: none; background: none; border: none; cursor: pointer; transition: color .2s, background .2s; }
+  .nav-links a:hover, .nav-links > li > button:hover, .nav-links a.active { color: var(--white); background: rgba(0,0,0,.15); border-radius: 10px;}
+  .dropdown { position: relative; }
+  .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: var(--white); min-width: 180px; box-shadow: 0 8px 24px rgba(0,0,0,.18); z-index: 200; }
+  .dropdown:hover .dropdown-menu { display: block; }
+  .dropdown-menu a { display: block; padding: 10px 18px; color: var(--text); font-size: .9rem; text-decoration: none; transition: background .2s; }
+  .dropdown-menu a:hover { background: var(--gold); color: var(--navy); }
+  .nav-caret { margin-left: 4px; font-size: .7rem; }
+  .nav-socials { margin-left: auto; display: flex; align-items: center; gap: 6px; padding-right: 14px; }
+  .soc-btn { width: 34px; height: 34px; background: var(--navy); display: flex; align-items: center; justify-content: center; border-radius: 2px; text-decoration: none; transition: background .2s; }
+  .soc-btn:hover { background: #1a2d4a; }
+  .soc-btn svg { width: 16px; height: 16px; fill: var(--white); }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 12px 16px; margin-left: auto; }
+  .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--navy); margin: 5px 0; transition: .3s; }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-collapse { display: contents; }
+
+  /* PAGE HERO */
+  .page-hero {
+    background: var(--navy); padding: 80px 40px;
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(240,165,0,.13) 0%, transparent 55%); }
+  .page-hero::after {
+    content: '✦';
+    position: absolute; right: 6%; top: 50%; transform: translateY(-50%);
+    font-size: 16rem; color: rgba(240,165,0,.06); pointer-events: none; z-index: 0;
+  }
+  .page-hero-inner { max-width: 1320px; margin: 0 auto; position: relative; z-index: 1; display: flex; gap: 60px; align-items: center; flex-wrap: wrap; }
+  .hero-text { flex: 1; min-width: 260px; }
+  .breadcrumb { display: flex; align-items: center; gap: 10px; font-size: .85rem; color: #a8b8cc; margin-bottom: 20px; }
+  .breadcrumb a { color: var(--gold); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb span { color: #556; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: var(--navy); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; padding: 5px 14px; margin-bottom: 16px; }
+  .page-hero h1 { font-family: 'Oswald', sans-serif; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 700; color: var(--white); text-transform: uppercase; line-height: 1.05; margin-bottom: 16px; }
+  .page-hero h1 em { color: var(--gold); font-style: normal; }
+  .page-hero p { font-size: 1.05rem; color: #a8b8cc; max-width: 560px; line-height: 1.75; }
+
+  /* hero side stats card */
+  .hero-card {
+    flex-shrink: 0; width: 300px; background: rgba(255,255,255,.05);
+    border: 1px solid rgba(240,165,0,.25); padding: 32px 28px;
+  }
+  .hero-card h4 { font-family: 'Oswald', sans-serif; color: var(--gold); font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+  .hero-card-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+  .hero-card-item svg { width: 20px; height: 20px; fill: var(--gold); flex-shrink: 0; margin-top: 2px; }
+  .hero-card-item span { font-size: .9rem; color: #ccd; line-height: 1.55; }
+
+  .hero-accent { height: 6px; background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dk) 50%, var(--navy) 100%); }
+
+  /* WHY MENTOR STRIP */
+  .why-strip{background:var(--gold);padding:22px 40px;box-sizing:border-box}
+  .why-strip-inner{max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:20px;box-sizing:border-box}
+  .why-strip-inner svg{width:32px;height:32px;fill:var(--navy);flex-shrink:0}
+  .why-strip-inner p{font-size:1.05rem;font-weight:600;color:var(--navy);flex:1;line-height:1.5}
+  .why-strip-inner a{background:var(--navy);color:var(--gold);padding:10px 22px;font-size:.88rem;font-weight:700;text-decoration:none;flex-shrink:0;transition:background .2s;box-sizing:border-box;display:inline-block}
+  .why-strip-inner a:hover{background:var(--navy-mid)}
+
+  /* MAIN LAYOUT */
+  .main-section { padding: 80px 40px; background: var(--white); }
+  .main-inner { max-width: 1320px; margin: 0 auto; display: flex; gap: 60px; align-items: flex-start; }
+
+  /* LEFT INFO PANEL */
+  .info-panel { flex-shrink: 0; width: 340px; }
+
+  .section-label { display: flex; align-items: center; gap: 12px; color: var(--gold); font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 14px; }
+  .section-label::after { content: ''; display: block; width: 50px; height: 2px; background: var(--gold); }
+
+  .info-panel h2 { font-family: 'Oswald', sans-serif; font-size: 1.9rem; font-weight: 700; color: var(--navy); line-height: 1.15; margin-bottom: 16px; }
+  .info-panel > p { font-size: .95rem; color: #666; line-height: 1.8; margin-bottom: 28px; }
+
+  /* benefit cards */
+  .benefit-card { background: var(--cream); padding: 18px 18px 18px 20px; margin-bottom: 12px; border-left: 4px solid var(--gold); display: flex; align-items: flex-start; gap: 14px; }
+  .benefit-card svg { width: 22px; height: 22px; fill: var(--gold); flex-shrink: 0; margin-top: 1px; }
+  .benefit-card div h5 { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+  .benefit-card div p  { font-size: .85rem; color: #666; line-height: 1.55; }
+
+  /* mentorship areas */
+  .areas-title { font-family: 'Oswald', sans-serif; font-size: 1.1rem; color: var(--navy); margin: 28px 0 14px; font-weight: 700; }
+  .area-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--navy); color: var(--gold); font-size: .82rem; font-weight: 600; padding: 6px 14px; margin: 0 6px 8px 0; }
+  .area-tag svg { width: 14px; height: 14px; fill: var(--gold); }
+
+  /* what we're looking for */
+  .looking-box { background: var(--navy); padding: 24px 22px; margin-top: 28px; }
+  .looking-box h4 { font-family: 'Oswald', sans-serif; color: var(--gold); font-size: 1rem; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px; }
+  .looking-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .looking-item svg { width: 16px; height: 16px; fill: var(--gold); flex-shrink: 0; margin-top: 3px; }
+  .looking-item span { font-size: .88rem; color: #a8b8cc; line-height: 1.6; }
+
+  /* FORM PANEL */
+  .form-panel { flex: 1; min-width: 0; }
+  .form-header { background: var(--navy); padding: 28px 32px; margin-bottom: 0; }
+  .form-header h3 { font-family: 'Oswald', sans-serif; font-size: 1.6rem; color: var(--white); margin-bottom: 6px; }
+  .form-header p { font-size: .9rem; color: #a8b8cc; line-height: 1.6; }
+  .form-progress { display: flex; gap: 0; margin-top: 20px; }
+  .prog-step { flex: 1; padding: 6px 0; text-align: center; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #a8b8cc; border-bottom: 3px solid rgba(255,255,255,.12); cursor: pointer; transition: all .2s; }
+  .prog-step.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .prog-step.done   { color: #4caf50; border-bottom-color: #4caf50; }
+
+  /* form body */
+  .form-body { border: 1px solid #e8e8e8; border-top: none; padding: 36px 32px; }
+
+  .form-step { display: none; }
+  .form-step.active { display: block; }
+
+  .step-title { font-family: 'Oswald', sans-serif; font-size: 1.2rem; color: var(--navy); margin-bottom: 6px; }
+  .step-desc  { font-size: .88rem; color: #888; margin-bottom: 24px; line-height: 1.5; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+  .form-row.full { grid-template-columns: 1fr; }
+  .form-row.three { grid-template-columns: 1fr 1fr 1fr; }
+
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: .85rem; font-weight: 700; color: var(--navy); }
+  .field label .req { color: var(--gold); margin-left: 2px; }
+  .field input, .field select, .field textarea {
+    padding: 12px 14px; border: 1.5px solid #ddd;
+    font-family: 'Source Sans 3', sans-serif; font-size: .93rem; color: var(--navy);
+    background: var(--white); outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    width: 100%;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--gold); box-shadow: 0 0 0 3px rgba(240,165,0,.12);
+  }
+  .field textarea { resize: vertical; min-height: 110px; }
+  .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%230d1b2e' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-size: 20px; padding-right: 40px; }
+  .field .hint { font-size: .78rem; color: #999; line-height: 1.5; }
+
+  /* checkbox group */
+  .check-group { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+  .check-option { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
+  .check-option input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--gold); flex-shrink: 0; margin-top: 2px; cursor: pointer; }
+  .check-option span { font-size: .9rem; color: #444; line-height: 1.5; }
+  .check-option span strong { color: var(--navy); }
+
+  /* radio group */
+  .radio-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+  .radio-option { display: flex; align-items: center; gap: 8px; cursor: pointer; background: var(--cream); padding: 10px 16px; border: 2px solid transparent; transition: all .2s; flex: 1; min-width: 130px; }
+  .radio-option input[type="radio"] { accent-color: var(--gold); }
+  .radio-option:has(input:checked) { border-color: var(--gold); background: var(--gold-pale); }
+  .radio-option span { font-size: .88rem; color: var(--navy); font-weight: 600; }
+
+  /* divider */
+  .form-divider { border: none; border-top: 1px solid #eee; margin: 24px 0; }
+
+  /* nav buttons */
+  .form-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 28px; flex-wrap: wrap; gap: 12px; }
+  .btn-back { background: var(--cream); color: var(--navy); border: none; padding: 13px 24px; font-size: .92rem; font-weight: 700; cursor: pointer; font-family: 'Source Sans 3', sans-serif; transition: background .2s; display: flex; align-items: center; gap: 8px; }
+  .btn-back:hover { background: #e8e3d8; }
+  .btn-back svg { width: 16px; height: 16px; fill: var(--navy); }
+  .btn-next { background: var(--gold); color: var(--navy); border: none; padding: 13px 28px; font-size: .95rem; font-weight: 700; cursor: pointer; font-family: 'Source Sans 3', sans-serif; transition: background .2s, transform .15s; display: flex; align-items: center; gap: 8px; }
+  .btn-next:hover { background: var(--gold-dk); transform: translateY(-2px); }
+  .btn-next svg { width: 16px; height: 16px; fill: var(--navy); }
+  .btn-submit { background: var(--navy); color: var(--white); border: none; padding: 15px 36px; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: 'Source Sans 3', sans-serif; transition: background .2s; display: flex; align-items: center; gap: 10px; }
+  .btn-submit:hover { background: var(--navy-mid); }
+  .btn-submit svg { width: 18px; height: 18px; fill: var(--gold); }
+
+  /* success state */
+  .form-success { display: none; text-align: center; padding: 60px 32px; }
+  .form-success.show { display: block; }
+  .success-icon { width: 72px; height: 72px; background: var(--gold); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; }
+  .success-icon svg { width: 36px; height: 36px; fill: var(--navy); }
+  .form-success h3 { font-family: 'Oswald', sans-serif; font-size: 2rem; color: var(--navy); margin-bottom: 12px; }
+  .form-success p  { font-size: 1rem; color: #666; line-height: 1.8; max-width: 440px; margin: 0 auto 28px; }
+  .form-success a  { background: var(--gold); color: var(--navy); padding: 13px 28px; font-weight: 700; text-decoration: none; display: inline-block; transition: background .2s; }
+  .form-success a:hover { background: var(--gold-dk); }
+
+  /* TESTIMONIAL STRIP */
+  .mentor-quote-strip { background: var(--cream); padding: 60px 40px; }
+  .mentor-quote-inner { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .mentor-quote-card { background: var(--white); border: 1px solid #e8e8e8; padding: 28px 24px; position: relative; }
+  .mentor-quote-card::before { content: '\201C'; font-family: 'Oswald', sans-serif; font-size: 5rem; color: var(--gold); line-height: .7; display: block; margin-bottom: 10px; }
+  .mentor-quote-card p { font-size: .93rem; color: #555; line-height: 1.75; margin-bottom: 20px; font-style: italic; }
+  .mentor-quote-card .attr { display: flex; align-items: center; gap: 12px; }
+  .attr-avatar { width: 42px; height: 42px; background: var(--navy); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .attr-avatar svg { width: 22px; height: 22px; fill: var(--gold); }
+  .attr-info strong { display: block; font-size: .88rem; color: var(--navy); font-weight: 700; }
+  .attr-info span   { font-size: .8rem; color: #999; }
+
+  /* FOOTER */
+  footer { background: var(--navy); padding: 60px 40px 0; color: #a8b8cc; font-size: .92rem; line-height: 1.75; }
+  .footer-grid { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,.1); }
+  .footer-col h4 { color: var(--white); font-size: 1.1rem; font-weight: 600; margin-bottom: 18px; }
+  .footer-col p { margin-bottom: 6px; display: flex; align-items: flex-start; gap: 10px; }
+  .footer-col p svg { width: 15px; height: 15px; fill: var(--gold); flex-shrink: 0; margin-top: 4px; }
+  .footer-links { display: flex; flex-direction: column; gap: 4px; }
+  .footer-links a { color: #a8b8cc; text-decoration: none; padding: 3px 0; display: flex; align-items: center; gap: 8px; transition: color .2s, padding-left .2s; }
+  .footer-links a::before { content: '›'; color: var(--gold); font-size: 1.1rem; }
+  .footer-links a:hover { color: var(--gold); padding-left: 4px; }
+  .ft-gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .ft-gallery-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; transition: opacity .2s; }
+  .ft-gallery-grid img:hover { opacity: .75; }
+  .ft-gallery-grid .gal-ph { width: 100%; aspect-ratio: 1; background: var(--navy-lt); display: block; }
+  .footer-socials { display: flex; gap: 8px; margin-top: 16px; }
+  .fsoc { width: 36px; height: 36px; background: var(--gold); display: flex; align-items: center; justify-content: center; text-decoration: none; transition: background .2s; }
+  .fsoc:hover { background: var(--gold-dk); }
+  .fsoc svg { width: 15px; height: 15px; fill: var(--navy); }
+  .copyright { max-width: 1320px; margin: 0 auto; padding: 20px 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; font-size: .85rem; color: #7a8fa6; }
+  .copyright a { color: var(--gold); text-decoration: none; }
+  .copyright a:hover { text-decoration: underline; }
+
+  /* BACK TO TOP */
+  #back-top { position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px; background: var(--gold); display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; z-index: 500; opacity: 0; pointer-events: none; transition: opacity .3s, transform .2s; }
+  #back-top.show { opacity: 1; pointer-events: auto; }
+  #back-top:hover { background: var(--gold-dk); transform: translateY(-3px); }
+  #back-top svg { width: 20px; height: 20px; fill: var(--navy); }
+
+ /* RESPONSIVE */
+@media (max-width: 1100px) {
+  .main-inner { flex-direction: column; gap: 48px; }
+  .info-panel { width: 100%; }
+  .mentor-quote-inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 1024px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 900px) {
+  .topbar-contacts { display: none; }
+  #topbar { padding: 10px 16px; }
+  .page-hero { padding: 50px 20px; }
+  .page-hero-inner { flex-direction: column; gap: 32px; }
+  .hero-card { width: 100%; }
+  /* WHY STRIP FIXED MOBILE COLLAPSE */
+  .why-strip { padding: 30px 20px; }
+  .why-strip-inner { flex-direction: column; text-align: center; gap: 16px; }
+  .why-strip-inner svg { margin: 0 auto; }
+  .why-strip-inner p { width: 100%; flex: none; }
+  .why-strip-inner a { width: 100%; text-align: center; margin-top: 4px; }
+  .main-section { padding: 50px 20px; }
+  .form-body { padding: 28px 20px; }
+  .form-header { padding: 22px 20px; }
+  .form-row.three { grid-template-columns: 1fr 1fr; }
+  .mentor-quote-strip { padding: 50px 20px; }
+  .mentor-quote-inner { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  #nav-wrapper { padding: 0; }
+  nav { flex-wrap: wrap; border-radius: 0; }
+  .nav-brand-mobile { font-family: 'Oswald', sans-serif; font-size: 1.3rem; color: var(--navy); font-weight: 700; padding: 12px 16px; display: flex; align-items: center; }
+  .nav-toggle { display: flex; flex-direction: column; }
+  .nav-collapse { display: none; width: 100%; flex-direction: column; background: var(--navy-mid); contents: unset; }
+  .nav-collapse.open { display: flex; }
+  .nav-links { flex-direction: column; width: 100%; }
+  .nav-links a, .nav-links > li > button { color: var(--white); padding: 12px 20px; width: 100%; border-bottom: 1px solid rgba(255,255,255,.06); box-sizing: border-box; }
+  .nav-links a:hover, .nav-links > li > button:hover { background: rgba(255,255,255,.08); color: var(--gold); }
+  .nav-links a.active { color: var(--gold); background: rgba(255,255,255,.06); }
+  .dropdown-menu { position: static; box-shadow: none; background: rgba(0,0,0,.2); }
+  .dropdown-menu a { color: #ccc; padding-left: 36px; }
+  .dropdown-menu a:hover { color: var(--gold); background: transparent; }
+  .dropdown:hover .dropdown-menu { display: none; }
+  .dropdown.open .dropdown-menu { display: block; }
+  .nav-socials { display: none; }
+  footer { padding: 40px 16px 0; }
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  .copyright { flex-direction: column; text-align: center; }
+  #back-top { bottom: 16px; right: 16px; }
+  .form-row { grid-template-columns: 1fr; }
+  .form-row.three { grid-template-columns: 1fr; }
+  .prog-step { font-size: .65rem; padding: 5px 4px; }
+}
+/* Logo css*/
+.brand-logo{ height: 70px; width: auto; display: block; }
+/*For L4R Menu*/
+@media (min-width: 769px) {
+  .nav-brand-mobile { display: none; }
+}
+@media (max-width: 768px) {
+  .nav-brand-mobile{font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--navy);font-weight:700;padding:12px 16px;display:flex;align-items:center}
+}
+</style>
+</head>
+<body id="top">
+<div id="global-scroll-bar"></div>
+<div id="spinner"><div class="spin-ring"></div></div>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="topbar-inner">
+    <a href="index.html"><img src="img/Logocolored.png" alt="Light 4 Refugee" class="brand-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-family:'Oswald',sans-serif;font-size:1.5rem;color:var(--gold);font-weight:700;text-decoration:none">Light 4 Refugee</span></a>
+    <div class="topbar-contacts">
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+        </div>
+        <div class="contact-text"><p>Call Us</p><span>+250 792 052 725</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </div>
+        <div class="contact-text"><p>Mail Us</p><span>info@light4refugee.org</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+        <div class="contact-text"><p>Location</p><span>Mahama Camp, Kirehe, Rwanda</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<div id="nav-wrapper">
+  <nav>
+    <span class="nav-brand-mobile">L4R Menu</span>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <div class="nav-collapse" id="nav-collapse">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">About Us<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="about-us.html">About What We Do</a>
+            <a href="team.html">About Our Team</a>
+            <a href="gallery.html">About L4R Gallery</a>
+            <a href="testimonies.html">Testimonials</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')" class="active">Programs<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="programs.html">Light Club & iSpeakLead</a>
+            <a href="applications-hub.html">Applications Hub</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">Get Involved<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="become-a-mentee.html">Become a Mentee</a>
+            <a href="become-a-mentor.html" style="color:var(--gold);font-weight:700;">Become a Mentor</a>
+            <a href="partners.html">Partners</a>
+          </div>
+        </li>
+        <li><a href="news-stories.html">News &amp; Stories</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact-us.html">Contact</a></li>
+        <li><a href="donate.html" style="background:var(--navy);color:var(--gold);font-weight:700; border-radius:5px;">Donate</a></li>
+      </ul>
+      <div class="nav-socials">
+        <button id="theme-toggle" aria-label="Toggle Theme Mode"></button>
+        <a class="soc-btn" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="soc-btn" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="var(--white)"/></svg></a>
+        <a class="soc-btn" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="hero-text">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a><span>›</span><span style="color:#fff;">Become a Mentor</span>
+      </div>
+      <div class="hero-eyebrow">
+        <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:var(--navy)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Become a Mentor
+      </div>
+      <h1>Be the <em>Guiding Light</em><br>for a Refugee Youth</h1>
+      <p>At Light4Refugee, mentorship isn't just about giving advice — it's about walking alongside someone as they rebuild their future. Your hour a week can reshape an entire life.</p>
+    </div>
+    <div class="hero-card">
+      <h4>What You Give</h4>
+      <div class="hero-card-item">
+        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"/></svg>
+        <span>1–2 hours per week of your time</span>
+      </div>
+      <div class="hero-card-item">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        <span>Your expertise, experience & encouragement</span>
+      </div>
+      <div class="hero-card-item">
+        <svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+        <span>Reliable internet access for virtual sessions</span>
+      </div>
+      <div class="hero-card-item">
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <span>A passion for equity, youth & education</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="hero-accent"></div>
+
+<!-- WHY STRIP -->
+<div class="why-strip">
+  <div class="why-strip-inner">
+    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+    <p>Join a growing network of mentors helping refugee youth in Rwanda unlock their potential — one conversation at a time.</p>
+    <a href="#mentor-form">Apply Now — It's Free</a>
+  </div>
+</div>
+
+<!-- MAIN SECTION: info + form -->
+<div class="main-section">
+  <div class="main-inner">
+
+    <!-- LEFT INFO PANEL -->
+    <div class="info-panel">
+      <div class="section-label">Why Mentor With Us</div>
+      <h2>Make a Direct Impact on a Refugee Student's Life</h2>
+      <p>Every mentor who joins Light4Refugee becomes part of something bigger than a weekly call. You become a proof of possibility — showing a young refugee that the world beyond the camp sees them, believes in them, and is willing to invest in their future.</p>
+
+      <div class="benefit-card">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+        <div>
+          <h5>Direct, Personal Impact</h5>
+          <p>You're not donating to a fund — you're speaking directly to a student who needs your voice. Your guidance shapes real decisions.</p>
+        </div>
+      </div>
+      <div class="benefit-card">
+        <svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.86.18-1a3 3 0 0 0-6 0c0 .14.11.56.18 1H10C8.9 6 8 6.9 8 8v12c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
+        <div>
+          <h5>Share Your Career Insight</h5>
+          <p>Industry experience, career tips, interview coaching — knowledge that took you years to build can fast-track a student's entire trajectory.</p>
+        </div>
+      </div>
+      <div class="benefit-card">
+        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        <div>
+          <h5>Join a Community of Changemakers</h5>
+          <p>Connect with a global network of educators, professionals, and advocates committed to equity and refugee empowerment.</p>
+        </div>
+      </div>
+
+      <p class="areas-title">Mentorship Areas</p>
+      <div>
+        <span class="area-tag"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg> Academic Support</span>
+        <span class="area-tag"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.86.18-1a3 3 0 0 0-6 0c0 .14.11.56.18 1H10C8.9 6 8 6.9 8 8v12c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg> Career Guidance</span>
+        <span class="area-tag"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg> College Counseling</span>
+        <span class="area-tag"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg> Personal Mentorship</span>
+      </div>
+
+      <div class="looking-box">
+        <h4>What We're Looking For</h4>
+        <div class="looking-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span>Passion for education, youth or refugee empowerment</span></div>
+        <div class="looking-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span>Students, professionals or educators — any background welcome</span></div>
+        <div class="looking-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span>Ability to commit 1–2 hours per week consistently</span></div>
+        <div class="looking-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span>Good communication skills and patience</span></div>
+        <div class="looking-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg><span>Reliable internet access for virtual mentorship sessions</span></div>
+      </div>
+    </div>
+
+    <!-- FORM PANEL -->
+    <div class="form-panel" id="mentor-form">
+      <div class="form-header">
+        <h3>Mentor Application Form</h3>
+        <p>This takes about 5 minutes. We review every application personally and will be in touch within 5 business days.</p>
+        <div class="form-progress">
+          <div class="prog-step active" data-step="1">1. Personal Info</div>
+          <div class="prog-step" data-step="2">2. Background</div>
+          <div class="prog-step" data-step="3">3. Mentorship</div>
+          <div class="prog-step" data-step="4">4. Confirm</div>
+        </div>
+      </div>
+
+      <div class="form-body">
+
+        <!-- STEP 1: Personal Info -->
+        <div class="form-step active" id="step-1">
+          <p class="step-title">Personal Information</p>
+          <p class="step-desc">Let's start with the basics so we know who you are.</p>
+
+          <div class="form-row">
+            <div class="field">
+              <label>First Name <span class="req">*</span></label>
+              <input type="text" id="f_first" placeholder="e.g. Amara" required>
+            </div>
+            <div class="field">
+              <label>Last Name <span class="req">*</span></label>
+              <input type="text" id="f_last" placeholder="e.g. Nkurunziza" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label>Email Address <span class="req">*</span></label>
+              <input type="email" id="f_email" placeholder="you@example.com" required>
+            </div>
+            <div class="field">
+              <label>Phone / WhatsApp Number</label>
+              <input type="tel" id="f_phone" placeholder="+250 700 000 000">
+              <span class="hint">Optional — useful for scheduling sessions</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label>Country of Residence <span class="req">*</span></label>
+              <select id="f_country" required>
+                <option value="">— Select Country —</option>
+                <option>Rwanda</option>
+                <option>Uganda</option>
+                <option>Kenya</option>
+                <option>Tanzania</option>
+                <option>United States</option>
+                <option>United Kingdom</option>
+                <option>Canada</option>
+                <option>Germany</option>
+                <option>France</option>
+                <option>Netherlands</option>
+                <option>Belgium</option>
+                <option>Australia</option>
+                <option>South Africa</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Preferred Language(s) <span class="req">*</span></label>
+              <input type="text" id="f_lang" placeholder="e.g. English, French, Kinyarwanda" required>
+            </div>
+          </div>
+          <div class="form-row full">
+            <div class="field">
+              <label>LinkedIn Profile URL</label>
+              <input type="url" id="f_linkedin" placeholder="https://linkedin.com/in/yourname">
+              <span class="hint">Optional but helpful — so we can learn more about your background</span>
+            </div>
+          </div>
+
+          <div class="form-nav">
+            <span></span>
+            <button class="btn-next" onclick="nextStep(1)">
+              Next: Your Background
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Background -->
+        <div class="form-step" id="step-2">
+          <p class="step-title">Your Background</p>
+          <p class="step-desc">Help us understand your experience so we can match you with the right mentee.</p>
+
+          <div class="form-row">
+            <div class="field">
+              <label>Current Occupation <span class="req">*</span></label>
+              <select id="f_occupation" required>
+                <option value="">— Select —</option>
+                <option>Student (Undergraduate)</option>
+                <option>Student (Postgraduate)</option>
+                <option>Early-Career Professional (0–3 years)</option>
+                <option>Mid-Career Professional (4–10 years)</option>
+                <option>Senior Professional / Manager</option>
+                <option>Educator / Teacher / Professor</option>
+                <option>Researcher / Academic</option>
+                <option>NGO / Humanitarian Sector Worker</option>
+                <option>Entrepreneur / Business Owner</option>
+                <option>Retired Professional</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Field / Industry <span class="req">*</span></label>
+              <input type="text" id="f_industry" placeholder="e.g. Technology, Education, Health, Law" required>
+            </div>
+          </div>
+          <div class="form-row full">
+            <div class="field">
+              <label>Highest Level of Education <span class="req">*</span></label>
+              <select id="f_education" required>
+                <option value="">— Select —</option>
+                <option>High School / Secondary</option>
+                <option>Bachelor's Degree</option>
+                <option>Master's Degree</option>
+                <option>Doctorate / PhD</option>
+                <option>Professional Certification</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row full">
+            <div class="field">
+              <label>Briefly describe your professional background and key skills <span class="req">*</span></label>
+              <textarea id="f_background" placeholder="Share your background, skills, and what you've worked on. This helps us match you with the right mentee..." required></textarea>
+            </div>
+          </div>
+          <div class="form-row full">
+            <div class="field">
+              <label>Do you have prior experience mentoring, tutoring or coaching? <span class="req">*</span></label>
+              <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="prior_exp" value="Yes, formal mentoring program"><span>Yes — formal program</span></label>
+                <label class="radio-option"><input type="radio" name="prior_exp" value="Yes, informal mentoring"><span>Yes — informally</span></label>
+                <label class="radio-option"><input type="radio" name="prior_exp" value="No, but eager to start"><span>No, but eager to start</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-nav">
+            <button class="btn-back" onclick="prevStep(2)"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>Back</button>
+            <button class="btn-next" onclick="nextStep(2)">Next: Mentorship Details <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+          </div>
+        </div>
+
+        <!-- STEP 3: Mentorship Preferences -->
+        <div class="form-step" id="step-3">
+          <p class="step-title">Mentorship Preferences</p>
+          <p class="step-desc">Tell us how you'd like to mentor so we can find the right match for you.</p>
+
+          <div class="form-row full">
+            <div class="field">
+              <label>Which mentorship area(s) can you support? <span class="req">*</span> (select all that apply)</label>
+              <div class="check-group">
+                <label class="check-option"><input type="checkbox" name="area" value="Academic Support (English, tutoring, Academic Prep)"><span><strong>Academic Support</strong> — English language, tutoring, Academic Prep sessions</span></label>
+                <label class="check-option"><input type="checkbox" name="area" value="Career Guidance (industry advice, resume reviews, job readiness)"><span><strong>Career Guidance</strong> — industry advice, CV/resume reviews, job readiness coaching</span></label>
+                <label class="check-option"><input type="checkbox" name="area" value="College Counseling (applications, essays, scholarship guidance)"><span><strong>College Counseling</strong> — university applications, personal statements, scholarship guidance</span></label>
+                <label class="check-option"><input type="checkbox" name="area" value="Personal Mentorship (life skills, confidence-building, goal-setting)"><span><strong>Personal Mentorship</strong> — life skills, confidence-building, goal-setting</span></label>
+              </div>
+            </div>
+          </div>
+
+          <hr class="form-divider">
+
+          <div class="form-row">
+            <div class="field">
+              <label>How many hours per week can you commit? <span class="req">*</span></label>
+              <select id="f_hours" required>
+                <option value="">— Select —</option>
+                <option>1 hour/week</option>
+                <option>2 hours/week</option>
+                <option>3+ hours/week</option>
+                <option>Flexible — depends on the period</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Preferred session format <span class="req">*</span></label>
+              <select id="f_format" required>
+                <option value="">— Select —</option>
+                <option>Video call (Zoom, Google Meet, etc.)</option>
+                <option>Voice/phone call only</option>
+                <option>Text-based (WhatsApp, email)</option>
+                <option>Any format — flexible</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label>Preferred days for sessions</label>
+              <input type="text" id="f_days" placeholder="e.g. Weekends, Monday evenings">
+            </div>
+            <div class="field">
+              <label>Your time zone <span class="req">*</span></label>
+              <input type="text" id="f_timezone" placeholder="e.g. GMT+2, EST, WAT" required>
+            </div>
+          </div>
+
+          <hr class="form-divider">
+
+          <div class="form-row full">
+            <div class="field">
+              <label>Why do you want to mentor with Light 4 Refugee? <span class="req">*</span></label>
+              <textarea id="f_motivation" placeholder="Tell us what draws you to this work and what you hope to contribute to a refugee student's journey..." required></textarea>
+            </div>
+          </div>
+          <div class="form-row full">
+            <div class="field">
+              <label>Anything else you'd like us to know?</label>
+              <textarea id="f_other" placeholder="Special skills, languages, interests, or anything that might help us match you with the right student..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-nav">
+            <button class="btn-back" onclick="prevStep(3)"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>Back</button>
+            <button class="btn-next" onclick="nextStep(3)">Review Application <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+          </div>
+        </div>
+
+        <!-- STEP 4: Review & Submit -->
+        <div class="form-step" id="step-4">
+          <p class="step-title">Review &amp; Submit</p>
+          <p class="step-desc">Please take a moment to review your application before submitting. We review every application personally.</p>
+
+          <div id="review-summary" style="background:var(--cream);padding:20px;margin-bottom:24px;font-size:.9rem;color:#444;line-height:1.8;"></div>
+
+          <div class="form-row full">
+            <div class="field">
+              <label class="check-option" style="align-items:flex-start;">
+                <input type="checkbox" id="consent" required style="margin-top:3px;">
+                <span>I confirm that the information I have provided is accurate. I understand that Light 4 Refugee will contact me via email to confirm my application, and that my personal data will be used solely for the purpose of the mentorship programme in line with L4R's privacy policy. <span class="req">*</span></span>
+              </label>
+            </div>
+          </div>
+          <div class="form-row full">
+            <div class="field">
+              <label class="check-option">
+                <input type="checkbox" id="newsletter">
+                <span>I'd like to receive L4R's newsletter with updates on our programs and students' success stories.</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-nav">
+            <button class="btn-back" onclick="prevStep(4)"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>Back</button>
+            <button class="btn-submit" onclick="submitForm()">
+              <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+              Submit Application
+            </button>
+          </div>
+        </div>
+
+        <!-- SUCCESS STATE -->
+        <div class="form-success" id="form-success">
+          <div class="success-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+          <h3>Application Received!</h3>
+          <p>Thank you for applying to become a Light 4 Refugee mentor. We've received your application and will review it personally. Expect to hear from us within <strong>2 to 5 business days</strong>.</p>
+          <p style="font-style:italic;color:#a09999;font-size:.85rem;margin-bottom:24px;">Questions? Email us at <a href="mailto:info@light4refugee.org" style="color:var(--gold); background:#0d1b2e; border: 2px solid gold; border-radius: 5px;">info@light4refugee.org</a></p>
+          <a href="index.html" class="btn-submit" style="border: 2px solid #0d1b2e; border-radius: 5px;">Back to Homepage</a>
+          <a href="Become-a-mentor.html" class="btn-submit" style="border: 2px solid #0d1b2e; border-radius: 5px;">Stay on Mentor Page</a>
+        </div>
+
+      </div><!-- /form-body -->
+    </div><!-- /form-panel -->
+
+  </div>
+</div>
+
+<!-- MENTOR QUOTES -->
+<div class="mentor-quote-strip">
+  <div class="mentor-quote-inner">
+    <div class="mentor-quote-card">
+      <p>"Mentoring a refugee student taught me as much as I gave. Watching her go from self-doubt to submitting her first university application was one of the most meaningful experiences of my professional life."</p>
+      <div class="attr">
+        <div class="attr-avatar"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+        <div class="attr-info"><strong>Sarah M.</strong><span>Software Engineer, UK — Career Mentor</span></div>
+      </div>
+    </div>
+    <div class="mentor-quote-card">
+      <p>"The sessions are only an hour a week, but the impact is enormous. My mentee just secured a full scholarship to study in Kigali. I never imagined one hour could change so much."</p>
+      <div class="attr">
+        <div class="attr-avatar"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+        <div class="attr-info"><strong>David K.</strong><span>University Lecturer, Canada — Academic Mentor</span></div>
+      </div>
+    </div>
+    <div class="mentor-quote-card">
+      <p>"I was nervous about the time commitment, but L4R made it so easy to manage. The matching process was thoughtful, and the coordination team is always there when you need them."</p>
+      <div class="attr">
+        <div class="attr-avatar"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+        <div class="attr-info"><strong>Fatima A.</strong><span>HR Manager, Netherlands — Personal Mentor</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Our Operational Locations</h4>
+      <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Mahama &amp; Kiziba Refugee Camps, Kirehe &amp; Karongi Districts, Rwanda</p>
+      <p><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>+250 792 052 725</p>
+      <p><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>info@light4refugee.org</p>
+      <div class="footer-socials">
+        <a class="fsoc" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="fsoc" href="https://www.youtube.com/channel/UCKFczxvUGOmq7e7tJQ65HxA" target="_blank" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+        <a class="fsoc" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="var(--navy)" stroke-width="2"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="var(--navy)" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="var(--navy)" stroke-width="2"/></svg></a>
+        <a class="fsoc" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div><br>
+      <a class="brand" href="index.html"><img src="img/logo.png" alt="Light 4 Refugee" class="brand-logo"></a>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="team.html">Our Team</a>
+        <a href="news-stories.html">News &amp; Stories</a>
+        <a href="applications-hu.html">Applications Hub</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact-us.html">Contact Us</a>
+        <a href="donate.html">Donate</a>
+        <a href="testimonies.html">Testimonials</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Our Programs</h4>
+      <div class="footer-links">
+        <a href="about-us.html">Academic Preparation</a>
+        <a href="about-us.html">College Counseling</a>
+        <a href="about-us.html">Career Guidance</a><br>
+        <h4>Get Involved</h4>
+        <a href="programs.html">Light Club (ECP &amp; ISEP)</a>
+        <a href="become-a-mentor.html">Become a Mentor</a>
+        <a href="become-a-mentee.html">Become a Mentee</a>
+        <a href="partners.html">Partner With Us</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>From the Gallery</h4>
+      <div class="ft-gallery-grid">
+        <a href="gallery.html"><img src="img/gallery-1.jpg"    alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-2.jpg"       alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-3.jpg"    alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-6.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-4.jpg"     alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-5.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">
+    <span>&copy; 2026 <a href="https://light4refugee.org" target="_blank">Light 4 Refugee</a>, All Rights Reserved.</span>
+      <span style="display:inline-flex; gap:12px;">
+      <a href="terms-conditions.html" target="_blank" style="color:#2e6d04;">Terms/Conditions</a> |
+      <a href="privacy-policy.html" target="_blank" style="color:#2e6d04;">Privacy Policy</a>
+      </span>
+    <span>Designed By <a href="https://yvesnickylirf.com" target="_blank">Yves Nicky Lirf</a></span>
+  </div>
+</footer>
+
+<button id="back-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+</button>
+<script src="theme-logic.js"></script>
+<script>
+  /* Spinner */
+  window.addEventListener('load', () => {
+    const sp = document.getElementById('spinner');
+    sp.classList.add('hide');
+    setTimeout(() => sp.remove(), 500);
+  });
+
+  /* Sticky nav */
+  const topbar  = document.getElementById('topbar');
+  const navWrap = document.getElementById('nav-wrapper');
+  const tbH     = topbar.offsetHeight;
+  window.addEventListener('scroll', () => {
+    const s = window.scrollY > tbH;
+    topbar.classList.toggle('hidden', s);
+    navWrap.classList.toggle('stuck', s);
+    document.getElementById('back-top').classList.toggle('show', window.scrollY > 300);
+  }, { passive: true });
+
+  /* Mobile nav */
+  document.getElementById('nav-toggle').addEventListener('click', function() {
+    this.classList.toggle('open');
+    document.getElementById('nav-collapse').classList.toggle('open');
+  });
+  function toggleDD(id) {
+    if (window.innerWidth > 768) return;
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  /* Multi-step form */ 
+let currentStep = 1; 
+const totalSteps = 4; 
+
+function setStep(n) { 
+  document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active')); 
+  document.querySelectorAll('.prog-step').forEach((s, i) => { 
+    s.classList.remove('active', 'done'); 
+    if (i + 1 < n) s.classList.add('done'); 
+    if (i + 1 === n) s.classList.add('active'); 
+  }); 
+  document.getElementById('step-' + n).classList.add('active'); 
+  document.getElementById('mentor-form').scrollIntoView({ behavior: 'smooth', block: 'start' }); 
+  currentStep = n; 
+  if (n === 4) buildReview(); 
+} 
+
+function nextStep(from) { 
+  if (!validateStep(from)) return; 
+  setStep(from + 1); 
+} 
+
+function prevStep(from) { 
+  setStep(from - 1); 
+} 
+
+function validateStep(n) { 
+  const step = document.getElementById('step-' + n); 
+  const required = step.querySelectorAll('[required]'); 
+  let ok = true; 
+  required.forEach(el => { 
+    el.style.borderColor = ''; 
+    if (!el.value.trim()) { 
+      el.style.borderColor = '#e53935'; 
+      el.focus(); 
+      ok = false; 
+    } 
+  }); 
+  if (n === 3) { 
+    const checked = step.querySelectorAll('input[name="area"]:checked'); 
+    if (!checked.length) { 
+      alert('Please select at least one mentorship area.'); 
+      ok = false; 
+    } 
+  } 
+  if (!ok) { 
+    /* scroll to first error */ 
+    const first = step.querySelector('[style*="border-color: rgb(229"]'); 
+    if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' }); 
+  } 
+  return ok; 
+} 
+
+function buildReview() { 
+  const areas = Array.from(document.querySelectorAll('input[name="area"]:checked')).map(i => i.value).join(', ') || '—'; 
+  const exp = document.querySelector('input[name="prior_exp"]:checked'); 
+  document.getElementById('review-summary').innerHTML = ` 
+    <strong style="display:block;margin-bottom:8px;color:var(--navy);font-size:1rem;">Your Application Summary</strong> 
+    <b>Name:</b> ${v('f_first')} ${v('f_last')}<br> 
+    <b>Email:</b> ${v('f_email')}<br> 
+    <b>Country:</b> ${v('f_country')}<br> 
+    <b>Language(s):</b> ${v('f_lang')}<br> 
+    <b>Occupation:</b> ${v('f_occupation')}<br> 
+    <b>Industry / Field:</b> ${v('f_industry')}<br> 
+    <b>Education:</b> ${v('f_education')}<br> 
+    <b>Prior Mentoring:</b> ${exp ? exp.value : '—'}<br> 
+    <b>Mentorship Area(s):</b> ${areas}<br> 
+    <b>Hours/Week:</b> ${v('f_hours')}<br> 
+    <b>Session Format:</b> ${v('f_format')}<br> 
+    <b>Time Zone:</b> ${v('f_timezone')} 
+  `; 
+} 
+
+function v(id) { 
+  const el = document.getElementById(id); 
+  return el ? (el.value || '—') : '—'; 
+} 
+
+// ── NEW REPLACED SUBMIT FUNCTION TARGETING APPS SCRIPT WEB APP ──
+function submitForm() {
+  const consent = document.getElementById('consent');
+  if (!consent.checked) {
+    alert('Please confirm the consent checkbox to submit your application.');
+    return;
+  }
+
+  // Disable button to prevent duplicate spam submissions
+  const submitBtn = document.querySelector('.btn-submit');
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Submitting Profile...";
+  }
+
+  const areas = Array.from(document.querySelectorAll('input[name="area"]:checked')).map(i => i.value).join('; ');
+  const exp = document.querySelector('input[name="prior_exp"]:checked');
+
+  // Format form data for the Apps Script e.parameter
+  const payload = new URLSearchParams();
+  payload.append('formType', 'mentorApplication'); 
+  payload.append('firstName', v('f_first'));
+  payload.append('lastName', v('f_last'));
+  payload.append('email', v('f_email'));
+  payload.append('phone', v('f_phone'));
+  payload.append('country', v('f_country'));
+  payload.append('languages', v('f_lang'));
+  payload.append('linkedin', v('f_linkedin'));
+  payload.append('occupation', v('f_occupation'));
+  payload.append('industry', v('f_industry'));
+  payload.append('education', v('f_education'));
+  payload.append('background', v('f_background'));
+  payload.append('priorExp', exp ? exp.value : '');
+  payload.append('areas', areas);
+  payload.append('hours', v('f_hours'));
+  payload.append('format', v('f_format'));
+  payload.append('timezone', v('f_timezone'));
+  payload.append('motivation', v('f_motivation'));
+  payload.append('other', v('f_other'));
+  payload.append('newsletter', document.getElementById('newsletter').checked ? 'Yes' : 'No');
+
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxqPQoKp1W4TdRraUcLdl6U46KKrnAvnA43povhNXrBcZF2f02mMycdGuOTBszMX5kl-w/exec";
+
+  fetch(WEB_APP_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: payload.toString()
+  })
+  .then(() => {
+    // 1. Hide the multi-step navigation header
+    document.querySelector('.form-header').style.display = 'none';
+    
+    // 2. Hide all the active questionnaire steps inside the body
+    document.querySelectorAll('.form-step').forEach(step => {
+      step.style.display = 'none';
+    });
+    
+    // 3. Keep .form-body visible, but display the success message container directly
+    const successEl = document.getElementById('form-success');
+    successEl.style.display = 'block';
+    successEl.classList.add('show');
+    
+    // 4. Smoothly focus user view on the confirmation message
+    document.getElementById('mentor-form').scrollIntoView({ behavior: 'smooth' });
+  })
+  .catch(err => {
+    console.error('Submission error:', err);
+    alert('Something went wrong. Please check your internet connection and try again.');
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerText = "Submit Application";
+    }
+  });
+}
+
+</script>
+</body>
+</html>

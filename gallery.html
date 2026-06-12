@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery – L4R</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="img/logo.jpg?v=2">
+<link rel="stylesheet" href="theme-style.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:     #0d1b2e;
+    --navy-mid: #162540;
+    --navy-lt:  #1e3258;
+    --gold:     #f0a500;
+    --gold-dk:  #c98a00;
+    --white:    #ffffff;
+    --cream:    #f5f0e8;
+    --text:     #1a1a1a;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--white); overflow-x: hidden; }
+
+  /* SPINNER */
+  #spinner {
+    position: fixed; inset: 0; z-index: 9999; background: var(--white);
+    display: flex; align-items: center; justify-content: center; transition: opacity .4s;
+  }
+  #spinner.hide { opacity: 0; pointer-events: none; }
+  .spin-ring {
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 4px solid #ddd; border-top-color: var(--gold);
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* TOPBAR */
+  #topbar {
+    background: var(--navy); padding: 10px 40px;
+    display: flex; align-items: center;
+    transition: transform .35s ease, opacity .35s ease;
+  }
+  #topbar.hidden { transform: translateY(-100%); opacity: 0; pointer-events: none; position: absolute; width: 100%; }
+  .topbar-inner { display: flex; align-items: center; width: 100%; max-width: 1320px; margin: 0 auto; }
+  .brand { font-family: 'Oswald', sans-serif; font-size: 2rem; color: var(--gold); text-decoration: none; letter-spacing: 1px; }
+  .topbar-contacts { display: flex; gap: 32px; margin-left: auto; }
+  .contact-item { display: flex; align-items: center; gap: 10px; }
+  .contact-icon { width: 36px; height: 36px; background: var(--gold); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .contact-icon svg { width: 16px; height: 16px; fill: var(--navy); }
+  .contact-text p  { font-size: .75rem; color: var(--gold); font-weight: 600; margin-bottom: 1px; }
+  .contact-text span { font-size: .8rem; color: var(--white); }
+
+  /* NAVBAR */
+  #nav-wrapper { background: var(--navy); padding: 0 40px 12px; position: sticky; top: 0; z-index: 100; transition: padding .35s ease; }
+  #nav-wrapper.stuck { padding: 0; }
+  nav { background: var(--gold); max-width: 1320px; margin: 0 auto; display: flex; align-items: stretch; transition: max-width .35s ease; border-radius: 0 0 4px 4px; position: relative; }
+  #nav-wrapper.stuck nav { max-width: 100%; border-radius: 0; }
+  .nav-links { display: flex; align-items: stretch; list-style: none; }
+  .nav-links a, .nav-links > li > button { display: flex; align-items: center; padding: 14px 20px; color: var(--navy); font-size: .95rem; font-weight: 600; text-decoration: none; background: none; border: none; cursor: pointer; transition: color .2s, background .2s; }
+  .nav-links a:hover, .nav-links > li > button:hover, .nav-links a.active { color: var(--white); background: rgba(0,0,0,.15); border-radius: 10px;}
+  .dropdown { position: relative; }
+  .dropdown-menu { display: none; position: absolute; top: 100%; left: 0; background: var(--white); min-width: 180px; box-shadow: 0 8px 24px rgba(0,0,0,.18); z-index: 200; }
+  .dropdown:hover .dropdown-menu { display: block; }
+  .dropdown-menu a { display: block; padding: 10px 18px; color: var(--text); font-size: .9rem; text-decoration: none; transition: background .2s; }
+  .dropdown-menu a:hover { background: var(--gold); color: var(--navy); }
+  .nav-caret { margin-left: 4px; font-size: .7rem; }
+  .nav-socials { margin-left: auto; display: flex; align-items: center; gap: 6px; padding-right: 14px; }
+  .soc-btn { width: 34px; height: 34px; background: var(--navy); display: flex; align-items: center; justify-content: center; border-radius: 2px; text-decoration: none; transition: background .2s; }
+  .soc-btn:hover { background: #1a2d4a; }
+  .soc-btn svg { width: 16px; height: 16px; fill: var(--white); }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 12px 16px; margin-left: auto; }
+  .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--navy); margin: 5px 0; transition: .3s; }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-collapse { display: contents; }
+
+  /* PAGE HERO */
+  .page-hero { background: var(--navy); padding: 80px 40px; position: relative; overflow: hidden; }
+  .page-hero::before { content: ''; position: absolute; top: -20px; bottom: -20px; right: -20px; left: 40%; background-image: url('img/Welcome.gif'); background-size: cover; background-position: center; background-repeat: no-repeat; background-blend-mode: multiply; background-image: linear-gradient(135deg, rgba(240,165,0,.13) 0%, transparent 55%), linear-gradient(rgba(10, 25, 47, 0.75), rgba(10, 25, 47, 0.75)), url('img/Welcome.gif'); }
+  .page-hero-inner { max-width: 1320px; margin: 0 auto; position: relative; z-index: 1; display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+  .hero-text .breadcrumb { display: flex; align-items: center; gap: 10px; font-size: .85rem; color: #a8b8cc; margin-bottom: 20px; }
+  .hero-text .breadcrumb a { color: var(--gold); text-decoration: none; }
+  .hero-text .breadcrumb a:hover { text-decoration: underline; }
+  .hero-text .breadcrumb span { color: #556; }
+  .page-hero h1 { font-family: 'Oswald', sans-serif; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 700; color: var(--white); text-transform: uppercase; line-height: 1.05; margin-bottom: 16px; }
+  .page-hero h1 em { color: var(--gold); font-style: normal; }
+  .page-hero p { font-size: 1.05rem; color: #a8b8cc; max-width: 580px; line-height: 1.7; }
+  .hero-accent { height: 6px; background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dk) 50%, var(--navy) 100%); }
+
+  .hero-accent { height: 6px; background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dk) 50%, var(--navy) 100%); }
+  /* FILTER BAR */
+  .filter-bar { background: var(--cream); padding: 28px 40px; border-bottom: 2px solid rgba(0,0,0,.05); }
+  .filter-inner { max-width: 1320px; margin: 0 auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .filter-label { font-size: .82rem; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-right: 8px; }
+  .filter-btn {
+    padding: 8px 20px; border: 2px solid #ddd; background: var(--white);
+    color: #555; font-size: .88rem; font-weight: 600; cursor: pointer;
+    transition: all .2s; font-family: 'Source Sans 3', sans-serif;
+  }
+  .filter-btn:hover { border-color: var(--gold); color: var(--navy); }
+  .filter-btn.active { background: var(--navy); border-color: var(--navy); color: var(--gold); }
+
+  /* GALLERY GRID */
+  .gallery-section { padding: 60px 40px; background: var(--white); }
+  .gallery-section-inner { max-width: 1320px; margin: 0 auto; }
+
+  /* Masonry-style grid using CSS columns */
+  .gallery-masonry {
+    columns: 4; column-gap: 16px;
+  }
+  .gallery-item {
+    break-inside: avoid; margin-bottom: 16px;
+    position: relative; overflow: hidden; cursor: pointer;
+    display: block;
+  }
+  .gallery-item img {
+    width: 100%; display: block; object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .gallery-item .img-ph {
+    width: 100%; aspect-ratio: 1; background: #c5cfe0; display: block;
+  }
+  /* Tall items — every 3rd and 7th in each category */
+  .gallery-item.tall img { aspect-ratio: 3/4; }
+  .gallery-item.wide img { aspect-ratio: 16/9; }
+  .gallery-item:not(.tall):not(.wide) img { aspect-ratio: 1; }
+
+  /* Overlay on hover */
+  .gallery-item .overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13,27,46,.85) 0%, rgba(13,27,46,.2) 60%, transparent 100%);
+    opacity: 0; transition: opacity .35s;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 20px;
+  }
+  .gallery-item:hover .overlay { opacity: 1; }
+  .gallery-item:hover img { transform: scale(1.05); }
+  .overlay-cat {
+    background: var(--gold); color: var(--navy);
+    font-size: .72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; padding: 3px 10px; display: inline-block;
+    margin-bottom: 8px; align-self: flex-start;
+  }
+  .overlay-title { font-family: 'Oswald', sans-serif; font-size: 1rem; color: var(--white); font-weight: 600; line-height: 1.2; }
+  .overlay-zoom {
+    position: absolute; top: 14px; right: 14px;
+    width: 36px; height: 36px; background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.3);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .35s;
+  }
+  .gallery-item:hover .overlay-zoom { opacity: 1; }
+  .overlay-zoom svg { width: 18px; height: 18px; fill: var(--white); }
+
+  /* LIGHTBOX */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 3000;
+    background: rgba(0,0,0,.92);
+    align-items: center; justify-content: center;
+  }
+  .lightbox.open { display: flex; }
+  .lb-content { position: relative; max-width: 90vw; max-height: 90vh; }
+  .lb-content img { max-width: 90vw; max-height: 80vh; object-fit: contain; display: block; }
+  .lb-close {
+    position: absolute; top: -44px; right: 0;
+    background: none; border: none; color: var(--white);
+    font-size: 2rem; cursor: pointer; line-height: 1;
+    transition: color .2s;
+  }
+  .lb-close:hover { color: var(--gold); }
+  .lb-prev, .lb-next {
+    position: fixed; top: 50%; transform: translateY(-50%);
+    width: 50px; height: 50px; background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.2);
+    color: var(--white); font-size: 1.6rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s;
+  }
+  .lb-prev:hover, .lb-next:hover { background: var(--gold); color: var(--navy); }
+  .lb-prev { left: 16px; }
+  .lb-next { right: 16px; }
+  .lb-caption {
+    color: #ccc; font-size: .9rem; text-align: center;
+    margin-top: 14px; padding: 0 40px;
+  }
+  .lb-caption strong { color: var(--gold); }
+
+  /* STATS STRIP */
+  .stats-strip { background: var(--navy); padding: 0; display: flex; }
+  .stat-block {
+    flex: 1; padding: 32px 24px; text-align: center;
+    border-right: 1px solid rgba(255,255,255,.08);
+  }
+  .stat-block:last-child { border-right: none; }
+  .stat-block strong { display: block; font-family: 'Oswald', sans-serif; font-size: 2rem; color: var(--gold); }
+  .stat-block span { font-size: .82rem; color: #a8b8cc; margin-top: 4px; display: block; }
+
+  /* CTA BAND */
+  .cta-band { background: var(--gold); padding: 60px 40px; text-align: center; }
+  .cta-band h2 { font-family: 'Oswald', sans-serif; font-size: 2.2rem; color: var(--navy); margin-bottom: 12px; }
+  .cta-band p { color: var(--navy-mid); font-size: 1rem; margin-bottom: 28px; max-width: 520px; margin-inline: auto; }
+  .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-navy { padding: 13px 28px; font-size: .95rem; font-weight: 700; cursor: pointer; border: none; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: var(--white); transition: background .2s, transform .15s; }
+  .btn-navy:hover { background: var(--navy-mid); transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer { background: var(--navy); padding: 60px 40px 0; color: #a8b8cc; font-size: .92rem; line-height: 1.75; position: relative; overflow: hidden; }
+  footer::before { content: ''; position: absolute; inset: -15px; background-image: url('img/bg-footer.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; filter: blur(5px); background-blend-mode: multiply; background-image: linear-gradient(rgba(5, 9, 75, 0.88), rgba(5, 3, 59, 0.88)), url('img/bg-footer.jpg'); }
+  .footer-grid { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,.1); position: relative; z-index: 1; }
+  .footer-col h4 { color: var(--white); font-size: 1.1rem; font-weight: 600; margin-bottom: 18px; }
+  .footer-col p { margin-bottom: 6px; display: flex; align-items: flex-start; gap: 10px; }
+  .footer-col p svg { width: 15px; height: 15px; fill: var(--gold); flex-shrink: 0; margin-top: 4px; }
+  .footer-links { display: flex; flex-direction: column; gap: 4px; }
+  .footer-links a { color: #a8b8cc; text-decoration: none; padding: 3px 0; display: flex; align-items: center; gap: 8px; transition: color .2s, padding-left .2s; }
+  .footer-links a::before { content: '›'; color: var(--gold); font-size: 1.1rem; }
+  .footer-links a:hover { color: var(--gold); padding-left: 4px; }
+  .hours-row { margin-bottom: 10px; }
+  .hours-row p { color: #a8b8cc; margin-bottom: 2px; }
+  .hours-row h6 { color: var(--white); font-size: .9rem; font-weight: 600; margin: 0; }
+  .ft-gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .ft-gallery-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; transition: opacity .2s; }
+  .ft-gallery-grid img:hover { opacity: .75; }
+  .ft-gallery-grid .gal-ph { width: 100%; aspect-ratio: 1; background: var(--navy-lt); display: block; }
+  .footer-socials { display: flex; gap: 8px; margin-top: 16px; }
+  .fsoc { width: 36px; height: 36px; background: var(--gold); display: flex; align-items: center; justify-content: center; text-decoration: none; transition: background .2s; }
+  .fsoc:hover { background: var(--gold-dk); }
+  .fsoc svg { width: 15px; height: 15px; fill: var(--navy); }
+  .copyright { max-width: 1320px; margin: 0 auto; padding: 20px 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; font-size: .85rem; color: #7a8fa6; position: relative; z-index: 1; }
+  .copyright a { color: var(--gold); text-decoration: none; }
+  .copyright a:hover { text-decoration: underline; }
+
+  /* BACK TO TOP */
+  #back-top { position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px; background: var(--gold); display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; z-index: 500; opacity: 0; pointer-events: none; transition: opacity .3s, transform .2s; }
+  #back-top.show { opacity: 1; pointer-events: auto; }
+  #back-top:hover { background: var(--gold-dk); transform: translateY(-3px); }
+  #back-top svg { width: 20px; height: 20px; fill: var(--navy); }
+
+  /* RESPONSIVE */
+  @media (max-width: 1200px) { .gallery-masonry { columns: 3; } }
+  @media (max-width: 1024px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 900px) {
+    .gallery-masonry { columns: 2; }
+    .topbar-contacts { display: none; }
+    #topbar { padding: 10px 16px; }
+    .page-hero { padding: 50px 20px; }
+    .filter-bar { padding: 20px 20px; }
+    .gallery-section { padding: 40px 20px; }
+    .stats-strip { flex-wrap: wrap; }
+    .stat-block { min-width: 50%; border-right: none; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .cta-band { padding: 50px 20px; }
+  }
+  @media (max-width: 768px) {
+    #nav-wrapper { padding: 0; }
+    nav { flex-wrap: wrap; border-radius: 0; }
+    .nav-brand-mobile { font-family: 'Oswald', sans-serif; font-size: 1.3rem; color: var(--navy); font-weight: 700; padding: 12px 16px; display: flex; align-items: center; }
+    .nav-toggle { display: flex; flex-direction: column; }
+    .nav-collapse { display: none; width: 100%; flex-direction: column; background: var(--navy-mid); contents: unset; }
+    .nav-collapse.open { display: flex; }
+    .nav-links { flex-direction: column; width: 100%; }
+    .nav-links a, .nav-links > li > button { color: var(--white); padding: 12px 20px; width: 100%; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .nav-links a:hover, .nav-links > li > button:hover { background: rgba(255,255,255,.08); color: var(--gold); }
+    .nav-links a.active { color: var(--gold); background: rgba(255,255,255,.06); }
+    .dropdown-menu { position: static; box-shadow: none; background: rgba(0,0,0,.2); }
+    .dropdown-menu a { color: #ccc; padding-left: 36px; }
+    .dropdown-menu a:hover { color: var(--gold); background: transparent; }
+    .dropdown:hover .dropdown-menu { display: none; }
+    .dropdown.open .dropdown-menu { display: block; }
+    .nav-socials { display: none; }
+    footer { padding: 40px 16px 0; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .copyright { flex-direction: column; text-align: center; }
+    #back-top { bottom: 16px; right: 16px; }
+  }
+  @media (max-width: 520px) {
+    .gallery-masonry { columns: 1; }
+    .stat-block { min-width: 100%; }
+  }
+
+     /* Logo css*/
+   .brand-logo{
+  height: 70px;
+  width: auto;
+  display: block;
+  }
+  /*For L4R Menu*/
+@media (min-width: 769px) {
+  .nav-brand-mobile { display: none; }
+}
+@media (max-width: 768px) {
+  .nav-brand-mobile{font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--navy);font-weight:700;padding:12px 16px;display:flex;align-items:center}
+}
+</style>
+</head>
+<body id="top">
+<div id="global-scroll-bar"></div>
+<div id="spinner"><div class="spin-ring"></div></div>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><img src="img/logocolored.png" alt="Light 4 Refugee" class="brand-logo"></a>
+    <div class="topbar-contacts">
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+        </div>
+        <div class="contact-text"><p>Call Us</p><span>+250 792 052 725</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </div>
+        <div class="contact-text"><p>Mail Us</p><span>info@light4refugee.org</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+        <div class="contact-text"><p>Location</p><span>Mahama Camp, Kirehe, Rwanda</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<div id="nav-wrapper">
+  <nav>
+    <span class="nav-brand-mobile">L4R Menu</span>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <div class="nav-collapse" id="nav-collapse">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">About Us<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="about-us.html">About What We Do</a>
+            <a href="team.html">About Our Team</a>
+            <a href="gallery.html" style="color:var(--gold);font-weight:700;">About L4R Gallery</a>
+            <a href="testimonies.html">Testimonials</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">Programs<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="programs.html">Light Club & iSpeakLead</a>
+            <a href="applications-hub.html">Applications Hub</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">Get Involved<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="become-a-mentor.html">Become a Mentor</a>
+            <a href="become-a-mentee.html">Become a Mentee</a>
+            <a href="partners.html">Partners</a>
+          </div>
+        </li>
+        <li><a href="news-stories.html">News &amp; Stories</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="donate.html" style="background:var(--navy);color:var(--gold);font-weight:700; border-radius:5px;">Donate</a></li>
+      </ul>
+      <div class="nav-socials">
+        <button id="theme-toggle" aria-label="Toggle Theme Mode"></button>
+        <a class="soc-btn" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="soc-btn" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="var(--white)"/></svg></a>
+        <a class="soc-btn" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="hero-text">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a><span>›</span><span style="color:#fff;">Gallery</span>
+      </div>
+      <h1>A Window Into<br><em>Our World</em></h1>
+      <p>Every image tells a story of resilience, learning, and hope. From classrooms in Mahama to college celebrations in Kigali — these are the faces and moments that fuel our mission.</p>
+    </div>
+  </div>
+</div>
+<div class="hero-accent"></div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <span class="filter-label">Filter by:</span>
+    <button class="filter-btn active" data-filter="all">All Moments</button>
+    <button class="filter-btn" data-filter="academic">Academic Prep</button>
+    <button class="filter-btn" data-filter="college">College Counseling</button>
+    <button class="filter-btn" data-filter="career">Career Guidance</button>
+    <button class="filter-btn" data-filter="community">Community</button>
+    <button class="filter-btn" data-filter="camps">Camp Life</button>
+  </div>
+</div>
+
+<!-- GALLERY GRID -->
+<div class="gallery-section">
+  <div class="gallery-section-inner">
+    <div class="gallery-masonry" id="gallery-masonry">
+
+      <!-- Academic Prep photos -->
+      <div class="gallery-item tall" data-cat="academic">
+        <img src="img/gallery-1.jpg" alt="English immersion session at Mahama camp"
+             onerror="this.style.display='none'">
+        <div class="overlay">
+          <span class="overlay-cat">Academic Prep</span>
+          <span class="overlay-title">English Immersion Session — Mahama Camp</span>
+        </div>
+        <div class="overlay-zoom"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-cat="college">
+        <img src="img/clg.jpg" alt="College counseling workshop"
+             onerror="this.style.display='none'">
+        <div class="overlay">
+          <span class="overlay-cat">College Counseling</span>
+          <span class="overlay-title">Scholarship Workshop — Essay Writing</span>
+        </div>
+        <div class="overlay-zoom"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-cat="career">
+        <img src="img/career.jpg" alt="Career guidance programme session"
+             onerror="this.style.display='none'">
+        <div class="overlay">
+          <span class="overlay-cat">Career Guidance</span>
+          <span class="overlay-title">11-Week Programme — Mock Interviews</span>
+        </div>
+        <div class="overlay-zoom"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+      </div>
+
+      <div class="gallery-item wide" data-cat="community">
+        <img src="img/about.jpg" alt="Community gathering"
+             onerror="this.style.display='none'">
+        <div class="overlay">
+          <span class="overlay-cat">Community</span>
+          <span class="overlay-title">Volunteer Team — Field Visit</span>
+        </div>
+        <div class="overlay-zoom"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-cat="camps">
+        <img src="img/carousel-1.jpg" alt="Students at Mahama refugee camp"
+             onerror="this.style.display='none'">
+        <div class="overlay">
+          <span class="overlay-cat">Camp Life</span>
+          <span class="overlay-title">Young Learners — Mahama Refugee Camp</span>
+        </div>
+        <div class="overlay-zoom"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+      </div>
+
+      <div class="gallery-item tall" data-cat="academic">
+        <img src="img/carousel-2.jpg" alt="Academic session outdoors"
+             onerror="this.style.display='none'">
+        <div class="overlay">
+          <span class="overlay-cat">Academic Prep</span>
+          <span class="overlay-title">Outdoor Study Group — Kigeme Camp</span>
+        </div>
+        <div class="overlay-zoom"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-cat="college">
+        <img src="img/donation-1.jpg" alt="Student celebration after university admission"
+             onerror="this.style.display='none'">
+        <div class="overlay">
+          <span class="overlay-cat">College Counseling</span>
+          <span class="overlay-title">University Admission Celebration</span>
+        </div>
+        <div class="overlay-zoom"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+      </div>
+
+      <div class="gallery-item wide" data-cat="career">
+        <img src="img/donation-2.jpg" alt="Professional skills training"
+             onerror="this.style.display='none'">
+        <div class="overlay">
+          <span class="overlay-cat">Career Guidance</span>
+          <span class="overlay-title">Professional Skills Training — Cohort 3</span>
+        </div>
+        <div class="overlay-zoom"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-cat="camps">
+        <img src="img/donation-3.jpg" alt="Children at Mugombwa camp"
+             onerror="this.style.display='none'">
+        <div class="overlay">
+          <span class="overlay-cat">Camp Life</span>
+          <span class="overlay-title">Children — Mugombwa Refugee Camp</span>
+        </div>
+        <div class="overlay-zoom"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-cat="community">
+        <img src="img/event-1.jpg" alt="Team member mentoring a student"
+             onerror="this.style.display='none'">
+        <div class="overlay">
+          <span class="overlay-cat">Community</span>
+          <span class="overlay-title">One-on-One Mentoring Session</span>
+        </div>
+        <div class="overlay-zoom"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+      </div>
+
+      <div class="gallery-item tall" data-cat="community">
+        <img src="img/bckg-2.jpg" alt="Project manager with students"
+             onerror="this.style.display='none'">
+        <div class="overlay">
+          <span class="overlay-cat">Community</span>
+          <span class="overlay-title">Connecting Youth With Opportunity</span>
+        </div>
+        <div class="overlay-zoom"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-cat="camps">
+        <img src="img/gallery-2.jpg" alt="Volunteer at refugee camp"
+             onerror="this.style.display='none'">
+        <div class="overlay">
+          <span class="overlay-cat">Camp Life</span>
+          <span class="overlay-title">Volunteer — Making Change Happen</span>
+        </div>
+        <div class="overlay-zoom"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stat-block"><strong>2</strong><span>Camps Served:<br>· Mahama · Kiziba ·</span></div>
+  <div class="stat-block"><strong>500+</strong><span>Students Supported<br>Across All Programs</span></div>
+  <div class="stat-block"><strong>70%</strong><span>Refugee Youth Who<br>Complete Secondary School</span></div>
+  <div class="stat-block"><strong>11 wks</strong><span>Career Guidance<br>Programme Duration</span></div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lb-content">
+    <button class="lb-close" id="lb-close">&times;</button>
+    <img id="lb-img" src="" alt="">
+    <p class="lb-caption" id="lb-caption"></p>
+  </div>
+  <button class="lb-prev" id="lb-prev">&#8249;</button>
+  <button class="lb-next" id="lb-next">&#8250;</button>
+</div>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <h2>Be Part of These Moments</h2>
+  <p>Your support funds the sessions, workshops, and mentorships captured in every one of these photos. Help us keep writing these stories.</p>
+  <div class="cta-btns">
+    <a class="btn-navy" href="donate.html">Donate Now</a>
+    <a class="btn-navy" href="about-us.html" style="background:var(--navy-lt);">See Our Work</a>
+    <a class="btn-navy" href="contact-us.html" style="background:var(--navy-lt);">Get Involved</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Our Operational Location</h4>
+      <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Mahama &amp; Kiziba Refugee Camps, Kirehe &amp; Karongi Districts, Rwanda</p>
+      <p><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>+250 792 052 725</p>
+      <p><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>info@light4refugee.org</p>
+      <div class="footer-socials">
+        <a class="fsoc" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="fsoc" href="https://www.youtube.com/channel/UCKFczxvUGOmq7e7tJQ65HxA" target="_blank" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+        <a class="fsoc" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="var(--navy)" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="var(--navy)" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="var(--navy)"/></svg></a>
+        <a class="fsoc" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div><br>
+      <a class="brand" href="index.html"><img src="img/logo.png" alt="Light 4 Refugee" class="brand-logo"></a>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="team.html">Our Team</a>
+        <a href="news-stories.html">News &amp; Stories</a>
+        <a href="applications-hu.html">Applications Hub</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact-us.html">Contact Us</a>
+        <a href="donate.html">Donate</a>
+        <a href="testimonies.html">Testimonials</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Our Programs</h4>
+      <div class="footer-links">
+        <a href="about-us.html">Academic Preparation</a>
+        <a href="about-us.html">College Counseling</a>
+        <a href="about-us.html">Career Guidance</a><br>
+        <h4>Get Involved</h4>
+        <a href="programs.html">Light Club (ECP &amp; ISEP)</a>
+        <a href="become-a-mentor.html">Become a Mentor</a>
+        <a href="become-a-mentee.html">Become a Mentee</a>
+        <a href="partners.html">Partner With Us</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>From the Gallery</h4>
+      <div class="ft-gallery-grid">
+        <a href="gallery.html"><img src="img/gallery-1.jpg"    alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-2.jpg"       alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-3.jpg"    alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-4.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-5.jpg"     alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-6.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">
+    <span>&copy; 2026 <a href="https://light4refugee.org" target="_blank">Light 4 Refugee</a>, All Rights Reserved.</span>
+      <span style="display:inline-flex; gap:12px;">
+      <a href="terms-conditions.html" target="_blank" style="color:#2e6d04;">Terms/Conditions</a> |
+      <a href="privacy-policy.html" target="_blank" style="color:#2e6d04;">Privacy Policy</a>
+      </span>
+    <span>Designed By <a href="https://yvesnickylirf.com" target="_blank">Yves Nicky Lirf</a></span>
+  </div>
+</footer>
+
+<button id="back-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+</button>
+<script src="theme-logic.js"></script>
+<script>
+  /* Spinner */
+  document.addEventListener('DOMContentLoaded', () => {
+    const sp = document.getElementById('spinner');
+    sp.classList.add('hide');
+    setTimeout(() => sp.remove(), 500);
+  });
+
+  /* Sticky nav */
+  const topbar  = document.getElementById('topbar');
+  const navWrap = document.getElementById('nav-wrapper');
+  const tbH = topbar ? topbar.offsetHeight : 0;
+  window.addEventListener('scroll', () => {
+    const s = window.scrollY > tbH;
+    topbar.classList.toggle('hidden', s);
+    navWrap.classList.toggle('stuck', s);
+    document.getElementById('back-top').classList.toggle('show', window.scrollY > 300);
+  }, { passive: true });
+
+  /* Mobile nav */
+  document.getElementById('nav-toggle').addEventListener('click', function() {
+    this.classList.toggle('open');
+    document.getElementById('nav-collapse').classList.toggle('open');
+  });
+  function toggleDD(id) {
+    if (window.innerWidth > 768) return;
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  /* Filter */
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.filter;
+      galleryItems.forEach(item => {
+        const match = cat === 'all' || item.dataset.cat === cat;
+        item.style.display = match ? 'block' : 'none';
+      });
+    });
+  });
+
+  /* Lightbox */
+  const lightbox = document.getElementById('lightbox');
+  const lbImg    = document.getElementById('lb-img');
+  const lbCap    = document.getElementById('lb-caption');
+  let lbItems    = [], lbIndex = 0;
+
+  function buildLbItems() {
+    lbItems = Array.from(document.querySelectorAll('.gallery-item:not([style*="display: none"]) img'));
+  }
+  function openLb(img, idx) {
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+    lbCap.innerHTML = img.closest('.gallery-item').querySelector('.overlay-title')?.textContent || '';
+    lbIndex = idx;
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLb() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function lbNav(dir) {
+    lbIndex = (lbIndex + dir + lbItems.length) % lbItems.length;
+    openLb(lbItems[lbIndex], lbIndex);
+  }
+
+  galleryItems.forEach(item => {
+    item.addEventListener('click', () => {
+      buildLbItems();
+      const img = item.querySelector('img');
+      if (!img) return;
+      const idx = lbItems.indexOf(img);
+      openLb(img, idx >= 0 ? idx : 0);
+    });
+  });
+
+  document.getElementById('lb-close').addEventListener('click', closeLb);
+  document.getElementById('lb-prev').addEventListener('click', () => lbNav(-1));
+  document.getElementById('lb-next').addEventListener('click', () => lbNav(1));
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLb(); });
+  document.addEventListener('keydown', e => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLb();
+    if (e.key === 'ArrowLeft')  lbNav(-1);
+    if (e.key === 'ArrowRight') lbNav(1);
+  });
+</script>
+</body>
+</html>
+

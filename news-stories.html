@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News & Stories – L4R</title>
+<meta name="description" content="Field reports, student stories, and program dispatches from Light4Refugee's Scholars Bootcamp and programs across Rwanda's refugee camps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Source+Sans+3:wght@400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="img/logo.jpg?v=2">
+<link rel="stylesheet" href="theme-style.css">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   GLOBAL RESET & TOKENS
+═══════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0d1b2e; --navy-mid:#162540; --navy-lt:#1e3258;
+  --gold:#f0a500; --gold-dk:#c98a00; --gold-pale:#fff8e6;
+  --white:#ffffff; --cream:#f5f0e8; --ink:#1a1a2e;
+  --muted:#666; --border:#e4e4e4;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Source Sans 3',sans-serif;background:var(--white);overflow-x:hidden;color:var(--ink)}
+
+/* SPINNER */
+#spinner{position:fixed;inset:0;z-index:9999;background:var(--white);display:flex;align-items:center;justify-content:center;transition:opacity .4s}
+#spinner.hide{opacity:0;pointer-events:none}
+.spin-ring{width:48px;height:48px;border-radius:50%;border:4px solid #ddd;border-top-color:var(--gold);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* TOPBAR */
+#topbar{background:var(--navy);padding:10px 40px;display:flex;align-items:center;transition:transform .35s,opacity .35s}
+#topbar.hidden{transform:translateY(-100%);opacity:0;pointer-events:none;position:absolute;width:100%}
+.topbar-inner{display:flex;align-items:center;width:100%;max-width:1320px;margin:0 auto}
+.brand{font-family:'Oswald',sans-serif;font-size:2rem;color:var(--gold);text-decoration:none;letter-spacing:1px}
+.topbar-contacts{display:flex;gap:32px;margin-left:auto}
+.contact-item{display:flex;align-items:center;gap:10px}
+.contact-icon{width:36px;height:36px;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-icon svg{width:16px;height:16px;fill:var(--navy)}
+.contact-text p{font-size:.75rem;color:var(--gold);font-weight:600;margin-bottom:1px}
+.contact-text span{font-size:.8rem;color:var(--white)}
+
+/* NAVBAR */
+#nav-wrapper{background:var(--navy);padding:0 40px 12px;position:sticky;top:0;z-index:100;transition:padding .35s}
+#nav-wrapper.stuck{padding:0}
+nav{background:var(--gold);max-width:1320px;margin:0 auto;display:flex;align-items:stretch;transition:max-width .35s;border-radius:0 0 4px 4px;position:relative}
+#nav-wrapper.stuck nav{max-width:100%;border-radius:0}
+.nav-links{display:flex;align-items:stretch;list-style:none}
+.nav-links a,.nav-links>li>button{display:flex;align-items:center;padding:14px 20px;color:var(--navy);font-size:.95rem;font-weight:600;text-decoration:none;background:none;border:none;cursor:pointer;transition:color .2s,background .2s}
+.nav-links a:hover,.nav-links>li>button:hover,.nav-links a.active{color:var(--white);background:rgba(0,0,0,.15); border-radius: 10px;}
+.dropdown{position:relative}
+.dropdown-menu{display:none;position:absolute;top:100%;left:0;background:var(--white);min-width:180px;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:200}
+.dropdown:hover .dropdown-menu{display:block}
+.dropdown-menu a{display:block;padding:10px 18px;color:var(--navy);font-size:.9rem;text-decoration:none;transition:background .2s}
+.dropdown-menu a:hover{background:var(--gold);color:var(--navy)}
+.nav-caret{margin-left:4px;font-size:.7rem}
+.nav-socials{margin-left:auto;display:flex;align-items:center;gap:6px;padding-right:14px}
+.soc-btn{width:34px;height:34px;background:var(--navy);display:flex;align-items:center;justify-content:center;border-radius:2px;text-decoration:none;transition:background .2s}
+.soc-btn:hover{background:#1a2d4a}
+.soc-btn svg{width:16px;height:16px;fill:var(--white)}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:12px 16px;margin-left:auto}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--navy);margin:5px 0;transition:.3s}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-collapse{display:contents}
+
+/* ═══════════════════════════════════════════════════════════
+   PAGE HERO
+═══════════════════════════════════════════════════════════ */
+.page-hero{
+  background:var(--navy);padding:90px 40px 0;
+  position:relative;overflow:hidden;
+}
+.page-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(240,165,0,.1) 0%,transparent 60%)}
+/* big watermark letter */
+.page-hero::after{
+  content:'N';font-family:'Oswald',sans-serif;font-size:28rem;font-weight:700;
+  color:rgba(240,165,0,.03);position:absolute;right:-2%;bottom:-10%;
+  line-height:1;pointer-events:none;z-index:0
+}
+.hero-inner{max-width:1320px;margin:0 auto;position:relative;z-index:1;display:flex;gap:60px;align-items:flex-end;flex-wrap:wrap;padding-bottom:60px}
+.hero-text{flex:1;min-width:300px}
+.breadcrumb{display:flex;align-items:center;gap:10px;font-size:.85rem;color:#a8b8cc;margin-bottom:20px}
+.breadcrumb a{color:var(--gold);text-decoration:none}
+.breadcrumb span{color:#556}
+.hero-chip{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--navy);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;padding:5px 14px;margin-bottom:20px}
+.hero-chip svg{width:13px;height:13px;fill:var(--navy)}
+.page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,5vw,4.2rem);font-weight:700;color:var(--white);line-height:1.05;margin-bottom:18px}
+.page-hero h1 em{color:var(--gold);font-style:italic}
+.page-hero .sub{font-size:1.05rem;color:#a8b8cc;max-width:520px;line-height:1.75;margin-bottom:32px}
+/* filter pills */
+.filter-row{display:flex;gap:8px;flex-wrap:wrap}
+.filter-pill{padding:8px 20px;border:1.5px solid rgba(255,255,255,.15);background:transparent;color:#a8b8cc;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:all .2s;letter-spacing:.3px}
+.filter-pill:hover{border-color:var(--gold);color:var(--gold)}
+.filter-pill.active{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+
+/* hero right: latest dispatch card */
+.hero-card{flex-shrink:0;width:320px;background:rgba(255,255,255,.05);border:1px solid rgba(240,165,0,.25);padding:0;overflow:hidden;align-self:flex-end;margin-bottom:-1px}
+.hero-card-img{height:200px;overflow:hidden;position:relative}
+.hero-card-img .img-slot{width:100%;height:100%;background:linear-gradient(135deg,var(--navy-lt),var(--navy-mid));display:flex;align-items:center;justify-content:center}
+.hero-card-img .img-slot span{font-size:.72rem;color:rgba(240,165,0,.4);font-weight:600;letter-spacing:2px;text-transform:uppercase}
+.hero-card-img img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-card-body{padding:20px 22px}
+.hc-tag{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:8px;display:block}
+.hero-card-body h3{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--white);line-height:1.3;margin-bottom:8px}
+.hero-card-body p{font-size:.8rem;color:#a8b8cc;line-height:1.6;margin-bottom:14px}
+.hc-link{display:inline-flex;align-items:center;gap:6px;color:var(--gold);font-size:.8rem;font-weight:700;text-decoration:none;cursor:pointer;background:none;border:none;font-family:'Source Sans 3',sans-serif}
+.hc-link svg{width:13px;height:13px;fill:var(--gold);transition:transform .2s}
+.hc-link:hover svg{transform:translateX(3px)}
+
+.hero-accent{height:6px;background:linear-gradient(90deg,var(--gold) 0%,var(--gold-dk) 50%,var(--navy) 100%)}
+
+/* ═══════════════════════════════════════════════════════════
+   LIVE TICKER / SERIES LABEL
+═══════════════════════════════════════════════════════════ */
+.ticker-bar{background:var(--gold);padding:0 40px;display:flex;align-items:center;gap:24px;overflow:hidden;height:42px}
+.ticker-label{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--navy);flex-shrink:0;background:var(--navy);color:var(--gold);padding:0 16px;height:100%;display:flex;align-items:center}
+.ticker-scroll{display:flex;gap:40px;animation:ticker 22s linear infinite;white-space:nowrap}
+.ticker-scroll span{font-size:.8rem;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:8px}
+.ticker-scroll span::before{content:'●';font-size:.4rem;opacity:.5}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ═══════════════════════════════════════════════════════════
+   MAIN LAYOUT
+═══════════════════════════════════════════════════════════ */
+.main-section{padding:70px 40px 80px;background:var(--cream)}
+.main-inner{max-width:1320px;margin:0 auto;display:flex;gap:48px;align-items:flex-start}
+
+/* ── ARTICLE GRID (left, wider) ── */
+.grid-col{flex:1;min-width:0}
+
+/* section eyebrow */
+.eyebrow{display:flex;align-items:center;gap:12px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--gold);margin-bottom:28px}
+.eyebrow::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+
+/* ── FEATURED BIG CARD ── */
+.featured-wrap{margin-bottom:32px}
+.feat-card{background:var(--white);overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:box-shadow .3s,transform .3s}
+.feat-card:hover{box-shadow:0 16px 48px rgba(0,0,0,.12);transform:translateY(-4px)}
+.feat-img{height:380px;overflow:hidden;position:relative}
+.feat-img .img-slot{width:100%;height:100%;background:linear-gradient(160deg,var(--navy) 0%,var(--navy-lt) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.feat-img .img-slot .img-name{font-size:.75rem;color:rgba(240,165,0,.5);font-weight:600;letter-spacing:2px;text-transform:uppercase}
+.feat-img .img-slot svg{width:52px;height:52px;fill:rgba(240,165,0,.15)}
+.feat-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.feat-card:hover .feat-img img{transform:scale(1.04)}
+.feat-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,27,46,.7) 0%,transparent 50%)}
+.feat-badge{position:absolute;top:20px;left:20px;background:var(--gold);color:var(--navy);font-family:'Oswald',sans-serif;font-size:.78rem;font-weight:700;padding:5px 14px;text-transform:uppercase;letter-spacing:1px}
+.feat-body{padding:30px 32px}
+.feat-meta{display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+.tag{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;background:var(--gold-pale);color:var(--gold-dk)}
+.date{font-size:.78rem;color:#aaa}
+.reading-time{font-size:.72rem;color:#bbb;display:flex;align-items:center;gap:4px}
+.reading-time svg{width:12px;height:12px;fill:#bbb}
+.feat-body h2{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,2.5vw,2.1rem);color:var(--navy);line-height:1.2;margin-bottom:12px;font-weight:700}
+.feat-quote{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--gold-dk);border-left:3px solid var(--gold);padding-left:16px;margin-bottom:14px;line-height:1.6}
+.feat-body p{font-size:.95rem;color:var(--muted);line-height:1.8;margin-bottom:22px}
+.read-more-btn{display:inline-flex;align-items:center;gap:10px;background:var(--navy);color:var(--white);padding:12px 24px;font-size:.88rem;font-weight:700;cursor:pointer;border:none;font-family:'Source Sans 3',sans-serif;transition:background .2s,transform .15s}
+.read-more-btn:hover{background:var(--gold);color:var(--navy);transform:translateX(4px)}
+.read-more-btn svg{width:16px;height:16px;fill:currentColor;transition:transform .2s}
+
+/* ── ARTICLE INLINE READER ── */
+.article-reader{
+  display:none;overflow:hidden;
+  max-height:0;transition:max-height .6s cubic-bezier(.4,0,.2,1);
+  background:var(--white);border-top:3px solid var(--gold);
+}
+.article-reader.open{display:block;max-height:9999px}
+.reader-inner{padding:50px 44px}
+
+/* reader header */
+.reader-header{margin-bottom:36px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+.reader-chips{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.r-chip{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;background:var(--gold-pale);color:var(--gold-dk)}
+.r-date{font-size:.8rem;color:#aaa}
+.reader-header h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.8rem);color:var(--navy);line-height:1.15;margin-bottom:14px;font-weight:700}
+.reader-header .location{font-size:.85rem;color:var(--gold);font-weight:600;display:flex;align-items:center;gap:6px}
+.reader-header .location svg{width:14px;height:14px;fill:var(--gold)}
+.reader-opening-quote{
+  background:var(--navy);padding:28px 32px;margin:28px 0;
+  border-left:5px solid var(--gold);
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:1.2rem;color:var(--white);line-height:1.65;
+}
+
+/* reader image blocks */
+.reader-img{margin:28px 0;overflow:hidden}
+.reader-img .img-slot{width:100%;height:300px;background:linear-gradient(135deg,var(--cream),#d8d0c4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.reader-img .img-slot svg{width:40px;height:40px;fill:#bbb}
+.reader-img .img-slot span{font-size:.72rem;color:#999;font-weight:600;letter-spacing:2px;text-transform:uppercase}
+.reader-img img{width:100%;height:320px;object-fit:cover;display:block}
+.reader-img figcaption{padding:8px 0;font-size:.78rem;color:#aaa;font-style:italic}
+
+/* reader photo grid */
+.reader-photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:28px 0}
+.reader-photo-grid .img-slot{height:200px;background:linear-gradient(135deg,var(--cream),#d8d0c4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.reader-photo-grid .img-slot svg{width:28px;height:28px;fill:#bbb}
+.reader-photo-grid .img-slot span{font-size:.68rem;color:#aaa;font-weight:600;letter-spacing:1.5px;text-transform:uppercase}
+.reader-photo-grid img{width:100%;height:200px;object-fit:cover;display:block}
+
+/* reader body text */
+.reader-body h2{font-family:'Oswald',sans-serif;font-size:1.4rem;color:var(--navy);margin:32px 0 14px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding-bottom:8px;border-bottom:2px solid var(--gold)}
+.reader-body p{font-size:.97rem;color:#444;line-height:1.85;margin-bottom:16px}
+.reader-body ul{margin:0 0 16px 20px}
+.reader-body ul li{font-size:.95rem;color:#444;line-height:1.8;margin-bottom:8px}
+.reader-body ul li::marker{color:var(--gold)}
+.reader-body strong{color:var(--navy)}
+
+/* pull quote inside article */
+.pull-quote{background:var(--gold-pale);border-left:4px solid var(--gold);padding:20px 24px;margin:28px 0;font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;color:var(--navy);line-height:1.65}
+
+/* hashtag footer */
+.reader-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
+.r-tag{font-size:.75rem;font-weight:600;color:var(--gold-dk);background:var(--gold-pale);padding:4px 12px;cursor:default}
+
+/* close button */
+.close-reader{display:flex;align-items:center;gap:8px;background:none;border:none;cursor:pointer;font-size:.85rem;font-weight:700;color:var(--muted);font-family:'Source Sans 3',sans-serif;margin-top:32px;padding:10px 0;transition:color .2s}
+.close-reader:hover{color:var(--navy)}
+.close-reader svg{width:16px;height:16px;fill:currentColor}
+
+/* ── SMALL STORY CARDS ── */
+.story-list{display:flex;flex-direction:column;gap:20px;margin-top:28px}
+.story-item{background:var(--white);border:1px solid var(--border);display:flex;gap:0;overflow:hidden;cursor:pointer;transition:box-shadow .25s,transform .25s}
+.story-item:hover{box-shadow:0 8px 28px rgba(0,0,0,.09);transform:translateY(-3px)}
+.si-img{width:160px;flex-shrink:0;position:relative;overflow:hidden}
+.si-img .img-slot{width:100%;height:100%;min-height:160px;background:linear-gradient(135deg,var(--navy),var(--navy-lt));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.si-img .img-slot svg{width:28px;height:28px;fill:rgba(240,165,0,.25)}
+.si-img .img-slot span{font-size:.62rem;color:rgba(240,165,0,.35);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;text-align:center;padding:0 8px}
+.si-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.story-item:hover .si-img img{transform:scale(1.08)}
+.si-day{position:absolute;top:10px;left:10px;background:var(--gold);color:var(--navy);font-family:'Oswald',sans-serif;font-size:.65rem;font-weight:700;padding:3px 8px;text-transform:uppercase;letter-spacing:1px}
+.si-body{flex:1;padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between}
+.si-meta{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.si-tag{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:2px 8px;background:var(--gold-pale);color:var(--gold-dk)}
+.si-date{font-size:.73rem;color:#aaa}
+.si-body h3{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--navy);line-height:1.3;margin-bottom:6px;font-weight:700}
+.si-quote{font-style:italic;font-size:.8rem;color:var(--gold-dk);margin-bottom:8px;line-height:1.5}
+.si-body p{font-size:.85rem;color:var(--muted);line-height:1.65;flex:1;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.si-cta{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:700;color:var(--navy);background:none;border:none;cursor:pointer;font-family:'Source Sans 3',sans-serif;padding:0;transition:color .2s}
+.si-cta svg{width:13px;height:13px;fill:var(--navy);transition:fill .2s,transform .2s}
+.si-cta:hover{color:var(--gold)}
+.si-cta:hover svg{fill:var(--gold);transform:translateX(3px)}
+
+/* expanded reader for small items */
+.item-reader{display:none;background:var(--white);border-top:3px solid var(--gold);overflow:hidden;max-height:0;transition:max-height .6s cubic-bezier(.4,0,.2,1)}
+.item-reader.open{display:block;max-height:9999px}
+.item-reader .reader-inner{padding:36px 32px}
+
+/* ── SIDEBAR (right) ── */
+.sidebar-col{flex-shrink:0;width:300px}
+.sidebar-card{background:var(--white);border:1px solid var(--border);padding:24px;margin-bottom:24px}
+.sidebar-card h4{font-family:'Oswald',sans-serif;font-size:1rem;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--gold)}
+/* timeline mini */
+.mini-tl{display:flex;flex-direction:column;gap:0}
+.mini-node{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid #f0f0f0;cursor:pointer;transition:background .2s;padding-left:4px;padding-right:4px}
+.mini-node:last-child{border-bottom:none}
+.mini-node:hover{background:var(--gold-pale)}
+.mini-dot{width:36px;height:36px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Oswald',sans-serif;font-size:.75rem;font-weight:700;color:var(--gold)}
+.mini-text .mini-day{font-size:.68rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.mini-text h5{font-size:.85rem;color:var(--navy);font-weight:700;line-height:1.3;margin-bottom:2px}
+.mini-text p{font-size:.75rem;color:#aaa;line-height:1.4}
+/* quick stats */
+.qs-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qs-item{background:var(--navy);padding:14px 12px;text-align:center}
+.qs-item strong{display:block;font-family:'Oswald',sans-serif;font-size:1.6rem;color:var(--gold);line-height:1}
+.qs-item span{font-size:.7rem;color:#a8b8cc;margin-top:3px;display:block;line-height:1.3}
+/* social share */
+.share-btns{display:flex;flex-direction:column;gap:8px}
+.share-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;font-size:.83rem;font-weight:600;text-decoration:none;transition:opacity .2s}
+.share-btn:hover{opacity:.85}
+.share-btn svg{width:16px;height:16px;fill:var(--white);flex-shrink:0}
+.share-btn.fb{background:#1877f2;color:var(--white)}
+.share-btn.tw{background:var(--navy);color:var(--white)}
+.share-btn.wa{background:#25d366;color:var(--white)}
+.share-btn.li{background:#0077b5;color:var(--white)}
+/* newsletter mini */
+.nl-form{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.nl-form input{padding:11px 14px;border:1.5px solid var(--border);font-size:.88rem;font-family:'Source Sans 3',sans-serif;color:var(--navy);outline:none;transition:border-color .2s}
+.nl-form input:focus{border-color:var(--gold)}
+.nl-form button{padding:11px;background:var(--navy);color:var(--white);border:none;font-size:.88rem;font-weight:700;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:background .2s}
+.nl-form button:hover{background:var(--gold);color:var(--navy)}
+
+/* TOAST NOTIFICATION STYLES */
+.sub-toast {position: relative; margin-top: 15px; padding: 12px 20px; border-radius: 4px; font-family: 'Source Sans 3', sans-serif; font-size: 0.95rem; font-weight: 600; display: inline-block; opacity: 0; transform: translateY(10px); transition: opacity 0.4s ease, transform 0.4s ease; visibility: hidden; max-width: 100%; box-sizing: border-box;}
+.sub-toast.show {opacity: 1; transform: translateY(0); visibility: visible;}
+.sub-toast.success {background-color: var(--navy); color: #ffffff; border: 2px solid var(--gold-dk); border-radius:10px;}
+.sub-toast.error {background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;}
+
+/* ═══════════════════════════════════════════════════════════
+   VIDEO SECTION
+═══════════════════════════════════════════════════════════ */
+.video-section{background:var(--navy);padding:60px 40px}
+.video-inner{max-width:1320px;margin:0 auto}
+.video-inner .eyebrow{color:var(--gold);margin-bottom:28px}
+.video-inner .eyebrow::after{background:linear-gradient(90deg,var(--gold),rgba(240,165,0,0))}
+.video-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.v-card{background:var(--navy-mid);overflow:hidden}
+.v-embed{position:relative;padding-bottom:56.25%}
+.v-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.v-label{padding:14px 18px;display:flex;align-items:center;gap:10px}
+.v-label svg{width:16px;height:16px;fill:var(--gold);flex-shrink:0}
+.v-label span{font-size:.85rem;color:#a8b8cc;font-weight:600}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════════════ */
+footer{background:var(--navy);padding:60px 40px 0;color:#a8b8cc;font-size:.92rem;line-height:1.75}
+.footer-grid{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.1)}
+.footer-col h4{color:var(--white);font-size:1.1rem;font-weight:600;margin-bottom:18px}
+.footer-col p{margin-bottom:6px;display:flex;align-items:flex-start;gap:10px}
+.footer-col p svg{width:15px;height:15px;fill:var(--gold);flex-shrink:0;margin-top:4px}
+.footer-links{display:flex;flex-direction:column;gap:4px}
+.footer-links a{color:#a8b8cc;text-decoration:none;padding:3px 0;display:flex;align-items:center;gap:8px;transition:color .2s,padding-left .2s}
+.footer-links a::before{content:'›';color:var(--gold);font-size:1.1rem}
+.footer-links a:hover{color:var(--gold);padding-left:4px}
+.ft-gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.ft-gallery-grid .gal-ph{width:100%;aspect-ratio:1;background:var(--navy-lt);display:block}
+.ft-gallery-grid img{width:100%;aspect-ratio:1;object-fit:cover;display:block;transition:opacity .2s}
+.ft-gallery-grid img:hover{opacity:.75}
+.footer-socials{display:flex;gap:8px;margin-top:16px}
+.fsoc{width:36px;height:36px;background:var(--gold);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:background .2s}
+.fsoc:hover{background:var(--gold-dk)}
+.fsoc svg{width:15px;height:15px;fill:var(--navy)}
+.copyright{max-width:1320px;margin:0 auto;padding:20px 0;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;font-size:.85rem;color:#7a8fa6}
+.copyright a{color:var(--gold);text-decoration:none}
+.copyright a:hover{text-decoration:underline}
+#back-top{position:fixed;bottom:28px;right:28px;width:44px;height:44px;background:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;z-index:500;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s}
+#back-top.show{opacity:1;pointer-events:auto}
+#back-top:hover{background:var(--gold-dk);transform:translateY(-3px)}
+#back-top svg{width:20px;height:20px;fill:var(--navy)}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════ */
+@media(max-width:1200px){.sidebar-col{width:260px}}
+@media(max-width:1100px){
+  .main-inner{flex-direction:column}
+  .sidebar-col{width:100%}
+  .qs-grid{grid-template-columns:repeat(4,1fr)}
+  .mini-tl{flex-direction:row;flex-wrap:wrap;gap:12px}
+  .mini-node{flex:1;min-width:140px;border:1px solid #f0f0f0;border-radius:4px}
+  .hero-inner{flex-direction:column;gap:32px;padding-bottom:40px}
+  .hero-card{width:100%}
+  .hero-card-img{height:160px}
+}
+@media(max-width:1024px){.footer-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){
+  .topbar-contacts{display:none}
+  #topbar{padding:10px 16px}
+  .page-hero,.main-section,.video-section{padding-left:20px;padding-right:20px}
+  .video-grid{grid-template-columns:1fr}
+  .feat-img{height:260px}
+  .feat-body{padding:22px 20px}
+  .reader-inner{padding:28px 20px}
+  .ticker-bar{padding:0 20px}
+}
+@media(max-width:768px){
+  #nav-wrapper{padding:0}
+  nav{flex-wrap:wrap;border-radius:0}
+  .nav-brand-mobile{font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--navy);font-weight:700;padding:12px 16px;display:flex;align-items:center}
+  .nav-toggle{display:flex;flex-direction:column}
+  .nav-collapse{display:none;width:100%;flex-direction:column;background:var(--navy-mid);contents:unset}
+  .nav-collapse.open{display:flex}
+  .nav-links{flex-direction:column;width:100%}
+  .nav-links a,.nav-links>li>button{color:var(--white);padding:12px 20px;width:100%;border-bottom:1px solid rgba(255,255,255,.06)}
+  .nav-links a:hover,.nav-links>li>button:hover{background:rgba(255,255,255,.08);color:var(--gold)}
+  .nav-links a.active{color:var(--gold);background:rgba(255,255,255,.06)}
+  .dropdown-menu{position:static;box-shadow:none;background:rgba(0,0,0,.2)}
+  .dropdown-menu a{color:#ccc;padding-left:36px}
+  .dropdown-menu a:hover{color:var(--gold);background:transparent}
+  .dropdown:hover .dropdown-menu{display:none}
+  .dropdown.open .dropdown-menu{display:block}
+  .nav-socials{display:none}
+  footer{padding:40px 16px 0}
+  .footer-grid{grid-template-columns:1fr;gap:28px}
+  .copyright{flex-direction:column;text-align:center}
+  #back-top{bottom:16px;right:16px}
+  .si-img{width:120px}
+  .reader-photo-grid{grid-template-columns:1fr}
+  .qs-grid{grid-template-columns:1fr 1fr}
+}
+   /* Logo css*/
+   .brand-logo{
+  height: 70px;
+  width: auto;
+  display: block;
+  }
+  /*For L4R Menu*/
+@media (min-width: 769px) {
+  .nav-brand-mobile { display: none; }
+}
+@media (max-width: 768px) {
+  .nav-brand-mobile{font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--navy);font-weight:700;padding:12px 16px;display:flex;align-items:center}
+}
+</style>
+</head>
+<body id="top">
+<div id="global-scroll-bar"></div>
+<div id="spinner"><div class="spin-ring"></div></div>
+
+<!-- ═══ TOPBAR ═══ -->
+<div id="topbar">
+  <div class="topbar-inner">
+    <a href="index.html"><img src="img/Logocolored.png" alt="Light 4 Refugee" class="brand-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-family:'Oswald',sans-serif;font-size:1.5rem;color:var(--gold);font-weight:700;text-decoration:none">Light 4 Refugee</span></a>
+    <div class="topbar-contacts">
+      <div class="contact-item">
+        <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></div>
+        <div class="contact-text"><p>Call Us</p><span>+250 000 000 000</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+        <div class="contact-text"><p>Mail Us</p><span>info@light4refugee.org</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+        <div class="contact-text"><p>Location</p><span>Mahama Camp, Kirehe, Rwanda</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ NAVBAR ═══ -->
+<div id="nav-wrapper">
+  <nav>
+    <span class="nav-brand-mobile">L4R Menu</span>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <div class="nav-collapse" id="nav-collapse">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">About Us<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="about-us.html">About What We Do</a>
+            <a href="team.html">About Our Team</a>
+            <a href="gallery.html">About L4R Gallery</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">Programs<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="programs.html">Light Club & iSpeakLead</a>
+            <a href="applications-hub.html">Applications Hub</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">Get Involved<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="become-a-mentor.html">Become a Mentor</a>
+            <a href="become-a-mentee.html">Become a Mentee</a>
+            <a href="partners.html">Partners</a>
+          </div>
+        </li>
+        <li><a href="news-stories.html" class="active">News &amp; Stories</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact-us.html">Contact</a></li>
+        <li><a href="donate.html" style="background:var(--navy);color:var(--gold);font-weight:700; border-radius:5px;">Donate</a></li>
+      </ul>
+      <div class="nav-socials">
+        <button id="theme-toggle" aria-label="Toggle Theme Mode"></button>
+        <a class="soc-btn" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="soc-btn" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="var(--white)"/></svg></a>
+        <a class="soc-btn" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<div class="page-hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span style="color:#fff">News &amp; Stories</span></div>
+      <div class="hero-chip"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg> Stories From The Field</div>
+      <h1>Every Dispatch is a<br><em>Human Story</em></h1>
+      <p class="sub">From the classrooms of Mahama to futures being rewritten — live field reports and stories from the students, mentors, and teams building Light4Refugee from the inside.</p>
+      <div class="filter-row">
+        <button class="filter-pill active" onclick="applyFilter('all',this)">All Stories</button>
+        <button class="filter-pill" onclick="applyFilter('bootcamp',this)">Scholars Bootcamp</button>
+        <button class="filter-pill" onclick="applyFilter('program',this)">Programs</button>
+        <button class="filter-pill" onclick="applyFilter('community',this)">Community</button>
+      </div>
+    </div>
+    <!-- latest story quick-card -->
+    <div class="hero-card">
+      <div class="hero-card-img">
+        <!-- Replace src with: img/bootcamp-day1-main.jpg -->
+        <img src="img/gallery-5.jpeg" alt="Bootcamp Day 1"
+             onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><span>bootcamp-day1-main.jpg</span></div>'">
+      </div>
+      <div class="hero-card-body">
+        <span class="hc-tag">📍 Latest — Bootcamp Day 1</span>
+        <h3>The Launch of the Scholars Bootcamp</h3>
+        <p>120+ students. One school. An extraordinary first day that no one expected.</p>
+        <button class="hc-link" onclick="openFeatured()">
+          Read now <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="hero-accent"></div>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-label">Live Reports</div>
+  <div class="ticker-scroll">
+    <span>Day 1 — The Launch · July 21, 2025</span>
+    <span>Day 2 — Voices Rise · July 22, 2025</span>
+    <span>Day 3 — Words That Move · July 23, 2025</span>
+    <span>Day 4 — Purpose in Motion · July 24, 2025</span>
+    <span>Day 5 — New Beginnings · July 25, 2025</span>
+    <!-- duplicate for seamless loop 
+    <span>Day 1 — The Launch · July 21, 2025</span>
+    <span>Day 2 — Voices Rise · July 22, 2025</span>
+    <span>Day 3 — Words That Move · July 23, 2025</span>
+    <span>Day 4 — Purpose in Motion · July 24, 2025</span>
+    <span>Day 5 — New Beginnings · July 25, 2025</span> -->
+  </div>
+</div>
+
+<!-- ═══ MAIN SECTION ═══ -->
+<div class="main-section">
+  <div class="main-inner">
+
+    <!-- ── GRID COLUMN ── -->
+    <div class="grid-col">
+      <div class="eyebrow">Featured Story</div>
+
+      <!-- ════ FEATURED CARD — DAY 1 ════ -->
+      <div class="featured-wrap" data-cat="bootcamp" id="feat-wrap">
+        <div class="feat-card" onclick="toggleFeatured()" id="feat-card">
+          <div class="feat-img">
+            <!-- Replace src with: img/bootcamp-day1-cover.jpg -->
+            <img src="img/Day50.jpg" alt="Bootcamp Day 1 cover"
+                 onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span class=\'img-name\'>bootcamp-day1-cover.jpg</span></div>'">
+            <div class="feat-img-overlay"></div>
+            <div class="feat-badge">Day 1 · July 21, 2025</div>
+          </div>
+          <div class="feat-body">
+            <div class="feat-meta">
+              <span class="tag">Scholars Bootcamp</span>
+              <span class="date">July 21, 2025</span>
+              <span class="reading-time"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"/></svg> 4 min read</span>
+            </div>
+            <h2>The Launch of the Light4Refugee Scholars Bootcamp</h2>
+            <div class="feat-quote">"The gates opened, classrooms unlocked, and we walked into possibility."</div>
+            <p>On July 21st, something extraordinary began at G.S. Paysannat L in Mahama Refugee Camp. More than 120 eager young minds showed up — nearly tripling expectations. Critical thinking, leadership, college counseling, career exploration, mental health support. A day that proved impact isn't about perfection — it's about presence.</p>
+            <button class="read-more-btn" onclick="event.stopPropagation();toggleFeatured()" id="feat-btn">
+              Read Full Report <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ══ INLINE ARTICLE READER — DAY 1 ══ -->
+        <div class="article-reader" id="feat-reader">
+          <div class="reader-inner">
+            <!-- Header -->
+            <div class="reader-header">
+              <div class="reader-chips">
+                <span class="r-chip">Scholars Bootcamp</span>
+                <span class="r-chip">Field Report</span>
+                <span class="r-date">July 21, 2025</span>
+              </div>
+              <h1>The Launch of the Light4Refugee Scholars Bootcamp</h1>
+              <div class="location"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> G.S. Paysannat L · Mahama Refugee Camp · July 21, 2025</div>
+            </div>
+            <div class="reader-opening-quote">"The gates opened, classrooms unlocked, and we walked into possibility."</div>
+
+            <!-- Lead image -->
+            <figure class="reader-img">
+              <!-- Replace src with: img/bootcamp-day1-main.jpg -->
+              <img src="img/bootcamp-day1-main.jpg" alt="Students on opening day of the Scholars Bootcamp"
+                   onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp-day1-main.jpg</span></div>'">
+              <figcaption>Opening morning — students arrive at G.S. Paysannat L, Mahama Refugee Camp.</figcaption>
+            </figure>
+
+            <div class="reader-body">
+              <h2>A Day That Changed Everything</h2>
+              <p>On Monday, July 21st, something extraordinary began at G.S. Paysannat L in Mahama Refugee Camp. The very school that once nurtured so many of us — the Light4Refugee founders and team as a whole — became the launchpad for a new chapter: the <strong>first-ever Light4Refugee Scholars Bootcamp</strong>.</p>
+              <p>The halls echoed with excitement. <strong>More than 120 eager young minds showed up, nearly tripling the number we expected.</strong> With no clear structure, minimal time, and hearts pounding with nervous energy and excitement, our team adapted in real time. What unfolded was nothing short of remarkable.</p>
+
+              <figure class="reader-img">
+                <!-- Replace src with: img/bootcamp01.jpg -->
+                <img src="img/bootcamp01.jpg" alt="Students engaged in session"
+                     onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp01.jpg</span></div>'">
+                <figcaption>Students leaning in during the morning session.</figcaption>
+              </figure>
+
+              <h2>A Full Day of Purpose</h2>
+              <p>Our classes unfolded as life itself does: spontaneously, beautifully, and sometimes a little chaotically. We kicked off with sessions that sparked thought, stirred emotion, and challenged assumptions:</p>
+              <ul>
+                <li>Critical Thinking</li>
+                <li>Leadership</li>
+                <li>Guided Reading</li>
+                <li>College Counseling</li>
+                <li>Career Exploration</li>
+                <li>Mental Health &amp; Psychosocial Support</li>
+              </ul>
+
+              <div class="pull-quote">"Students didn't just sit and listen. They leaned in. Asked hard questions. Shared personal reflections. Laughed, paused, and learned. Some moments were loud with energy; others were quietly profound."</div>
+
+              <div class="reader-photo-grid">
+                <!-- Replace srcs with: img/bootcamp02.jpg and img/bootcamp03.jpg -->
+                <img src="img/bootcamp02.jpg" alt="Bootcamp session moment"
+                     onerror="this.outerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp02.jpg</span></div>'">
+                <img src="img/bootcamp03.jpg" alt="Students in discussion"
+                     onerror="this.outerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp03.jpg</span></div>'">
+              </div>
+
+              <h2>A First Step Worth Remembering</h2>
+              <p>It wasn't the schedule we'll remember — it was the spirit. How one student stood up, nervous but bold, to share a dream. How the room fell silent during a story that hit too close to home. How the mentors, barely older than the learners, guided with humility and purpose.</p>
+              <p>How a school once filled with our own childhood memories transformed into a beacon of hope for the future.</p>
+              <p>Snacks were shared. Smiles exchanged. Notebooks filled. Possibilities awakened.</p>
+
+              <h2>When Leadership Meets Humanity</h2>
+              <p>This bootcamp would not exist without the <strong>Government of Rwanda</strong>, whose open-armed refugee policy since 2015 has offered safety, dignity, and opportunity to so many. We also recognize the ongoing support of <strong>UNHCR</strong> — whose tireless efforts in refugee protection and education make the work of Light4Refugee possible.</p>
+              <p>And then, our beloved <strong>G.S. Paysannat L</strong> — the place where many of us once wore uniforms and carried notebooks through these very halls. We were welcomed back not as students, but as mentors. The staff embraced us with warmth. We didn't just feel accommodated. We felt at home.</p>
+
+              <figure class="reader-img">
+                <!-- Replace src with: img/bootcamp04.jpg -->
+                <img src="img/bootcamp04.jpg" alt="Team and students at close of Day 1"
+                     onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp04.jpg</span></div>'">
+                <figcaption>The team and scholars at the end of Day 1 — the beginning of something lasting.</figcaption>
+              </figure>
+
+              <h2>Only the Beginning</h2>
+              <p>Day 1 taught us that impact isn't about perfection — it's about presence. We showed up, together. And that's what made it unforgettable. The following day brought more lessons, more stories, and more light.</p>
+              <p>But for now, we pause to breathe it in and reflect. The first step was taken. And the journey has begun.</p>
+            </div>
+
+            <div class="reader-tags">
+              <span class="r-tag">#Light4Refugee</span>
+              <span class="r-tag">#ScholarsBootcamp</span>
+              <span class="r-tag">#RefugeeYouth</span>
+              <span class="r-tag">#Rwanda</span>
+              <span class="r-tag">#Mahama</span>
+              <span class="r-tag">#EducationMatters</span>
+              <span class="r-tag">#LeadershipInAction</span>
+            </div>
+
+            <button class="close-reader" onclick="closeFeatured()">
+              <svg viewBox="0 0 24 24"><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg>
+              Collapse Article
+            </button>
+          </div>
+        </div>
+      </div><!-- /featured-wrap -->
+
+      <!-- ── STORY LIST: Days 2–5 ── -->
+      <div class="eyebrow" style="margin-top:48px">Full Series — All 5 Days</div>
+      <div class="story-list" id="story-list">
+
+        <!-- DAY 2 -->
+        <div data-cat="bootcamp">
+          <div class="story-item" onclick="toggleItem('r2')">
+            <div class="si-img">
+              <!-- Replace src: img/bootcamp-day2-cover.jpg -->
+              <img src="img/bootcamp-day2-cover.jpg" alt="Day 2"
+                   onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp-day2-cover.jpg</span></div>'">
+              <div class="si-day">Day 2</div>
+            </div>
+            <div class="si-body">
+              <div class="si-meta"><span class="si-tag">Bootcamp</span><span class="si-date">July 22, 2025</span></div>
+              <h3>Voices Rise, Confidence Grows</h3>
+              <div class="si-quote">"We began as strangers in rows. By the end, we spoke like a community in bloom."</div>
+              <p>Day 2 deepened the momentum. Students grouped by academic level engaged in targeted learning that unfolded with greater connection and insight than anyone expected.</p>
+              <button class="si-cta">Expand Full Report <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+            </div>
+          </div>
+          <div class="item-reader" id="r2">
+            <div class="reader-inner">
+              <div class="reader-header">
+                <div class="reader-chips"><span class="r-chip">Bootcamp Day 2</span><span class="r-date">July 22, 2025</span></div>
+                <h1>Voices Rise, Confidence Grows</h1>
+                <div class="location"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Mahama Refugee Camp · July 22, 2025</div>
+              </div>
+              <div class="reader-opening-quote">"We began as strangers in rows. By the end, we spoke like a community in bloom."</div>
+              <figure class="reader-img">
+                <!-- Replace: img/bootcamp-day2-main.jpg -->
+                <img src="img/bootcamp-day2-main.jpg" alt="Day 2 main" onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp-day2-main.jpg</span></div>'">
+              </figure>
+              <div class="reader-body">
+                <h2>A Day for Deeper Discovery</h2>
+                <p>The second day of the Light4Refugee Scholars Bootcamp didn't just continue the momentum — it deepened it. After the surprise and spark of the first day, Tuesday welcomed a more grounded energy. Students returned — some in their school uniforms, others with notebooks ready — more focused, more curious, more alive to the promise of the space we had created together.</p>
+                <p>This time, we gathered with a bit more clarity. <strong>Students were grouped according to their academic levels</strong>, allowing for learning to meet each mind where it was. And from that simple act of intention, the day unfolded with greater connection and insight.</p>
+                <div class="reader-photo-grid">
+                  <img src="img/bootcamp-day2-a.jpg" alt="Day 2 session" onerror="this.outerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp-day2-a.jpg</span></div>'">
+                  <img src="img/bootcamp-day2-b.jpg" alt="Day 2 discussion" onerror="this.outerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp-day2-b.jpg</span></div>'">
+                </div>
+                <div class="pull-quote">"Something had shifted. The spark from Day 1 had become a steady fire."</div>
+              </div>
+              <div class="reader-tags"><span class="r-tag">#BootcampDay2</span><span class="r-tag">#VoicesRise</span><span class="r-tag">#RefugeeYouth</span></div>
+              <button class="close-reader" onclick="closeItem('r2')"><svg viewBox="0 0 24 24"><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg> Collapse</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAY 3 -->
+        <div data-cat="bootcamp">
+          <div class="story-item" onclick="toggleItem('r3')">
+            <div class="si-img">
+              <!-- Replace: img/bootcamp-day3-cover.jpg -->
+              <img src="img/bootcamp-day3-cover.jpg" alt="Day 3" onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp-day3-cover.jpg</span></div>'">
+              <div class="si-day">Day 3</div>
+            </div>
+            <div class="si-body">
+              <div class="si-meta"><span class="si-tag">Bootcamp</span><span class="si-date">July 23, 2025</span></div>
+              <h3>Words That Move, Dreams That Speak</h3>
+              <div class="si-quote">"We're not just learning English. We're learning how to tell the world who we are."</div>
+              <p>Day 3 found its rhythm. Students arrived with intention — journals tucked under arms, curiosity glowing. The college application process became a map, not a mystery.</p>
+              <button class="si-cta">Expand Full Report <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+            </div>
+          </div>
+          <div class="item-reader" id="r3">
+            <div class="reader-inner">
+              <div class="reader-header">
+                <div class="reader-chips"><span class="r-chip">Bootcamp Day 3</span><span class="r-date">July 23, 2025</span></div>
+                <h1>Words That Move, Dreams That Speak</h1>
+                <div class="location"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Mahama Refugee Camp · July 23, 2025</div>
+              </div>
+              <div class="reader-opening-quote">"We're not just learning English. We're learning how to tell the world who we are."</div>
+              <figure class="reader-img">
+                <img src="img/bootcamp-day3-main.jpg" alt="Day 3" onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp-day3-main.jpg</span></div>'">
+              </figure>
+              <div class="reader-body">
+                <h2>On Day 3, the Bootcamp Found Its Rhythm</h2>
+                <p>Students returned not just on time, but with intention. There was a quiet confidence in the way they walked in — journals tucked under arms, curiosity glowing in their eyes. Something had shifted. The spark from Day 1 had become a steady fire.</p>
+                <p>We split into two learning paths, but journeyed toward one shared goal: <strong>empowerment through education</strong>.</p>
+                <p>Graduate-track students gathered to explore what once felt impossible — the college application process. But this time, it wasn't a mystery. It was a map. They wrote. They reflected. They began to see themselves as candidates worthy of the world's best institutions.</p>
+                <div class="pull-quote">"The college application process stopped being a mystery. It became a map — and they were the ones reading it."</div>
+                <div class="reader-photo-grid">
+                  <img src="img/bootcamp-day3-a.jpg" alt="Day 3 writing session" onerror="this.outerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp-day3-a.jpg</span></div>'">
+                  <img src="img/bootcamp-day3-b.jpg" alt="Day 3 group" onerror="this.outerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp-day3-b.jpg</span></div>'">
+                </div>
+              </div>
+              <div class="reader-tags"><span class="r-tag">#BootcampDay3</span><span class="r-tag">#WordsThatMove</span><span class="r-tag">#CollegeCounseling</span></div>
+              <button class="close-reader" onclick="closeItem('r3')"><svg viewBox="0 0 24 24"><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg> Collapse</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAY 4 -->
+        <div data-cat="bootcamp">
+          <div class="story-item" onclick="toggleItem('r4')">
+            <div class="si-img">
+              <!-- Replace: img/bootcamp-day4-cover.jpg -->
+              <img src="img/bootcamp-day4-cover.jpg" alt="Day 4" onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp-day4-cover.jpg</span></div>'">
+              <div class="si-day">Day 4</div>
+            </div>
+            <div class="si-body">
+              <div class="si-meta"><span class="si-tag">Bootcamp</span><span class="si-date">July 24, 2025</span></div>
+              <h3>Purpose in Motion</h3>
+              <div class="si-quote">"When someone becomes better for themselves, they naturally become better for others."</div>
+              <p>Guided seminars on gender equality and equity challenged students to confront hard questions and imagine futures of fairness and inclusion.</p>
+              <button class="si-cta">Expand Full Report <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+            </div>
+          </div>
+          <div class="item-reader" id="r4">
+            <div class="reader-inner">
+              <div class="reader-header">
+                <div class="reader-chips"><span class="r-chip">Bootcamp Day 4</span><span class="r-date">July 24, 2025</span></div>
+                <h1>Purpose in Motion</h1>
+                <div class="location"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Mahama Refugee Camp · July 24, 2025</div>
+              </div>
+              <div class="reader-opening-quote">"When someone becomes better for themselves, they naturally become better for others."</div>
+              <figure class="reader-img">
+                <img src="img/bootcamp-day4-main.jpg" alt="Day 4" onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp-day4-main.jpg</span></div>'">
+              </figure>
+              <div class="reader-body">
+                <h2>Momentum in Every Step</h2>
+                <p>From the moment the day began, there was a sense of momentum in the air. Conversations unfolded, ideas came alive, and every session moved forward with focus, creativity, and a spirit of shared learning. Scholars arrived ready — not just for lessons, but for the kind of growth that goes beyond the classroom.</p>
+                <p>Class discussions began with guided reading on <strong>gender equality and equity</strong>, unfolding in powerful small-group seminars. Through hard questions and honest reflections, students confronted the challenges of inequality and imagined futures of fairness and inclusion.</p>
+                <div class="pull-quote">"You could see it in the way they sat, in the way they spoke. Purpose had arrived — and it wore their faces."</div>
+                <div class="reader-photo-grid">
+                  <img src="img/bootcamp-day4-a.jpg" alt="Day 4 seminar" onerror="this.outerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp-day4-a.jpg</span></div>'">
+                  <img src="img/bootcamp-day4-b.jpg" alt="Day 4 group" onerror="this.outerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp-day4-b.jpg</span></div>'">
+                </div>
+              </div>
+              <div class="reader-tags"><span class="r-tag">#BootcampDay4</span><span class="r-tag">#PurposeInMotion</span><span class="r-tag">#GenderEquality</span></div>
+              <button class="close-reader" onclick="closeItem('r4')"><svg viewBox="0 0 24 24"><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg> Collapse</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- DAY 5 -->
+        <div data-cat="bootcamp">
+          <div class="story-item" onclick="toggleItem('r5')">
+            <div class="si-img">
+              <!-- Replace: img/bootcamp-day5-cover.jpg -->
+              <img src="img/bootcamp-day5-cover.jpg" alt="Day 5" onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp-day5-cover.jpg</span></div>'">
+              <div class="si-day">Day 5</div>
+            </div>
+            <div class="si-body">
+              <div class="si-meta"><span class="si-tag">Bootcamp</span><span class="si-date">July 25, 2025</span></div>
+              <h3>The End That Sparked New Beginnings</h3>
+              <div class="si-quote">"Knowing is not enough — you must take action."</div>
+              <p>The final day. Confidence earned, not taught. A closing ceremony that proved: the doubts were loud, but the hope was louder.</p>
+              <button class="si-cta">Expand Full Report <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+            </div>
+          </div>
+          <div class="item-reader" id="r5">
+            <div class="reader-inner">
+              <div class="reader-header">
+                <div class="reader-chips"><span class="r-chip">Bootcamp Day 5</span><span class="r-date">July 25, 2025</span></div>
+                <h1>The End That Sparked New Beginnings</h1>
+                <div class="location"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Mahama Refugee Camp · July 25, 2025</div>
+              </div>
+              <div class="reader-opening-quote">"In life, many people know what to do, but few do it. Knowing is not enough — you must take action."</div>
+              <figure class="reader-img">
+                <img src="img/bootcamp-day5-main.jpg" alt="Closing ceremony Day 5" onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp-day5-main.jpg</span></div>'">
+              </figure>
+              <div class="reader-body">
+                <h2>We Didn't Just Show Up — We Rose</h2>
+                <p>We didn't know what we were stepping into a few days ago. Would we manage over 120 eager minds? Would the resources hold up? Would we truly be able to give every scholar the tools to grow? The doubts were loud. But the hope was louder.</p>
+                <p>And so, on the final day of the L4R Scholars Bootcamp, we didn't just show up — <strong>we rose</strong>.</p>
+                <h2>From Growth to Grit</h2>
+                <p>The morning began with an energy unlike any other. One class gathered to sharpen essential life and academic skills — discussions flowed, ideas sparked, and reflections dug deeper than ever before. You could see it in their faces: confidence wasn't taught; it was earned.</p>
+                <div class="pull-quote">"The doubts were loud. But the hope was louder. And so, we rose."</div>
+                <div class="reader-photo-grid">
+                  <img src="img/bootcamp-day5-a.jpg" alt="Closing ceremony" onerror="this.outerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp-day5-a.jpg</span></div>'">
+                  <img src="img/bootcamp-day5-b.jpg" alt="Final moments" onerror="this.outerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>bootcamp-day5-b.jpg</span></div>'">
+                </div>
+                <h2>A Journey Complete. A Movement Begun.</h2>
+                <p>Five days. One school. 120+ scholars. The L4R Scholars Bootcamp Cohort 1 is now a chapter written — not in ink, but in the confidence, skills, and hope that walked out of those doors. What comes next is bigger than any of us imagined when we walked in.</p>
+              </div>
+              <div class="reader-tags"><span class="r-tag">#BootcampDay5</span><span class="r-tag">#NewBeginnings</span><span class="r-tag">#ScholarsBootcamp</span><span class="r-tag">#L4R</span></div>
+              <button class="close-reader" onclick="closeItem('r5')"><svg viewBox="0 0 24 24"><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg> Collapse</button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /story-list -->
+    </div><!-- /grid-col -->
+
+    <!-- ── SIDEBAR ── -->
+    <div class="sidebar-col">
+
+      <!-- Quick stats -->
+      <div class="sidebar-card">
+        <h4>Bootcamp in Numbers</h4>
+        <div class="qs-grid">
+          <div class="qs-item"><strong>120+</strong><span>Scholars attended</span></div>
+          <div class="qs-item"><strong>5</strong><span>Days of learning</span></div>
+          <div class="qs-item"><strong>6</strong><span>Topics covered daily</span></div>
+          <div class="qs-item"><strong>1</strong><span>Camp. Many futures.</span></div>
+        </div>
+      </div>
+
+      <!-- Mini timeline -->
+      <div class="sidebar-card">
+        <h4>All 5 Days</h4>
+        <div class="mini-tl">
+          <div class="mini-node" onclick="openFeatured()">
+            <div class="mini-dot">01</div>
+            <div class="mini-text">
+              <div class="mini-day">July 21</div>
+              <h5>The Launch</h5>
+              <p>120+ students. One extraordinary beginning.</p>
+            </div>
+          </div>
+          <div class="mini-node" onclick="toggleItem('r2')">
+            <div class="mini-dot">02</div>
+            <div class="mini-text">
+              <div class="mini-day">July 22</div>
+              <h5>Voices Rise</h5>
+              <p>Grouped learning. Deeper connection.</p>
+            </div>
+          </div>
+          <div class="mini-node" onclick="toggleItem('r3')">
+            <div class="mini-dot">03</div>
+            <div class="mini-text">
+              <div class="mini-day">July 23</div>
+              <h5>Words That Move</h5>
+              <p>College applications become a map.</p>
+            </div>
+          </div>
+          <div class="mini-node" onclick="toggleItem('r4')">
+            <div class="mini-dot">04</div>
+            <div class="mini-text">
+              <div class="mini-day">July 24</div>
+              <h5>Purpose in Motion</h5>
+              <p>Gender equity. Momentum. Growth.</p>
+            </div>
+          </div>
+          <div class="mini-node" onclick="toggleItem('r5')">
+            <div class="mini-dot">05</div>
+            <div class="mini-text">
+              <div class="mini-day">July 25</div>
+              <h5>New Beginnings</h5>
+              <p>Confidence earned. Movement born.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Share -->
+      <div class="sidebar-card">
+        <h4>Share These Stories</h4>
+        <div class="share-btns">
+          <a class="share-btn fb" href="https://www.facebook.com/sharer/sharer.php?u=https://light4refugee.org/news-stories" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> Share on Facebook
+          </a>
+          <a class="share-btn tw" href="https://twitter.com/intent/tweet?url=https://light4refugee.org/news-stories&text=Stories+from+the+field+at+Light4Refugee" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L2.25 2.25h6.938l4.26 5.629L18.244 2.25z"/></svg> Share on X / Twitter
+          </a>
+          <a class="share-btn wa" href="https://wa.me/?text=Read+the+latest+field+reports+from+Light4Refugee+https://light4refugee.org/news-stories" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.534 5.847L.057 23.535l5.848-1.53A11.956 11.956 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.861 0-3.601-.488-5.11-1.342l-.364-.215-3.588.94.956-3.505-.234-.375A9.966 9.966 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Share on WhatsApp
+          </a>
+          <a class="share-btn li" href="https://www.linkedin.com/sharing/share-offsite/?url=https://light4refugee.org/news-stories" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg> Share on LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- Newsletter Sidebar Card Layout -->
+      <div class="sidebar-card"> 
+        <h4>Never Miss a Story</h4> 
+        <p style="font-size:.85rem;color:var(--muted);line-height:1.7;margin-bottom:12px;">Field reports, student milestones, and program updates delivered to your inbox.</p> 
+        <div class="nl-form" style="position: relative;"> 
+          <input type="email" id="nl-email" placeholder="your@email.com" required> 
+          <button id="nl-btn" onclick="nlSubscribe()">Subscribe — It's Free</button> 
+        </div> 
+      </div>
+
+      <!-- Reusable Toast Alert Window (If not already present on page body) -->
+      <div id="sub-toast" class="sub-toast"></div>
+
+    </div><!-- /sidebar-col -->
+  </div>
+</div><!-- /main-section -->
+
+<!-- VIDEOS -->
+<div class="video-section">
+  <div class="video-inner">
+    <div class="eyebrow">Watch — From The Field</div>
+    <div class="video-grid">
+      <div class="v-card">
+        <div class="v-embed">
+          <iframe src="https://www.youtube.com/watch?v=hqNFRf9BAEo" allowfullscreen loading="lazy" title="L4R Bootcamp Video 1"></iframe>
+        </div>
+        <div class="v-label"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg><span>L4R Scholars Bootcamp — Highlights Reel</span></div>
+      </div>
+      <div class="v-card">
+        <div class="v-embed">
+          <iframe src="https://www.youtube.com/watch?v=UsAB5_Gg87E" allowfullscreen loading="lazy" title="L4R Student Voices"></iframe>
+        </div>
+        <div class="v-label"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg><span>Voices from Mahama — Student Reflections</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Our Operational Locations</h4>
+      <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Mahama &amp; Kiziba Refugee Camps, <br>Kirehe &amp; Karongi Districts, Rwanda</p>
+      <p><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>+250 792 052 725</p>
+      <p><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>info@light4refugee.org</p>
+      <div class="footer-socials">
+        <a class="fsoc" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="fsoc" href="https://www.youtube.com/channel/UCKFczxvUGOmq7e7tJQ65HxA" target="_blank" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+        <a class="fsoc" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="var(--navy)" stroke-width="2"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="var(--navy)" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="var(--navy)" stroke-width="2"/></svg></a>
+        <a class="fsoc" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div><br>
+      <a class="brand" href="index.html"><img src="img/logo.png" alt="Light 4 Refugee" class="brand-logo"></a>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="team.html">Our Team</a>
+        <a href="news-stories.html">News &amp; Stories</a>
+        <a href="applications-hu.html">Applications Hub</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact-us.html">Contact Us</a>
+        <a href="donate.html">Donate</a>
+        <a href="testimonies.html">Testimonials</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Our Programs</h4>
+      <div class="footer-links">
+        <a href="about-us.html">Academic Preparation</a>
+        <a href="about-us.html">College Counseling</a>
+        <a href="about-us.html">Career Guidance</a><br>
+        <h4>Get Involved</h4>
+        <a href="programs.html">Light Club (ECP &amp; ISEP)</a>
+        <a href="become-a-mentor.html">Become a Mentor</a>
+        <a href="become-a-mentee.html">Become a Mentee</a>
+        <a href="partners.html">Partner With Us</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>From the Field</h4>
+      <div class="ft-gallery-grid">
+        <a href="gallery.html"><img src="img/gallery-1.jpg"    alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-2.jpg"       alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-3.jpg"    alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-6.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-4.jpg"     alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-5.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">
+    <span>&copy; 2026 <a href="https://light4refugee.org" target="_blank">Light 4 Refugee</a>, All Rights Reserved.</span>
+      <span style="display:inline-flex; gap:12px;">
+      <a href="terms-conditions.html" target="_blank" style="color:#2e6d04;">Terms/Conditions</a> |
+      <a href="privacy-policy.html" target="_blank" style="color:#2e6d04;">Privacy Policy</a>
+      </span>
+    <span>Designed By <a href="https://yvesnickylirf.com" target="_blank">Yves Nicky Lirf</a></span>
+  </div>
+</footer>
+
+<button id="back-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+</button>
+<script src="theme-logic.js"></script>
+<script>
+/* === BOOT === */
+window.addEventListener('load',()=>{
+  const sp=document.getElementById('spinner');
+  sp.classList.add('hide');
+  setTimeout(()=>sp.remove(),500);
+});
+
+/* === STICKY NAV === */
+const topbar=document.getElementById('topbar');
+const navWrap=document.getElementById('nav-wrapper');
+const tbH=topbar.offsetHeight;
+window.addEventListener('scroll',()=>{
+  const s=window.scrollY>tbH;
+  topbar.classList.toggle('hidden',s);
+  navWrap.classList.toggle('stuck',s);
+  document.getElementById('back-top').classList.toggle('show',window.scrollY>300);
+},{passive:true});
+
+/* === MOBILE NAV === */
+document.getElementById('nav-toggle').addEventListener('click',function(){
+  this.classList.toggle('open');
+  document.getElementById('nav-collapse').classList.toggle('open');
+});
+function toggleDD(id){
+  if(window.innerWidth>768)return;
+  document.getElementById(id).classList.toggle('open');
+}
+
+/* === FILTER === */
+function applyFilter(cat,btn){
+  document.querySelectorAll('.filter-pill').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  // featured
+  const fw=document.getElementById('feat-wrap');
+  fw.style.display=(cat==='all'||fw.dataset.cat===cat)?'':'none';
+  // story items
+  document.querySelectorAll('#story-list>div[data-cat]').forEach(item=>{
+    item.style.display=(cat==='all'||item.dataset.cat===cat)?'':'none';
+  });
+}
+
+/* === FEATURED READER === */
+let featOpen=false;
+function toggleFeatured(){
+  featOpen=!featOpen;
+  const reader=document.getElementById('feat-reader');
+  const btn=document.getElementById('feat-btn');
+  if(featOpen){
+    reader.classList.add('open');
+    btn.innerHTML='Collapse <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M7 14l5-5 5 5z"/></svg>';
+    setTimeout(()=>reader.scrollIntoView({behavior:'smooth',block:'start'}),50);
+  }else{
+    reader.classList.remove('open');
+    btn.innerHTML='Read Full Report <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M7 10l5 5 5-5z"/></svg>';
+  }
+}
+function openFeatured(){if(!featOpen)toggleFeatured();}
+function closeFeatured(){if(featOpen)toggleFeatured();}
+
+/* === ITEM READERS === */
+function toggleItem(id){
+  const reader=document.getElementById(id);
+  const isOpen=reader.classList.contains('open');
+  // close all others
+  document.querySelectorAll('.item-reader.open').forEach(r=>{if(r.id!==id)r.classList.remove('open');});
+  if(isOpen){
+    reader.classList.remove('open');
+  }else{
+    reader.classList.add('open');
+    setTimeout(()=>reader.scrollIntoView({behavior:'smooth',block:'start'}),50);
+  }
+}
+function closeItem(id){document.getElementById(id).classList.remove('open')}
+
+/* === SIDEBAR NEWSLETTER SUBSCRIBE === */
+function nlSubscribe(){ 
+  // Replace this link with your active Web App deployment URL string!
+  const scriptUrl = 'https://script.google.com/macros/s/AKfycbwhqGzKGS-WWH0bJFr82p82inwZSiXMni2ykkBhg8yjpcjQ-RyRxxAgRlGBqtPcZhD8Cg/exec'; 
+  const email = document.getElementById('nl-email').value.trim(); 
+  const btn = document.getElementById('nl-btn'); 
+  
+  if(!email || !email.includes('@')){ 
+    showToast('Please enter a valid email address.', 'error'); 
+    return; 
+  } 
+  
+  // Update UI element states during transmission step
+  btn.disabled = true; 
+  btn.innerText = 'Subscribing...'; 
+  
+  fetch(scriptUrl + '?email=' + encodeURIComponent(email) + '&formType=sidebarNewsletter', { 
+    method: 'POST' 
+  }) 
+  .then(response => response.json()) 
+  .then(data => { 
+    if(data.result === 'success') { 
+      showToast('Thank you for subscribing! We\'ll keep you updated. — Light4Refugee', 'success'); 
+      document.getElementById('nl-email').value = ''; 
+    } else { 
+      showToast('Something went wrong. Please try again later.', 'error'); 
+    } 
+  }) 
+  .catch(error => { 
+    console.error('Error!', error.message); 
+    showToast('Subscription failed. Please check your internet connection.', 'error'); 
+  }) 
+  .finally(() => { 
+    btn.disabled = false; 
+    btn.innerText = "Subscribe — It's Free"; 
+  }); 
+}
+
+// Helper function to animate the toast view window 
+function showToast(message, type) { 
+  const toast = document.getElementById('sub-toast'); 
+  toast.innerText = message; 
+  toast.className = 'sub-toast show ' + type; 
+  
+  // Automatically hides the toast box after 5 seconds 
+  setTimeout(() => { 
+    toast.classList.remove('show'); 
+  }, 5000); 
+}
+
+</script>
+</body>
+</html>

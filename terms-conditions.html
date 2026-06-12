@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms & Conditions – L4R</title>
+<meta name="description" content="Terms and Conditions governing the use of Light4Refugee's website, programs, and services.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="img/logo.jpg?v=2">
+<link rel="stylesheet" href="theme-style.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0d1b2e; --navy-mid:#162540; --navy-lt:#1e3258;
+  --gold:#f0a500; --gold-dk:#c98a00; --gold-pale:#fff8e6;
+  --white:#ffffff; --cream:#f5f0e8; --text:#1a1a1a; --muted:#666;
+  --radius:12px; --shadow:0 4px 24px rgba(13,27,46,.08);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Source Sans 3',sans-serif;background:var(--cream);overflow-x:hidden;color:var(--text)}
+
+/* SPINNER */
+#spinner{position:fixed;inset:0;z-index:9999;background:var(--white);display:flex;align-items:center;justify-content:center;transition:opacity .4s}
+#spinner.hide{opacity:0;pointer-events:none}
+.spin-ring{width:48px;height:48px;border-radius:50%;border:4px solid #ddd;border-top-color:var(--gold);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* TOPBAR */
+#topbar{background:var(--navy);padding:10px 40px;display:flex;align-items:center;transition:transform .35s ease,opacity .35s ease}
+#topbar.hidden{transform:translateY(-100%);opacity:0;pointer-events:none;position:absolute;width:100%}
+.topbar-inner{display:flex;align-items:center;width:100%;max-width:1320px;margin:0 auto}
+.brand-logo{height:60px;width:auto;display:block}
+.topbar-contacts{display:flex;gap:32px;margin-left:auto}
+.contact-item{display:flex;align-items:center;gap:10px}
+.contact-icon{width:36px;height:36px;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-icon svg{width:16px;height:16px;fill:var(--navy)}
+.contact-text p{font-size:.75rem;color:var(--gold);font-weight:600;margin-bottom:1px}
+.contact-text span{font-size:.8rem;color:var(--white)}
+
+/* NAVBAR */
+#nav-wrapper{background:var(--navy);padding:0 40px 12px;position:sticky;top:0;z-index:100;transition:padding .35s ease}
+#nav-wrapper.stuck{padding:0}
+nav{background:var(--gold);max-width:1320px;margin:0 auto;display:flex;align-items:stretch;transition:max-width .35s ease;border-radius:0 0 4px 4px;position:relative}
+#nav-wrapper.stuck nav{max-width:100%;border-radius:0}
+.nav-links{display:flex;align-items:stretch;list-style:none}
+.nav-links a,.nav-links>li>button{display:flex;align-items:center;padding:14px 20px;color:var(--navy);font-family:'Source Sans 3',sans-serif;font-size:.95rem;font-weight:600;text-decoration:none;background:none;border:none;cursor:pointer;transition:color .2s,background .2s}
+.nav-links a:hover,.nav-links>li>button:hover,.nav-links a.active{color:var(--white);background:rgba(0,0,0,.15)}
+.dropdown{position:relative}
+.dropdown-menu{display:none;position:absolute;top:100%;left:0;background:var(--white);min-width:200px;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:200}
+.dropdown:hover .dropdown-menu{display:block}
+.dropdown-menu a{display:block;padding:10px 18px;color:var(--text);font-size:.9rem;text-decoration:none;transition:background .2s,color .2s}
+.dropdown-menu a:hover{background:var(--gold);color:var(--navy)}
+.nav-caret{margin-left:4px;font-size:.7rem}
+.nav-socials{margin-left:auto;display:flex;align-items:center;gap:6px;padding-right:14px}
+.soc-btn{width:34px;height:34px;background:var(--navy);display:flex;align-items:center;justify-content:center;border-radius:2px;text-decoration:none;transition:background .2s}
+.soc-btn:hover{background:#1a2d4a}
+.soc-btn svg{width:16px;height:16px;fill:var(--white)}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:12px 16px;margin-left:auto}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--navy);margin:5px 0;transition:.3s}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-collapse{display:contents}
+
+/* ── HERO ── */
+.page-hero{
+  position:relative;
+  background:linear-gradient(rgba(13,27,46,.82),rgba(13,27,46,.88)),
+             url('img/carousel-1.jpg') center/cover no-repeat;
+  padding:110px 40px 90px;
+  overflow:hidden;
+}
+.page-hero::after{
+  content:'';position:absolute;bottom:-1px;left:0;width:100%;height:100px;
+  background:linear-gradient(to top,var(--cream),transparent);
+}
+.hero-inner{max-width:1200px;margin:0 auto;position:relative;z-index:2}
+.breadcrumb{display:flex;gap:10px;align-items:center;color:#ccc;margin-bottom:24px;flex-wrap:wrap;font-size:.9rem}
+.breadcrumb a{color:var(--gold);font-weight:600;text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.page-hero h1{color:var(--white);font-family:'Oswald',sans-serif;font-size:clamp(2.6rem,5vw,4.2rem);font-weight:700;line-height:1.05;max-width:700px;margin-bottom:18px;text-transform:uppercase}
+.page-hero h1 em{color:var(--gold);font-style:normal}
+.page-hero p{color:#ddd;max-width:720px;font-size:1.05rem;line-height:1.75}
+
+/* ── POLICY LAYOUT ── */
+.policy-wrap{max-width:1200px;margin:0 auto;padding:60px 40px 80px}
+
+.policy-intro{
+  background:var(--white);padding:32px 36px;
+  border-left:6px solid var(--gold);
+  box-shadow:var(--shadow);margin-bottom:40px;
+}
+.policy-intro h2{font-family:'Oswald',sans-serif;color:var(--navy);font-size:1.5rem;margin-bottom:10px}
+.policy-intro p{color:var(--muted);font-size:.95rem;line-height:1.75}
+
+.policy-grid{display:grid;grid-template-columns:270px 1fr;gap:36px;align-items:start}
+
+/* Sidebar */
+.policy-sidebar{
+  position:sticky;top:90px;
+  background:var(--white);box-shadow:var(--shadow);padding:24px;
+}
+.policy-sidebar h3{font-family:'Oswald',sans-serif;color:var(--navy);font-size:1.05rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--gold)}
+.policy-sidebar a{display:block;padding:10px 0;color:var(--muted);font-size:.88rem;font-weight:600;border-bottom:1px solid #f0f0f0;text-decoration:none;transition:color .2s,padding-left .2s}
+.policy-sidebar a:hover{color:var(--gold);padding-left:6px}
+.policy-sidebar a:last-child{border-bottom:none}
+
+/* Cards */
+.policy-content{display:flex;flex-direction:column;gap:24px}
+.policy-card{background:var(--white);padding:32px 36px;box-shadow:var(--shadow)}
+.policy-card h2{font-family:'Oswald',sans-serif;color:var(--navy);font-size:1.5rem;margin-bottom:16px;display:flex;align-items:center;gap:12px;line-height:1.2}
+.policy-card h2 .num{
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(240,165,0,.12);color:var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.95rem;font-weight:800;flex-shrink:0;
+}
+.policy-card p{color:var(--muted);line-height:1.8;margin-bottom:14px;font-size:.95rem}
+.policy-card p:last-child{margin-bottom:0}
+.policy-card ul{padding-left:20px;color:var(--muted);margin-bottom:14px}
+.policy-card ul li{margin-bottom:10px;line-height:1.7;font-size:.93rem}
+.policy-card ul li::marker{color:var(--gold)}
+.policy-card strong{color:var(--navy)}
+
+.highlight-box{
+  background:var(--gold-pale);border:1px solid rgba(240,165,0,.3);
+  padding:18px 20px;margin-top:18px;border-left:4px solid var(--gold);
+}
+.highlight-box strong{color:var(--navy)}
+.highlight-box p{color:var(--navy-mid);font-size:.9rem;margin:0}
+
+/* CTA */
+.policy-cta{
+  margin-top:60px;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-lt) 100%);
+  padding:60px 40px;text-align:center;color:var(--white);
+  position:relative;overflow:hidden;
+}
+.policy-cta::before{
+  content:'';position:absolute;width:300px;height:300px;border-radius:50%;
+  background:rgba(240,165,0,.06);top:-100px;right:-60px;
+}
+.policy-cta::after{
+  content:'';position:absolute;width:200px;height:200px;border-radius:50%;
+  background:rgba(255,255,255,.04);bottom:-60px;left:-40px;
+}
+.policy-cta h2{font-family:'Oswald',sans-serif;font-size:2.2rem;margin-bottom:14px;position:relative;z-index:2}
+.policy-cta>p{color:rgba(255,255,255,.8);max-width:620px;margin:0 auto;font-size:.97rem;line-height:1.75;position:relative;z-index:2}
+.policy-btns{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:28px;position:relative;z-index:2}
+.btn-cta-gold{background:var(--gold);color:var(--navy);padding:14px 30px;font-weight:700;font-size:.97rem;text-decoration:none;font-family:'Source Sans 3',sans-serif;transition:background .2s,transform .15s;display:inline-block}
+.btn-cta-gold:hover{background:var(--gold-dk);transform:translateY(-2px)}
+.btn-cta-outline{border:2px solid rgba(255,255,255,.25);color:var(--white);padding:14px 30px;font-weight:700;font-size:.97rem;text-decoration:none;font-family:'Source Sans 3',sans-serif;transition:all .2s;display:inline-block}
+.btn-cta-outline:hover{background:var(--white);color:var(--navy)}
+
+/* FOOTER */
+footer{background:var(--navy);padding:60px 40px 0;color:#a8b8cc;font-size:.92rem;line-height:1.75}
+.footer-grid{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.1)}
+.footer-col h4{color:var(--white);font-size:1.1rem;font-weight:600;margin-bottom:18px}
+.footer-col p{margin-bottom:6px;display:flex;align-items:flex-start;gap:10px}
+.footer-col p svg{width:15px;height:15px;fill:var(--gold);flex-shrink:0;margin-top:4px}
+.footer-links{display:flex;flex-direction:column;gap:4px}
+.footer-links a{color:#a8b8cc;text-decoration:none;padding:3px 0;display:flex;align-items:center;gap:8px;transition:color .2s,padding-left .2s}
+.footer-links a::before{content:'›';color:var(--gold);font-size:1.1rem}
+.footer-links a:hover{color:var(--gold);padding-left:4px}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.gallery-grid img{width:100%;aspect-ratio:1;object-fit:cover;display:block;transition:opacity .2s}
+.gallery-grid img:hover{opacity:.75}
+.gallery-grid .gal-placeholder{width:100%;aspect-ratio:1;background:var(--navy-lt);display:block}
+.footer-socials{display:flex;gap:8px;margin-top:16px}
+.fsoc{width:36px;height:36px;background:var(--gold);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:background .2s}
+.fsoc:hover{background:var(--gold-dk)}
+.fsoc svg{width:15px;height:15px;fill:var(--navy)}
+.copyright{max-width:1320px;margin:0 auto;padding:20px 0;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;font-size:.85rem;color:#7a8fa6}
+.copyright a{color:var(--gold);text-decoration:none}
+.copyright a:hover{text-decoration:underline}
+#back-top{position:fixed;bottom:28px;right:28px;width:44px;height:44px;background:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;z-index:500;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s}
+#back-top.show{opacity:1;pointer-events:auto}
+#back-top:hover{background:var(--gold-dk);transform:translateY(-3px)}
+#back-top svg{width:20px;height:20px;fill:var(--navy)}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.footer-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){
+  .topbar-contacts{display:none}
+  #topbar{padding:10px 16px}
+  .page-hero{padding:70px 20px 60px}
+  .policy-wrap{padding:40px 20px 60px}
+  .policy-grid{grid-template-columns:1fr}
+  .policy-sidebar{position:static}
+}
+@media(max-width:768px){
+  #nav-wrapper{padding:0}
+  nav{flex-wrap:wrap;border-radius:0}
+  .nav-brand-mobile{font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--navy);font-weight:700;padding:12px 16px;display:flex;align-items:center}
+  .nav-toggle{display:flex;flex-direction:column}
+  .nav-collapse{display:none;width:100%;flex-direction:column;background:var(--navy-mid);contents:unset}
+  .nav-collapse.open{display:flex}
+  .nav-links{flex-direction:column;width:100%}
+  .nav-links a,.nav-links>li>button{color:var(--white);padding:12px 20px;width:100%;border-bottom:1px solid rgba(255,255,255,.06)}
+  .nav-links a:hover,.nav-links>li>button:hover{background:rgba(255,255,255,.08);color:var(--gold)}
+  .nav-links a.active{color:var(--gold);background:rgba(255,255,255,.06)}
+  .dropdown-menu{position:static;box-shadow:none;background:rgba(0,0,0,.2)}
+  .dropdown-menu a{color:#ccc;padding-left:36px}
+  .dropdown-menu a:hover{color:var(--gold);background:transparent}
+  .dropdown:hover .dropdown-menu{display:none}
+  .dropdown.open .dropdown-menu{display:block}
+  .nav-socials{display:none}
+  footer{padding:40px 16px 0}
+  .footer-grid{grid-template-columns:1fr;gap:28px}
+  .copyright{flex-direction:column;text-align:center}
+  #back-top{bottom:16px;right:16px}
+  .policy-card{padding:24px 20px}
+  .policy-cta{padding:44px 20px}
+}
+/* Logo css*/
+.brand-logo{ height: 70px; width: auto; display: block; }
+/*For L4R Menu*/
+@media (min-width: 769px) {
+  .nav-brand-mobile { display: none; }
+}
+@media (max-width: 768px) {
+  .nav-brand-mobile{font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--navy);font-weight:700;padding:12px 16px;display:flex;align-items:center}
+}
+</style>
+</head>
+<body id="top">
+<div id="global-scroll-bar"></div>
+<div id="spinner"><div class="spin-ring"></div></div>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="topbar-inner">
+    <a href="index.html"><img src="img/Logocolored.png" alt="Light 4 Refugee" class="brand-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-family:'Oswald',sans-serif;font-size:1.5rem;color:var(--gold);font-weight:700;text-decoration:none">Light 4 Refugee</span></a>
+    <div class="topbar-contacts">
+      <div class="contact-item">
+        <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></div>
+        <div class="contact-text"><p>Call Us</p><span>+250 792 052 725</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+        <div class="contact-text"><p>Mail Us</p><span>info@light4refugee.org</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+        <div class="contact-text"><p>Address</p><span>Mahama Camp, Kirehe, Rwanda</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+  <nav>
+    <span class="nav-brand-mobile">L4R Menu</span>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <div class="nav-collapse" id="nav-collapse">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">About Us<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="about-us.html">About What We Do</a>
+            <a href="team.html">About Our Team</a>
+            <a href="gallery.html">About L4R Gallery</a>
+            <a href="testimonies.html">Testimonials</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')" class="active">Programs<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="programs.html">Light Club & iSpeakLead</a>
+            <a href="applications-hub.html">Applications Hub</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">Get Involved<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="become-a-mentor.html">Become a Mentor</a>
+            <a href="become-a-mentee.html">Become a Mentee</a>
+            <a href="partners.html">Partners</a>
+          </div>
+        </li>
+        <li><a href="news-stories.html">News &amp; Stories</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact-us.html">Contact</a></li>
+        <li><a href="donate.html" style="background:var(--navy);color:var(--gold);font-weight:700; border-radius:5px;">Donate</a></li>
+      </ul>
+      <div class="nav-socials">
+        <button id="theme-toggle" aria-label="Toggle Theme Mode"></button>
+        <a class="soc-btn" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="soc-btn" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="var(--white)"/></svg></a>
+        <a class="soc-btn" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="hero-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a><span>›</span><span>Terms &amp; Conditions</span>
+    </div>
+    <h1>Terms &amp; <em>Conditions</em></h1>
+    <p>Please read these terms carefully before using the Light4Refugee website, programs, or services. By engaging with us in any capacity, you agree to the conditions outlined below.</p>
+  </div>
+</section>
+
+<!-- POLICY CONTENT -->
+<section class="policy-wrap">
+
+  <div class="policy-intro">
+    <h2>Effective Date: August 2026</h2>
+    <p>These Terms &amp; Conditions govern your use of the Light4Refugee website at <strong>light4refugee.org</strong> and any related programs, platforms, or communications operated by Light 4 Refugee (L4R). They apply to all visitors, students, mentors, donors, volunteers, and partners.</p>
+  </div>
+
+  <div class="policy-grid">
+
+    <!-- SIDEBAR -->
+    <aside class="policy-sidebar">
+      <h3>Quick Navigation</h3>
+      <a href="#acceptance">1. Acceptance of Terms</a>
+      <a href="#about-l4r">2. About Light4Refugee</a>
+      <a href="#use-of-site">3. Use of Our Website</a>
+      <a href="#programs">4. Programs &amp; Services</a>
+      <a href="#intellectual">5. Intellectual Property</a>
+      <a href="#donations">6. Donations &amp; Payments</a>
+      <a href="#links">7. Third-Party Links</a>
+      <a href="#disclaimer">8. Disclaimer of Warranties</a>
+      <a href="#liability">9. Limitation of Liability</a>
+      <a href="#conduct">10. User Conduct</a>
+      <a href="#termination">11. Termination</a>
+      <a href="#changes">12. Changes to Terms</a>
+      <a href="#governing">13. Governing Law</a>
+      <a href="#contact-us">14. Contact Us</a>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="policy-content">
+
+      <div class="policy-card" id="acceptance">
+        <h2><span class="num">1</span> Acceptance of Terms</h2>
+        <p>By accessing or using the Light4Refugee website, participating in our programs, or engaging with our platforms in any way, you confirm that you have read, understood, and agree to be bound by these Terms &amp; Conditions.</p>
+        <p>If you do not agree with any part of these terms, please discontinue use of our website and services immediately.</p>
+      </div>
+
+      <div class="policy-card" id="about-l4r">
+        <h2><span class="num">2</span> About Light4Refugee</h2>
+        <p>Light 4 Refugee (L4R) is a refugee-led nonprofit initiative dedicated to empowering refugee youth through academic preparation, college counseling, mentorship, career guidance, and leadership development.</p>
+        <p>Our programs operate primarily within refugee camps in Rwanda — including Mahama, Kigeme, and Mugombwa — and extend to refugee communities across the region. All programs are offered free of charge to eligible students.</p>
+      </div>
+
+      <div class="policy-card" id="use-of-site">
+        <h2><span class="num">3</span> Use of Our Website</h2>
+        <p>You agree to use the Light4Refugee website only for lawful purposes and in a manner consistent with our mission and values. Specifically, you agree not to:</p>
+        <ul>
+          <li>Use the site in any way that violates applicable local, national, or international laws or regulations</li>
+          <li>Transmit any unsolicited or unauthorized advertising, spam, or promotional material</li>
+          <li>Attempt to gain unauthorized access to any part of the website or its underlying systems</li>
+          <li>Reproduce, distribute, or misuse any content from this website without written permission</li>
+          <li>Engage in any conduct that could damage, disable, or impair the functionality of the website</li>
+          <li>Impersonate Light4Refugee, its staff, or any affiliated individual or organization</li>
+        </ul>
+        <div class="highlight-box">
+          <p><strong>Note:</strong> We reserve the right to restrict or terminate access to the website for any user who violates these terms, without prior notice.</p>
+        </div>
+      </div>
+
+      <div class="policy-card" id="programs">
+        <h2><span class="num">4</span> Programs &amp; Services</h2>
+        <p>Light4Refugee offers educational programs, mentorship opportunities, career guidance, and related services. Participation in these programs is subject to eligibility requirements, availability, and program-specific terms communicated directly to applicants.</p>
+        <ul>
+          <li>All programs are provided on a good-faith basis with the aim of supporting refugee youth</li>
+          <li>L4R does not guarantee specific outcomes such as university admission, employment, or scholarship awards</li>
+          <li>Program availability, content, and structure may change at any time without prior notice</li>
+          <li>Participants are expected to engage responsibly, honestly, and in alignment with L4R's values</li>
+          <li>L4R may remove any participant from a program whose conduct is deemed harmful or inconsistent with program objectives</li>
+        </ul>
+      </div>
+
+      <div class="policy-card" id="intellectual">
+        <h2><span class="num">5</span> Intellectual Property</h2>
+        <p>All content on the Light4Refugee website — including but not limited to text, graphics, logos, photographs, videos, program materials, and written reports — is the property of Light 4 Refugee or its content contributors and is protected by applicable copyright and intellectual property laws.</p>
+        <p>You may not reproduce, copy, modify, distribute, or use any content from this website for commercial purposes without express written permission from Light4Refugee.</p>
+        <p>Sharing or linking to our content for non-commercial, educational, or advocacy purposes is welcomed, provided appropriate credit is given to Light4Refugee.</p>
+      </div>
+
+      <div class="policy-card" id="donations">
+        <h2><span class="num">6</span> Donations &amp; Payments</h2>
+        <p>Donations made to Light4Refugee through our website are processed via secure third-party payment platforms. By making a donation, you confirm that:</p>
+        <ul>
+          <li>You are authorized to use the payment method provided</li>
+          <li>The information you provide is accurate and complete</li>
+          <li>Donations are voluntary and non-refundable unless otherwise stated</li>
+          <li>Light4Refugee will use donations in alignment with its mission and stated purposes</li>
+        </ul>
+        <div class="highlight-box">
+          <p><strong>Payment Gateway Notice:</strong> Full payment gateway integration is currently in development. For direct transfers or donation inquiries, please contact <strong>info@light4refugee.org</strong>.</p>
+        </div>
+      </div>
+
+      <div class="policy-card" id="links">
+        <h2><span class="num">7</span> Third-Party Links</h2>
+        <p>Our website may contain links to external websites, partner organizations, scholarship portals, and resources. These links are provided for informational purposes and your convenience.</p>
+        <p>Light4Refugee does not endorse, control, or take responsibility for the content, privacy practices, or accuracy of any third-party websites. Visiting external links is done at your own discretion and risk.</p>
+      </div>
+
+      <div class="policy-card" id="disclaimer">
+        <h2><span class="num">8</span> Disclaimer of Warranties</h2>
+        <p>The Light4Refugee website and all its content are provided on an <strong>"as is"</strong> and <strong>"as available"</strong> basis, without warranties of any kind — express or implied.</p>
+        <p>We do not warrant that the website will be uninterrupted, error-free, or free of viruses or other harmful components. We do not make any representations regarding the accuracy or completeness of the content published.</p>
+      </div>
+
+      <div class="policy-card" id="liability">
+        <h2><span class="num">9</span> Limitation of Liability</h2>
+        <p>To the fullest extent permitted by applicable law, Light4Refugee, its founders, staff, volunteers, and partners shall not be liable for any direct, indirect, incidental, consequential, or punitive damages arising from:</p>
+        <ul>
+          <li>Your use of or inability to use the website or its content</li>
+          <li>Errors or omissions in any content published</li>
+          <li>Unauthorized access to or alteration of your transmissions or data</li>
+          <li>Program outcomes, including scholarship results or employment placement</li>
+          <li>Any third-party content or services accessed through our website</li>
+        </ul>
+      </div>
+
+      <div class="policy-card" id="conduct">
+        <h2><span class="num">10</span> User Conduct &amp; Community Standards</h2>
+        <p>Light4Refugee is built on values of dignity, respect, and shared humanity. All users — whether visiting the website, participating in programs, engaging in mentorship, or contributing in any other capacity — are expected to:</p>
+        <ul>
+          <li>Treat all individuals with respect regardless of background, gender, religion, or nationality</li>
+          <li>Provide honest and accurate information in all communications and applications</li>
+          <li>Refrain from any form of harassment, discrimination, or abusive language</li>
+          <li>Respect the confidentiality and privacy of fellow participants and staff</li>
+          <li>Report any concerns or violations to <strong>info@light4refugee.org</strong></li>
+        </ul>
+      </div>
+
+      <div class="policy-card" id="termination">
+        <h2><span class="num">11</span> Termination</h2>
+        <p>Light4Refugee reserves the right to suspend or terminate access to our website, programs, or services for any individual whose conduct violates these Terms &amp; Conditions or whose participation is deemed harmful to our community or mission.</p>
+        <p>Termination decisions are made at the discretion of L4R leadership and will be communicated to the affected individual where appropriate.</p>
+      </div>
+
+      <div class="policy-card" id="changes">
+        <h2><span class="num">12</span> Changes to These Terms</h2>
+        <p>Light4Refugee may update these Terms &amp; Conditions periodically to reflect operational, legal, or organizational changes. Updated versions will be published on this page with a revised effective date.</p>
+        <p>Continued use of our website or programs after such updates constitutes acceptance of the revised terms. We encourage you to review this page periodically.</p>
+      </div>
+
+      <div class="policy-card" id="governing">
+        <h2><span class="num">13</span> Governing Law</h2>
+        <p>These Terms &amp; Conditions are governed by and construed in accordance with the laws of the Republic of Rwanda. Any disputes arising from these terms shall be subject to the jurisdiction of the courts of Rwanda, unless otherwise required by applicable law.</p>
+      </div>
+
+      <div class="policy-card" id="contact-us">
+        <h2><span class="num">14</span> Contact Us</h2>
+        <p>If you have any questions, concerns, or feedback regarding these Terms &amp; Conditions, please reach out to us:</p>
+        <ul>
+          <li><strong>Email:</strong> info@light4refugee.org</li>
+          <li><strong>Location:</strong> Mahama Refugee Camp, Kirehe District, Rwanda</li>
+          <li><strong>Website:</strong> light4refugee.org</li>
+        </ul>
+        <p>We are committed to transparency and will respond to all reasonable inquiries within 48 business hours.</p>
+      </div>
+
+    </div><!-- /policy-content -->
+  </div><!-- /policy-grid -->
+
+  <!-- CTA -->
+  <div class="policy-cta">
+    <h2>Questions? We're Here.</h2>
+    <p>Light4Refugee is built on trust. If anything in these terms is unclear, or if you have concerns about how we operate, we want to hear from you.</p>
+    <div class="policy-btns">
+      <a href="contact-us.html" class="btn-cta-gold">Contact Us</a>
+      <a href="privacy-policy.html" class="btn-cta-outline">Privacy Policy →</a>
+    </div>
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Our Operational Locations</h4>
+      <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Mahama &amp; Kiziba Refugee Camps, Kirehe &amp; Karongi Districts, Rwanda</p>
+      <p><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>+250 792 052 725</p>
+      <p><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>info@light4refugee.org</p>
+      <div class="footer-socials">
+        <a class="fsoc" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="fsoc" href="https://www.youtube.com/channel/UCKFczxvUGOmq7e7tJQ65HxA" target="_blank" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+        <a class="fsoc" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="var(--navy)" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="var(--navy)" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="var(--navy)"/></svg></a>
+        <a class="fsoc" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="team.html">Our Team</a>
+        <a href="news-stories.html">News &amp; Stories</a>
+        <a href="applications-hu.html">Applications Hub</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact-us.html">Contact Us</a>
+        <a href="donate.html">Donate</a>
+        <a href="testimonies.html">Testimonials</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Our Programs</h4>
+      <div class="footer-links">
+        <a href="about-us.html">Academic Preparation</a>
+        <a href="about-us.html">College Counseling</a>
+        <a href="about-us.html">Career Guidance</a><br>
+        <h4>Get Involved</h4>
+        <a href="programs.html">Light Club (ECP &amp; ISEP)</a>
+        <a href="become-a-mentor.html">Become a Mentor</a>
+        <a href="become-a-mentee.html">Become a Mentee</a>
+        <a href="partners.html">Partner With Us</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Gallery</h4>
+      <div class="gallery-grid">
+        <a href="gallery.html"><img src="img/gallery-1.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-2.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-3.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-4.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-5.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-6.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">
+    <span>&copy; 2026 <a href="https://light4refugee.org" target="_blank">Light 4 Refugee</a>, All Rights Reserved.</span>
+      <span style="display:inline-flex; gap:12px;">
+      <a href="terms-conditions.html" target="_blank" style="color:#2e6d04;">Terms/Conditions</a> |
+      <a href="privacy-policy.html" target="_blank" style="color:#2e6d04;">Privacy Policy</a>
+      </span>
+    <span>Designed By <a href="https://yvesnickylirf.com" target="_blank">Yves Nicky Lirf</a></span>
+  </div>
+</footer>
+
+<button id="back-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+</button>
+<script src="theme-logic.js"></script>
+<script>
+  /* Spinner */
+  window.addEventListener('load', () => {
+    const sp = document.getElementById('spinner');
+    sp.classList.add('hide');
+    setTimeout(() => sp.remove(), 500);
+  });
+
+  /* Sticky nav */
+  const topbar  = document.getElementById('topbar');
+  const navWrap = document.getElementById('nav-wrapper');
+  const tbH     = topbar.offsetHeight;
+  window.addEventListener('scroll', () => {
+    const s = window.scrollY > tbH;
+    topbar.classList.toggle('hidden', s);
+    navWrap.classList.toggle('stuck', s);
+    document.getElementById('back-top').classList.toggle('show', window.scrollY > 300);
+  }, { passive: true });
+
+  /* Mobile nav */
+  document.getElementById('nav-toggle').addEventListener('click', function () {
+    this.classList.toggle('open');
+    document.getElementById('nav-collapse').classList.toggle('open');
+  });
+
+  function toggleDD(id) {
+    if (window.innerWidth > 768) return;
+    document.getElementById(id).classList.toggle('open');
+  }
+</script>
+</body>
+</html>

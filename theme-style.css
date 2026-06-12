@@ -1,0 +1,157 @@
+/* 🌑 DEFAULT DARK CONFIGURATION VALUES */
+:root { --navy:#0d1b2e; --navy-mid:#162540; --navy-lt:#1e3258; --gold:#f0a500; --gold-dk:#c98a00; --gold-pale:#fff8e6; --white:#ffffff; --cream:#f5f0e8; --muted:#a8b8cc; }
+
+/* ☀️ FIXED LIGHT MODE SELECTOR CONFIGURATIONS */
+[data-theme="light"] { --navy:#f4f7fc; --navy-mid:#ffffff; --navy-lt:#e2eaf4; --white:#0d1b2e; --cream:#162540; --muted:#556780; --gold-pale:#fff3d1; }
+
+/* 🎯 GLOBAL STRUCTURAL ELEMENT CONVERSIONS */
+[data-theme="light"] body, [data-theme="light"] #nav-wrapper, [data-theme="light"] .page-hero, [data-theme="light"] .team-section, [data-theme="light"] .features-section, [data-theme="light"] .partner-section, [data-theme="light"] .leadership-section, [data-theme="light"] .join-section { background: var(--navy) !important; color: var(--white) !important; }
+[data-theme="light"] .team-card, [data-theme="light"] .donation-card, [data-theme="light"] .pay-card { background: var(--navy-mid) !important; border-color: var(--navy-lt) !important; }
+[data-theme="light"] h1, [data-theme="light"] h2, [data-theme="light"] h3, [data-theme="light"] h4 { color: var(--white) !important; }
+[data-theme="light"] p, [data-theme="light"] span { color: #00fbff !important; }
+
+/* 🧭 SPECIAL NAVIGATION & DROPDOWN CONTRAST TUNING */
+[data-theme="light"] .dropdown-menu { background: var(--navy-mid) !important; border: 1px solid var(--navy-lt) !important; }
+[data-theme="light"] .dropdown-menu a { color: var(--white) !important; }
+[data-theme="light"] .dropdown-menu a:hover { background: var(--gold) !important; color: #0d1b2e !important; }
+[data-theme="light"] .nav-links a:hover, [data-theme="light"] .nav-links > li > button:hover { color: var(--navy) !important; }
+[data-theme="light"] .breadcrumb span { color: var(--muted) !important; }
+[data-theme="light"] .hero-pills { border-color: var(--navy-lt) !important; }
+[data-theme="light"] .hero-pill { border-right-color: var(--navy-lt) !important; }
+
+/* 🎛️ FIXED STATE: HOVER EFFECTS & PERFECT SQUARE BUTTON BORDERS FOR BOTH MODES */
+#theme-toggle { position: relative; background: rgb(1, 11, 43) !important; border: 1.5px solid rgba(255,255,255,0.35) !important; border-top-left-radius: 20px; border-bottom-right-radius:20px; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; outline: none; margin-left: 14px; transition: all 0.2s ease; }
+#theme-toggle:hover { background: var(--gold) !important; border-color: var(--gold) !important; }
+#theme-toggle svg { width: 18px; height: 18px; fill: var(--gold); transition: fill 0.2s, transform 0.2s; }
+#theme-toggle:hover svg { fill: var(--navy); transform: rotate(15deg); }
+#theme-toggle::after { content: attr(data-tooltip); position: absolute; top: calc(100% + 8px); right: 0; background: #07111e; color: #fff; font-size: 0.72rem; font-weight: 700; font-family: 'Source Sans 3', sans-serif; letter-spacing: 0.5px; padding: 5px 10px; border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transform: translateY(4px); transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.25); z-index: 1000; text-transform: uppercase; }
+#theme-toggle:hover::after { opacity: 1; transform: translateY(0); }
+[data-theme="light"] #theme-toggle { background: rgba(13,27,46,0.06) !important; border-color: rgba(78, 107, 149, 0.25) !important; }
+[data-theme="light"] #theme-toggle svg { fill: #0dbcdf; }
+[data-theme="light"] #theme-toggle:hover svg { fill: #f4f7fc; }
+[data-theme="light"] #theme-toggle::after { background: #ffffff; color: #0d1b2e; box-shadow: 0 4px 12px rgba(13,27,46,0.12); border: 1px solid rgba(13,27,46,0.08); }
+
+/* ✨ SMOOTH CROSSFADE TRANSITION SELECTION */
+body, body *, footer, footer * { transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, fill 0.25s ease; }
+
+/* ── GLOBAL SCROLL PROGRESS INDICATOR ───────────────────────────────────────── */
+#global-scroll-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--white) 0%, var(--navy-mid) 100%); width: 0%; z-index: 99999; transition: width 0.08s ease-out; pointer-events: none; }
+
+
+/*THEME-PROTECT.css */
+/* ============================================================
+   theme-protect.css — Light 4 Refugee Content Protection
+   Link in every page <head> AFTER your main stylesheet.
+   Does NOT break accessibility, SEO, or user experience.
+   ============================================================ */
+
+/* ── 1. TRANSPARENT IMAGE OVERLAY
+   Sits on top of every img inside protected containers.
+   Blocks drag-off-page without hiding the image.
+   Applied to gallery, team photos, hero images.
+   ─────────────────────────────────────────────────────────── */
+.img-protect {
+  position: relative;
+  display: inline-block; /* or block — match your layout */
+}
+
+.img-protect img {
+  display: block;
+  pointer-events: none;          /* disables drag + right-click target */
+  -webkit-user-drag: none;       /* Safari/Chrome drag disable */
+  user-drag: none;
+  -webkit-touch-callout: none;   /* iOS long-press menu */
+}
+
+.img-protect::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  /* Fully transparent — invisible but intercepts mouse events */
+  background: transparent;
+  cursor: default;
+}
+
+/* ── 2. GALLERY GRIDS — apply overlay to all gallery images ── */
+.gallery-grid img,
+.ft-gallery-grid img,
+.ft-grid img,
+.team-detail img,
+.testi-photo-wrap img,
+.feat-img img,
+.si-img img,
+.uc-img img,
+.about-img-wrap img,
+.don-img-wrap img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-touch-callout: none;
+}
+
+/* ── 3. OVERLAY WRAPPERS for gallery / team / hero containers ── */
+.gallery-grid,
+.ft-gallery-grid,
+.ft-grid,
+.team-detail,
+.testi-photo-wrap,
+.feat-img,
+.si-img,
+.uc-img,
+.don-img-wrap {
+  position: relative;
+}
+
+.gallery-grid::after,
+.ft-gallery-grid::after,
+.ft-grid::after,
+.feat-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: transparent;
+  pointer-events: none; /* let normal clicks (links etc.) pass through */
+}
+
+/* ── 4. DISABLE TEXT SELECTION on decorative / brand elements
+   Only applied to logos, brand marks, hero titles.
+   Body text stays selectable — accessibility preserved.
+   ─────────────────────────────────────────────────────────── */
+.brand,
+.brand-logo,
+.hero-chip,
+.feat-badge,
+.day-pill,
+.si-day,
+.uc-prog-badge {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ── 5. COPYRIGHT WATERMARK on hover over image sections
+   Subtle — only appears on hover, fades out. Non-intrusive.
+   ─────────────────────────────────────────────────────────── */
+.gallery-grid:hover::before,
+.feat-img:hover::before {
+  content: '© Light 4 Refugee — light4refugee.org';
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  z-index: 10;
+  font-size: .65rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: .5px;
+  pointer-events: none;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+  font-family: 'Source Sans 3', sans-serif;
+  text-transform: uppercase;
+  animation: fadeWatermark .4s ease;
+}
+
+@keyframes fadeWatermark {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

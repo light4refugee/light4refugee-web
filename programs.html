@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Club & iSpeakLead – L4R</title>
+<meta name="description" content="The Light Club is L4R's living student community — stay updated on the English Communication Program and Interpersonal Skills Enhancement Program (ISEP) helping refugee youth thrive.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Source+Sans+3:wght@400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="img/logo.jpg?v=2">
+<link rel="stylesheet" href="theme-style.css">
+<style>
+/* ════════════════════════════════════════════════════════
+   GLOBAL
+════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0d1b2e; --navy-mid:#162540; --navy-lt:#1e3258;
+  --gold:#f0a500; --gold-dk:#c98a00; --gold-pale:#fff8e6;
+  --white:#ffffff; --cream:#f5f0e8; --ink:#1a1a2e;
+  --muted:#666; --border:#e4e4e4; --green:#2d9e6b;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Source Sans 3',sans-serif;background:var(--white);overflow-x:hidden;color:var(--ink)}
+
+/* SPINNER */
+#spinner{position:fixed;inset:0;z-index:9999;background:var(--white);display:flex;align-items:center;justify-content:center;transition:opacity .4s}
+#spinner.hide{opacity:0;pointer-events:none}
+.spin-ring{width:48px;height:48px;border-radius:50%;border:4px solid #ddd;border-top-color:var(--gold);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* TOPBAR */
+#topbar{background:var(--navy);padding:10px 40px;display:flex;align-items:center;transition:transform .35s,opacity .35s}
+#topbar.hidden{transform:translateY(-100%);opacity:0;pointer-events:none;position:absolute;width:100%}
+.topbar-inner{display:flex;align-items:center;width:100%;max-width:1320px;margin:0 auto}
+.brand{font-family:'Oswald',sans-serif;font-size:2rem;color:var(--gold);text-decoration:none;letter-spacing:1px}
+.topbar-contacts{display:flex;gap:32px;margin-left:auto}
+.contact-item{display:flex;align-items:center;gap:10px}
+.contact-icon{width:36px;height:36px;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-icon svg{width:16px;height:16px;fill:var(--navy)}
+.contact-text p{font-size:.75rem;color:var(--gold);font-weight:600;margin-bottom:1px}
+.contact-text span{font-size:.8rem;color:var(--white)}
+
+/* NAVBAR */
+#nav-wrapper{background:var(--navy);padding:0 40px 12px;position:sticky;top:0;z-index:100;transition:padding .35s}
+#nav-wrapper.stuck{padding:0}
+nav{background:var(--gold);max-width:1320px;margin:0 auto;display:flex;align-items:stretch;transition:max-width .35s;border-radius:0 0 4px 4px;position:relative}
+#nav-wrapper.stuck nav{max-width:100%;border-radius:0}
+.nav-links{display:flex;align-items:stretch;list-style:none}
+.nav-links a,.nav-links>li>button{display:flex;align-items:center;padding:14px 20px;color:var(--navy);font-size:.95rem;font-weight:600;text-decoration:none;background:none;border:none;cursor:pointer;transition:color .2s,background .2s}
+.nav-links a:hover,.nav-links>li>button:hover,.nav-links a.active{color:var(--white);background:rgba(0,0,0,.15); border-radius: 10px;}
+.dropdown{position:relative}
+.dropdown-menu{display:none;position:absolute;top:100%;left:0;background:var(--white);min-width:190px;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:200}
+.dropdown:hover .dropdown-menu{display:block}
+.dropdown-menu a{display:block;padding:10px 18px;color:var(--navy);font-size:.9rem;text-decoration:none;transition:background .2s}
+.dropdown-menu a:hover{background:var(--gold);color:var(--navy)}
+.nav-caret{margin-left:4px;font-size:.7rem}
+.nav-socials{margin-left:auto;display:flex;align-items:center;gap:6px;padding-right:14px}
+.soc-btn{width:34px;height:34px;background:var(--navy);display:flex;align-items:center;justify-content:center;border-radius:2px;text-decoration:none;transition:background .2s}
+.soc-btn:hover{background:#1a2d4a}
+.soc-btn svg{width:16px;height:16px;fill:var(--white)}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:12px 16px;margin-left:auto}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--navy);margin:5px 0;transition:.3s}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-collapse{display:contents}
+
+/* ════════════════════════════════════════════════════════
+   HERO — two-panel split
+════════════════════════════════════════════════════════ */
+.page-hero{
+  background:var(--navy);
+  position:relative;overflow:hidden;
+  display:grid;grid-template-columns:1fr 1fr;min-height:480px;
+}
+.page-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(240,165,0,.1) 0%,transparent 60%);z-index:0}
+
+/* left text panel */
+.hero-text{
+  padding:80px 48px 80px 40px;
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;z-index:1;
+  max-width:680px;
+}
+.breadcrumb{display:flex;align-items:center;gap:10px;font-size:.85rem;color:#a8b8cc;margin-bottom:20px}
+.breadcrumb a{color:var(--gold);text-decoration:none}
+.breadcrumb span{color:#556}
+.hero-chip{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--navy);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;padding:5px 14px;margin-bottom:20px;width:fit-content}
+.hero-chip svg{width:13px;height:13px;fill:var(--navy)}
+.page-hero h1{font-family:'Oswald',sans-serif;font-size:clamp(2.2rem,4.5vw,3.8rem);font-weight:700;color:var(--white);text-transform:uppercase;line-height:1.05;margin-bottom:18px}
+.page-hero h1 em{color:var(--gold);font-style:normal}
+.page-hero .sub{font-size:1rem;color:#a8b8cc;max-width:480px;line-height:1.75;margin-bottom:30px}
+.hero-pill-row{display:flex;gap:0;border:1px solid rgba(255,255,255,.1);width:fit-content}
+.h-pill{padding:12px 22px;border-right:1px solid rgba(255,255,255,.1);text-align:center}
+.h-pill:last-child{border-right:none}
+.h-pill strong{display:block;font-family:'Oswald',sans-serif;font-size:1.7rem;color:var(--gold);line-height:1}
+.h-pill span{font-size:.72rem;color:#a8b8cc;display:block;margin-top:2px}
+
+/* right: program cards */
+.hero-programs{
+  display:grid;grid-template-rows:1fr 1fr;
+  position:relative;z-index:1;
+}
+.hero-prog{
+  padding:36px 36px 36px 40px;
+  display:flex;flex-direction:column;justify-content:center;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  transition:background .25s;cursor:default;
+  position:relative;overflow:hidden;
+}
+.hero-prog:last-child{border-bottom:none}
+.hero-prog::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--gold);transform:scaleY(0);transition:transform .3s;transform-origin:bottom}
+.hero-prog:hover{background:rgba(255,255,255,.04)}
+.hero-prog:hover::before{transform:scaleY(1)}
+.prog-tag{display:inline-flex;align-items:center;gap:6px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:10px}
+.prog-tag svg{width:14px;height:14px;fill:var(--gold)}
+.hero-prog h3{font-family:'Oswald',sans-serif;font-size:1.4rem;color:var(--white);margin-bottom:8px;line-height:1.15}
+.hero-prog p{font-size:.88rem;color:#a8b8cc;line-height:1.65}
+.hero-prog .prog-scroll{display:flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;color:var(--gold);margin-top:14px;cursor:pointer;background:none;border:none;font-family:'Source Sans 3',sans-serif;padding:0;transition:gap .2s}
+.hero-prog .prog-scroll:hover{gap:10px}
+.hero-prog .prog-scroll svg{width:14px;height:14px;fill:var(--gold)}
+
+.hero-accent{height:6px;background:linear-gradient(90deg,var(--gold) 0%,var(--gold-dk) 50%,var(--navy) 100%)}
+
+/* ════════════════════════════════════════════════════════
+   LIGHT CLUB INTRO BAND
+════════════════════════════════════════════════════════ */
+.club-band{background:var(--gold);padding:32px 40px}
+.club-band-inner{max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.club-icon{width:60px;height:60px;background:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.club-icon svg{width:30px;height:30px;fill:var(--gold)}
+.club-band-text{flex:1;min-width:240px}
+.club-band-text h2{font-family:'Oswald',sans-serif;font-size:1.4rem;color:var(--navy);margin-bottom:4px}
+.club-band-text p{font-size:.93rem;color:var(--navy-mid);line-height:1.6;max-width:700px}
+.club-band-cta{display:flex;flex-direction:column;gap:8px;flex-shrink:0}
+.club-band-cta a{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:var(--white);padding:10px 20px;font-size:.85rem;font-weight:700;text-decoration:none;transition:background .2s;white-space:nowrap}
+.club-band-cta a:hover{background:var(--navy-mid)}
+.club-band-cta a svg{width:15px;height:15px;fill:var(--gold)}
+
+/* ════════════════════════════════════════════════════════
+   PROGRAM DEEP-DIVES (ECP + ISEP accordion)
+════════════════════════════════════════════════════════ */
+.programs-section{padding:80px 40px;background:var(--white)}
+.programs-inner{max-width:1320px;margin:0 auto}
+
+.section-eyebrow{display:flex;align-items:center;gap:12px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--gold);margin-bottom:28px}
+.section-eyebrow::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+
+/* two-col layout: sticky info left, accordions right */
+.prog-layout{display:flex;gap:60px;align-items:flex-start}
+.prog-sticky{flex-shrink:0;width:320px;position:sticky;top:90px}
+.prog-sticky h2{font-family:'Oswald',sans-serif;font-size:2rem;color:var(--navy);margin-bottom:14px;line-height:1.15}
+.prog-sticky>p{font-size:.95rem;color:var(--muted);line-height:1.8;margin-bottom:24px}
+
+/* program selector tabs */
+.prog-selector{display:flex;flex-direction:column;gap:0}
+.prog-sel-btn{
+  display:flex;align-items:center;gap:14px;padding:16px 18px;
+  border:none;background:var(--cream);cursor:pointer;
+  text-align:left;border-left:4px solid transparent;
+  transition:all .2s;font-family:'Source Sans 3',sans-serif;
+  border-bottom:1px solid var(--border);
+}
+.prog-sel-btn:last-child{border-bottom:none}
+.prog-sel-btn:hover{background:var(--gold-pale);border-left-color:var(--gold)}
+.prog-sel-btn.active{background:var(--navy);border-left-color:var(--gold)}
+.prog-sel-icon{width:40px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s}
+.prog-sel-btn:not(.active) .prog-sel-icon{background:var(--white)}
+.prog-sel-btn.active .prog-sel-icon{background:var(--gold)}
+.prog-sel-icon svg{width:20px;height:20px}
+.prog-sel-btn:not(.active) .prog-sel-icon svg{fill:var(--navy)}
+.prog-sel-btn.active .prog-sel-icon svg{fill:var(--navy)}
+.prog-sel-text strong{display:block;font-size:.9rem;font-weight:700;transition:color .2s}
+.prog-sel-btn:not(.active) .prog-sel-text strong{color:var(--navy)}
+.prog-sel-btn.active .prog-sel-text strong{color:var(--gold)}
+.prog-sel-text span{font-size:.75rem;transition:color .2s}
+.prog-sel-btn:not(.active) .prog-sel-text span{color:#888}
+.prog-sel-btn.active .prog-sel-text span{color:#a8b8cc}
+
+/* right: program detail panels */
+.prog-panels{flex:1;min-width:0}
+.prog-panel{display:none;animation:fadeUp .4s ease}
+.prog-panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+.panel-header{background:var(--navy);padding:32px 36px;margin-bottom:0}
+.panel-tag{display:inline-flex;align-items:center;gap:7px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);margin-bottom:12px}
+.panel-tag svg{width:13px;height:13px;fill:var(--gold)}
+.panel-header h2{font-family:'Oswald',sans-serif;font-size:1.8rem;color:var(--white);margin-bottom:8px;line-height:1.15}
+.panel-header .tagline{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:rgba(240,165,0,.8)}
+
+.panel-body{border:1px solid var(--border);border-top:none;padding:36px}
+
+/* problem/response two-col */
+.panel-split{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px}
+.split-box{padding:22px;background:var(--cream)}
+.split-box h4{font-family:'Oswald',sans-serif;font-size:1rem;color:var(--navy);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.split-box h4 svg{width:16px;height:16px;fill:var(--gold)}
+.split-box p{font-size:.9rem;color:var(--muted);line-height:1.75}
+.split-box.dark{background:var(--navy);padding:22px}
+.split-box.dark h4{color:var(--gold)}
+.split-box.dark p{color:#a8b8cc}
+
+.panel-quote{background:var(--navy);border-left:5px solid var(--gold);padding:24px 28px;margin:28px 0;font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;color:var(--white);line-height:1.65}
+
+/* module cards */
+.module-label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.module-label::after{content:'';flex:1;height:1px;background:rgba(240,165,0,.2)}
+.modules-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px}
+.module-card{background:var(--cream);padding:16px 18px;border-left:3px solid var(--gold);transition:background .2s,transform .2s}
+.module-card:hover{background:var(--gold-pale);transform:translateX(4px)}
+.module-card h5{font-family:'Oswald',sans-serif;font-size:1rem;color:var(--navy);margin-bottom:4px}
+.module-card p{font-size:.82rem;color:var(--muted);line-height:1.55}
+
+/* check list */
+.check-list{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.check-item{display:flex;align-items:flex-start;gap:10px;font-size:.93rem;color:#444;line-height:1.55}
+.check-item svg{width:16px;height:16px;fill:var(--green);flex-shrink:0;margin-top:3px}
+
+/* stat band inside panel */
+.panel-stats{display:flex;gap:0;background:var(--navy);margin:28px 0}
+.ps-stat{flex:1;padding:20px 16px;text-align:center;border-right:1px solid rgba(255,255,255,.1)}
+.ps-stat:last-child{border-right:none}
+.ps-stat strong{display:block;font-family:'Oswald',sans-serif;font-size:1.9rem;color:var(--gold);line-height:1}
+.ps-stat span{font-size:.72rem;color:#a8b8cc;display:block;margin-top:4px;line-height:1.3}
+
+/* school partners band */
+.school-strip{background:var(--cream);padding:18px 22px;margin-top:28px}
+.school-strip p{font-size:.82rem;color:var(--muted);margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+.school-tags{display:flex;gap:8px;flex-wrap:wrap}
+.school-tag{background:var(--white);border:1px solid var(--border);color:var(--navy);font-size:.8rem;font-weight:600;padding:5px 12px;display:flex;align-items:center;gap:6px}
+.school-tag svg{width:12px;height:12px;fill:var(--gold)}
+
+/* apply CTA in panel */
+.panel-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;padding-top:22px;border-top:1px solid var(--border)}
+.btn-navy{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:var(--white);padding:13px 24px;font-size:.9rem;font-weight:700;text-decoration:none;border:none;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:background .2s,transform .15s}
+.btn-navy:hover{background:var(--navy-mid);transform:translateY(-2px)}
+.btn-navy svg{width:15px;height:15px;fill:var(--gold)}
+.btn-gold{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--navy);padding:13px 24px;font-size:.9rem;font-weight:700;text-decoration:none;border:none;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:background .2s,transform .15s}
+.btn-gold:hover{background:var(--gold-dk);transform:translateY(-2px)}
+.btn-gold svg{width:15px;height:15px;fill:var(--navy)}
+
+/* ════════════════════════════════════════════════════════
+   LIGHT CLUB UPDATES (live feed)
+════════════════════════════════════════════════════════ */
+.updates-section{padding:80px 40px;background:var(--cream)}
+.updates-inner{max-width:1320px;margin:0 auto}
+.updates-heading{margin-bottom:44px}
+.updates-heading h2{font-family:'Oswald',sans-serif;font-size:2.2rem;color:var(--navy);margin-bottom:8px}
+.updates-heading p{font-size:.97rem;color:var(--muted);max-width:560px;line-height:1.7}
+
+/* update cards in a 3-col masonry-ish grid */
+.updates-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+
+.update-card{background:var(--white);border:1px solid var(--border);overflow:hidden;transition:box-shadow .25s,transform .25s;cursor:pointer}
+.update-card:hover{box-shadow:0 12px 36px rgba(0,0,0,.1);transform:translateY(-4px)}
+.update-card.featured{grid-column:span 2}
+
+/* card image placeholder */
+.uc-img{height:200px;overflow:hidden;position:relative;background:linear-gradient(135deg,var(--navy),var(--navy-lt))}
+.update-card.featured .uc-img{height:260px}
+.uc-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.update-card:hover .uc-img img{transform:scale(1.06)}
+.uc-img .img-slot{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.uc-img .img-slot svg{width:40px;height:40px;fill:rgba(240,165,0,.2)}
+.uc-img .img-slot span{font-size:.68rem;color:rgba(240,165,0,.35);font-weight:600;letter-spacing:2px;text-transform:uppercase;text-align:center;padding:0 16px}
+.uc-prog-badge{position:absolute;top:14px;left:14px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 10px}
+.badge-ecp{background:var(--gold);color:var(--navy)}
+.badge-isep{background:var(--navy-lt);color:var(--gold)}
+.badge-club{background:var(--green);color:var(--white)}
+.badge-bootcamp{background:var(--navy);color:var(--gold)}
+
+.uc-body{padding:20px 20px 18px}
+.uc-meta{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.uc-tag{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:2px 8px;background:var(--gold-pale);color:var(--gold-dk)}
+.uc-date{font-size:.72rem;color:#aaa}
+.uc-body h3{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--navy);line-height:1.3;margin-bottom:6px;font-weight:700}
+.update-card.featured .uc-body h3{font-size:1.3rem}
+.uc-quote{font-style:italic;font-size:.82rem;color:var(--gold-dk);margin-bottom:8px;line-height:1.5}
+.uc-body p{font-size:.85rem;color:var(--muted);line-height:1.68;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.update-card.featured .uc-body p{-webkit-line-clamp:4}
+/* expand toggle */
+.uc-expand{margin-top:12px;display:flex;align-items:center;gap:6px;font-size:.8rem;font-weight:700;color:var(--navy);cursor:pointer;background:none;border:none;font-family:'Source Sans 3',sans-serif;padding:0;transition:color .2s}
+.uc-expand svg{width:13px;height:13px;fill:var(--navy);transition:fill .2s,transform .3s}
+.uc-expand:hover{color:var(--gold)}
+.uc-expand:hover svg{fill:var(--gold)}
+
+/* inline expand content */
+.uc-full{display:none;border-top:2px solid var(--gold);margin-top:14px;padding-top:16px}
+.uc-full.open{display:block}
+.uc-full p{font-size:.88rem;color:#444;line-height:1.8;margin-bottom:10px}
+.uc-full ul{margin:0 0 12px 18px}
+.uc-full ul li{font-size:.86rem;color:#444;line-height:1.7;margin-bottom:4px}
+.uc-full ul li::marker{color:var(--gold)}
+.uc-full .pull{background:var(--gold-pale);border-left:3px solid var(--gold);padding:10px 14px;font-style:italic;font-size:.88rem;color:var(--navy);margin:12px 0}
+.uc-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.uc-hash{font-size:.72rem;font-weight:600;color:var(--gold-dk);background:var(--gold-pale);padding:3px 8px}
+.uc-close{margin-top:10px;font-size:.78rem;font-weight:700;color:#aaa;cursor:pointer;background:none;border:none;font-family:'Source Sans 3',sans-serif;display:flex;align-items:center;gap:5px;transition:color .2s}
+.uc-close:hover{color:var(--navy)}
+.uc-close svg{width:13px;height:13px;fill:currentColor}
+
+/* ════════════════════════════════════════════════════════
+   JOIN / APPLY BAND
+════════════════════════════════════════════════════════ */
+.join-band{background:var(--navy);padding:70px 40px}
+.join-inner{max-width:1320px;margin:0 auto;display:flex;gap:60px;align-items:center;flex-wrap:wrap}
+.join-text{flex:1;min-width:260px}
+.join-text h2{font-family:'Oswald',sans-serif;font-size:2.2rem;color:var(--white);margin-bottom:12px}
+.join-text h2 em{color:var(--gold);font-style:normal}
+.join-text p{font-size:.97rem;color:#a8b8cc;line-height:1.8}
+.join-actions{display:flex;flex-direction:column;gap:12px;flex-shrink:0;min-width:280px}
+.join-act{display:flex;align-items:flex-start;gap:14px;background:rgba(255,255,255,.05);border:1px solid rgba(240,165,0,.2);padding:18px 20px;text-decoration:none;transition:all .2s}
+.join-act:hover{background:rgba(240,165,0,.08);border-color:var(--gold)}
+.ja-icon{width:42px;height:42px;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ja-icon svg{width:20px;height:20px;fill:var(--navy)}
+.ja-text strong{display:block;font-family:'Oswald',sans-serif;color:var(--white);font-size:1rem;margin-bottom:2px}
+.ja-text span{font-size:.82rem;color:#a8b8cc;line-height:1.4}
+
+/* ════════════════════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════════════════════ */
+footer{background:var(--navy);padding:60px 40px 0;color:#a8b8cc;font-size:.92rem;line-height:1.75}
+.footer-grid{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.1)}
+.footer-col h4{color:var(--white);font-size:1.1rem;font-weight:600;margin-bottom:18px}
+.footer-col p{margin-bottom:6px;display:flex;align-items:flex-start;gap:10px}
+.footer-col p svg{width:15px;height:15px;fill:var(--gold);flex-shrink:0;margin-top:4px}
+.footer-links{display:flex;flex-direction:column;gap:4px}
+.footer-links a{color:#a8b8cc;text-decoration:none;padding:3px 0;display:flex;align-items:center;gap:8px;transition:color .2s,padding-left .2s}
+.footer-links a::before{content:'›';color:var(--gold);font-size:1.1rem}
+.footer-links a:hover{color:var(--gold);padding-left:4px}
+.ft-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.ft-grid img{width:100%;aspect-ratio:1;object-fit:cover;display:block;transition:opacity .2s}
+.ft-grid img:hover{opacity:.75}
+.ft-grid .gal-ph{width:100%;aspect-ratio:1;background:var(--navy-lt);display:block}
+.footer-socials{display:flex;gap:8px;margin-top:16px}
+.fsoc{width:36px;height:36px;background:var(--gold);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:background .2s}
+.fsoc:hover{background:var(--gold-dk)}
+.fsoc svg{width:15px;height:15px;fill:var(--navy)}
+.copyright{max-width:1320px;margin:0 auto;padding:20px 0;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;font-size:.85rem;color:#7a8fa6}
+.copyright a{color:var(--gold);text-decoration:none}
+.copyright a:hover{text-decoration:underline}
+#back-top{position:fixed;bottom:28px;right:28px;width:44px;height:44px;background:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;z-index:500;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s}
+#back-top.show{opacity:1;pointer-events:auto}
+#back-top:hover{background:var(--gold-dk);transform:translateY(-3px)}
+#back-top svg{width:20px;height:20px;fill:var(--navy)}
+
+/* ════════════════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════════════════ */
+@media(max-width:1200px){
+  .prog-sticky{width:270px}
+  .updates-grid{grid-template-columns:repeat(2,1fr)}
+  .update-card.featured{grid-column:span 2}
+}
+@media(max-width:1024px){
+  .footer-grid{grid-template-columns:repeat(2,1fr)}
+  .page-hero{grid-template-columns:1fr}
+  .hero-programs{display:none} /* hidden on tablet, handled below */
+  .panel-split{grid-template-columns:1fr}
+}
+@media(max-width:900px){
+  .topbar-contacts{display:none}
+  #topbar{padding:10px 16px}
+  .page-hero{padding:0}
+  .hero-text{padding:50px 20px}
+  .programs-section,.updates-section,.join-band{padding:50px 20px}
+  .prog-layout{flex-direction:column;gap:32px}
+  .prog-sticky{width:100%;position:static}
+  .prog-selector{flex-direction:row;flex-wrap:wrap;gap:8px}
+  .prog-sel-btn{flex:1;min-width:200px;border-bottom:none;border:1px solid var(--border)}
+  .prog-sel-btn.active{border-color:var(--gold)}
+  .panel-body{padding:22px 16px}
+  .modules-grid{grid-template-columns:1fr}
+  .updates-grid{grid-template-columns:1fr}
+  .update-card.featured{grid-column:span 1}
+  .club-band{padding:20px 20px}
+  .join-inner{flex-direction:column;gap:32px}
+  .join-actions{width:100%;min-width:unset}
+}
+@media(max-width:768px){
+  #nav-wrapper{padding:0}
+  nav{flex-wrap:wrap;border-radius:0}
+  .nav-brand-mobile{font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--navy);font-weight:700;padding:12px 16px;display:flex;align-items:center}
+  .nav-toggle{display:flex;flex-direction:column}
+  .nav-collapse{display:none;width:100%;flex-direction:column;background:var(--navy-mid);contents:unset}
+  .nav-collapse.open{display:flex}
+  .nav-links{flex-direction:column;width:100%}
+  .nav-links a,.nav-links>li>button{color:var(--white);padding:12px 20px;width:100%;border-bottom:1px solid rgba(255,255,255,.06)}
+  .nav-links a:hover,.nav-links>li>button:hover{background:rgba(255,255,255,.08);color:var(--gold)}
+  .nav-links a.active{color:var(--gold);background:rgba(255,255,255,.06)}
+  .dropdown-menu{position:static;box-shadow:none;background:rgba(0,0,0,.2)}
+  .dropdown-menu a{color:#ccc;padding-left:36px}
+  .dropdown-menu a:hover{color:var(--gold);background:transparent}
+  .dropdown:hover .dropdown-menu{display:none}
+  .dropdown.open .dropdown-menu{display:block}
+  .nav-socials{display:none}
+  footer{padding:40px 16px 0}
+  .footer-grid{grid-template-columns:1fr;gap:28px}
+  .copyright{flex-direction:column;text-align:center}
+  #back-top{bottom:16px;right:16px}
+  .panel-stats{flex-wrap:wrap}
+  .ps-stat{min-width:50%;border-right:none;border-bottom:1px solid rgba(255,255,255,.1)}
+  .hero-pill-row{flex-wrap:wrap}
+  .h-pill{min-width:50%;border-right:none;border-bottom:1px solid rgba(255,255,255,.1)}
+}
+   /* Logo css*/
+   .brand-logo{
+  height: 70px;
+  width: auto;
+  display: block;
+  }
+  /*For L4R Menu*/
+@media (min-width: 769px) {
+  .nav-brand-mobile { display: none; }
+}
+@media (max-width: 768px) {
+  .nav-brand-mobile{font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--navy);font-weight:700;padding:12px 16px;display:flex;align-items:center}
+}
+</style>
+</head>
+<body id="top">
+<div id="global-scroll-bar"></div>
+<div id="spinner"><div class="spin-ring"></div></div>
+
+<!-- ══ TOPBAR ══ -->
+<div id="topbar">
+  <div class="topbar-inner">
+    <a href="index.html"><img src="img/Logocolored.png" alt="Light 4 Refugee" class="brand-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-family:'Oswald',sans-serif;font-size:1.5rem;color:var(--gold);font-weight:700;text-decoration:none">Light 4 Refugee</span></a>
+    <div class="topbar-contacts">
+      <div class="contact-item"><div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></div><div class="contact-text"><p>Call Us</p><span>+250 000 000 000</span></div></div>
+      <div class="contact-item"><div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div><div class="contact-text"><p>Mail Us</p><span>info@light4refugee.org</span></div></div>
+      <div class="contact-item"><div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div><div class="contact-text"><p>Location</p><span>Mahama Camp, Kirehe, Rwanda</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NAVBAR ══ -->
+<div id="nav-wrapper">
+  <nav>
+    <span class="nav-brand-mobile">L4R Menu</span>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <div class="nav-collapse" id="nav-collapse">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">About Us<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="about-us.html">About What We Do</a>
+            <a href="team.html">About Our Team</a>
+            <a href="gallery.html">About L4R Gallery</a>
+            <a href="testimonies.html">Testimonials</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')" class="active">Programs<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="programs.html" style="color:var(--gold);font-weight:700;">Light Club & iSpeakLead</a>
+            <a href="applications-hub.html">Applications Hub</a>
+          </div>
+        </li>
+        <li><a href=""></a></li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">Get Involved<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="become-a-mentor.html">Become a Mentor</a>
+            <a href="become-a-mentee.html">Become a Mentee</a>
+            <a href="partners.html">Partners</a>
+          </div>
+        </li>
+        <li><a href="news-stories.html">News &amp; Stories</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact-us.html">Contact</a></li>
+        <li><a href="donate.html" style="background:var(--navy);color:var(--gold);font-weight:700; border-radius:5px;">Donate</a></li>
+      </ul>
+      <div class="nav-socials">
+        <button id="theme-toggle" aria-label="Toggle Theme Mode"></button>
+        <a class="soc-btn" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="soc-btn" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="var(--white)"/></svg></a>
+        <a class="soc-btn" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- ══ HERO ══ -->
+<div class="page-hero">
+  <div class="hero-text">
+    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span style="color:#fff">Light Club &amp; iSpeakLead</span></div>
+    <div class="hero-chip"><svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg> L4R Light Club</div>
+    <h1>Two Programs.<br>One <em>Shared Mission.</em></h1>
+    <p class="sub">Inside the Light Club — L4R's living student community — two intensive programs run side by side to equip refugee youth with the language and the life skills to thrive. Together, they don't just prepare students for school. They prepare them for the world.</p>
+    <div class="hero-pill-row">
+      <div class="h-pill"><strong>ECP ^ Light Club</strong><span>English Communication<br>Program</span></div>
+      <div class="h-pill"><strong>ISEP ^ iSpeakLead</strong><span>Interpersonal Skills<br>Enhancement Program</span></div>
+      <div class="h-pill"><strong>2</strong><span>Camps<br>Served</span></div>
+    </div>
+  </div>
+  <div class="hero-programs">
+    <div class="hero-prog">
+      <div class="prog-tag"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg> ECP</div>
+      <h3>English Communication Program</h3>
+      <p>Intensive English immersion — grammar, vocabulary, reading, writing, and real conversation practice — designed to close the language gap that stands between refugee students and higher education.</p>
+      <button class="prog-scroll" onclick="openPanel('ecp')">Explore ECP <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+    </div>
+    <div class="hero-prog">
+      <div class="prog-tag"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg> ISEP</div>
+      <h3>Interpersonal Skills Enhancement Program</h3>
+      <p>Soft skills, emotional intelligence, communication, and relationship-building — the tools that determine how students perform once they enter schools, workplaces, and the world.</p>
+      <button class="prog-scroll" onclick="openPanel('isep')">Explore ISEP <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+    </div>
+  </div>
+</div>
+<div class="hero-accent"></div>
+
+<!-- ══ LIGHT CLUB BAND ══ -->
+<div class="club-band">
+  <div class="club-band-inner">
+    <div class="club-icon"><svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg></div>
+    <div class="club-band-text">
+      <h2>What is the Light Club?</h2>
+      <p>The Light Club is L4R's vibrant, always-on student community — the home of our ECP and ISEP programs, the space where alumni connect, where cohort updates are shared, and where students hold each other accountable and celebrate milestones together. Think of it as our beating heart: always alive, always growing.</p>
+    </div>
+    <div class="club-band-cta">
+      <a href="become-a-mentee.html">
+        <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+        Get Notified When Open
+      </a>
+      <a href="donate.html">
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        Support the Programs
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PROGRAM DEEP-DIVES ══ -->
+<div class="programs-section" id="programs">
+  <div class="programs-inner">
+    <div class="section-eyebrow">Program Details</div>
+    <div class="prog-layout">
+
+      <!-- sticky selector -->
+      <div class="prog-sticky">
+        <h2>Choose a Program to Explore</h2>
+        <p>Both programs run inside the Light Club and are designed to work in tandem — language opens doors, and interpersonal skills determine what you do once you walk through them.</p>
+        <div class="prog-selector">
+          <button class="prog-sel-btn active" id="sel-ecp" onclick="openPanel('ecp')">
+            <div class="prog-sel-icon"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></div>
+            <div class="prog-sel-text"><strong>ECP ^ Light Club</strong><span>English Communication Program</span></div>
+          </button>
+          <button class="prog-sel-btn" id="sel-isep" onclick="openPanel('isep')">
+            <div class="prog-sel-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
+            <div class="prog-sel-text"><strong>ISEP ^ iSpeakLead</strong><span>Interpersonal Skills Enhancement Program</span></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- panels -->
+      <div class="prog-panels" id="prog-panels">
+
+        <!-- ═══ ECP PANEL ═══ -->
+        <div class="prog-panel active" id="panel-ecp">
+          <div class="panel-header">
+            <div class="panel-tag"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg> English Communication Program</div>
+            <h2>📘 ECP — Unlocking Opportunity Through Language</h2>
+            <div class="tagline">"Language is the bridge between who you are and who the world sees you as."</div>
+          </div>
+          <div class="panel-body">
+
+            <div class="panel-split">
+              <div class="split-box">
+                <h4><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg> The Challenge</h4>
+                <p>Refugee students graduating secondary school in Rwanda often carry extraordinary potential — and a critical barrier. English proficiency, disrupted by years of displacement and limited resources in the camps, stands between their talent and their opportunity. According to UNHCR, while <strong>70% of refugee youth complete secondary school, only 4% access higher education</strong>. Language is a primary reason why.</p>
+              </div>
+              <div class="split-box dark">
+                <h4><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg> Our Response</h4>
+                <p>The English Communication Program delivers a rigorous, immersive English learning experience — designed specifically for refugee learners. We meet students where they are, build them to where they need to be, and give them the confidence to use English as a tool for opportunity — not just a test to pass.</p>
+              </div>
+            </div>
+
+            <div class="panel-quote">"We're not just learning English. We're learning how to tell the world who we are — and that changes everything."</div>
+
+            <div class="module-label">What ECP Covers</div>
+            <div class="modules-grid">
+              <div class="module-card"><h5>Speaking &amp; Pronunciation</h5><p>Real conversation practice, accent clarity, and confidence-building in both formal and informal English communication.</p></div>
+              <div class="module-card"><h5>Reading &amp; Comprehension</h5><p>Academic reading strategies, vocabulary in context, and critical reading — the foundation for university-level study.</p></div>
+              <div class="module-card"><h5>Writing &amp; Grammar</h5><p>From structured essays to personal statements — students learn to write with clarity, accuracy, and voice.</p></div>
+              <div class="module-card"><h5>Listening &amp; Response</h5><p>Audio comprehension exercises and structured debate — preparing students for classrooms and boardrooms alike.</p></div>
+              <div class="module-card"><h5>Scholarship Essay Prep</h5><p>How to write for scholarship applications, university admissions, and competitive programs — with real examples from past applicants.</p></div>
+              <div class="module-card"><h5>Vocabulary Expansion</h5><p>Targeted vocabulary for academic writing, career settings, and professional communication — tailored to refugee students' goals.</p></div>
+            </div>
+
+            <div class="panel-stats">
+              <div class="ps-stat"><strong>70%</strong><span>Complete secondary<br>school</span></div>
+              <div class="ps-stat"><strong>4%</strong><span>Access tertiary<br>education</span></div>
+              <div class="ps-stat"><strong>#1</strong><span>Barrier cited:<br>English proficiency</span></div>
+              <div class="ps-stat"><strong>100%</strong><span>Free to eligible<br>students</span></div>
+            </div>
+
+            <div class="module-label" style="margin-top:28px">What Students Gain</div>
+            <div class="check-list">
+              <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>The confidence to speak in English in academic, professional, and social settings</div>
+              <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>A competitive edge when applying for scholarships, universities, and career opportunities</div>
+              <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Academic writing skills for personal statements, essays, and university coursework</div>
+              <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Ongoing academic support, feedback, and mentorship from ECP facilitators</div>
+            </div>
+
+            <div class="panel-cta">
+              <a class="btn-navy" href="become-a-mentee.html"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg> Apply for ECP</a>
+              <a class="btn-gold" href="mailto:academicservices@light4refugee.org"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg> Contact ECP Team</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ ISEP PANEL ═══ -->
+        <div class="prog-panel" id="panel-isep">
+          <div class="panel-header">
+            <div class="panel-tag"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg> Interpersonal Skills Enhancement Program</div>
+            <h2>🤝 ISEP — The Skills No Classroom Can Ignore</h2>
+            <div class="tagline">"Technical knowledge opens the door. How you relate to people determines whether you stay."</div>
+          </div>
+          <div class="panel-body">
+
+            <div class="panel-split">
+              <div class="split-box">
+                <h4><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg> Why It Matters</h4>
+                <p>Refugee students arrive in schools and workplaces with often remarkable academic resilience — but the hidden curriculum of interpersonal skills: how to collaborate, negotiate, resolve conflict, and build professional relationships — was never taught. These gaps hold back brilliant young people in institutions that value soft skills just as much as grades.</p>
+              </div>
+              <div class="split-box dark">
+                <h4><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg> Our Response</h4>
+                <p>ISEP runs alongside ECP inside the Light Club, building the relationship, emotional, and professional skills that transform a student from a learner to a collaborator — from a graduate to a colleague. We work with partner schools in Rwanda to align ISEP content with what institutions actually need.</p>
+              </div>
+            </div>
+
+            <div class="panel-quote">"When someone becomes better for themselves — more self-aware, more empathetic, more confident — they naturally become better for everyone around them. That's what ISEP builds."</div>
+
+            <div class="module-label">ISEP Core Modules</div>
+            <div class="modules-grid">
+              <div class="module-card"><h5>Active Listening &amp; Empathy</h5><p>Understanding before being understood — the skill that transforms conversations, builds trust, and opens doors.</p></div>
+              <div class="module-card"><h5>Conflict Resolution</h5><p>How to navigate disagreements constructively in academic, team, and professional settings without burning bridges.</p></div>
+              <div class="module-card"><h5>Professional Communication</h5><p>Writing professional emails, contributing in meetings, presenting ideas, and giving feedback with clarity and confidence.</p></div>
+              <div class="module-card"><h5>Emotional Intelligence (EQ)</h5><p>Self-awareness, emotional regulation, and social awareness — the foundations of long-term academic and professional success.</p></div>
+              <div class="module-card"><h5>Teamwork &amp; Collaboration</h5><p>Group dynamics, shared responsibility, and how to work across cultural and language differences — essential in global institutions.</p></div>
+              <div class="module-card"><h5>Networking &amp; Relationship-Building</h5><p>How to build genuine professional relationships, leverage mentorship, and grow a network that opens doors over a lifetime.</p></div>
+            </div>
+
+            <div class="panel-stats">
+              <div class="ps-stat"><strong>6</strong><span>Core skill<br>modules</span></div>
+              <div class="ps-stat"><strong>EQ</strong><span>Emotional intelligence<br>at the core</span></div>
+              <div class="ps-stat"><strong>3+</strong><span>Partner schools<br>aligned</span></div>
+              <div class="ps-stat"><strong>100%</strong><span>Free to eligible<br>students</span></div>
+            </div>
+
+            <!-- school partners -->
+            <div class="school-strip">
+              <p>Partner Schools &amp; Institutions</p>
+              <div class="school-tags">
+                <span class="school-tag"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg> G.S. Paysannat L, Mahama</span>
+                <span class="school-tag"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg> Schools in Kigeme &amp; Mugombwa</span>
+                <span class="school-tag"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg> Urban Refugee Communities, Kigali</span>
+                <span class="school-tag"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg> More Partnerships Expanding</span>
+              </div>
+            </div>
+
+            <div class="module-label" style="margin-top:28px">What Students Gain</div>
+            <div class="check-list">
+              <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>The ability to build and maintain productive relationships in school and professional environments</div>
+              <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Emotional intelligence skills that underpin leadership, teamwork, and long-term career success</div>
+              <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Practical communication tools for navigating universities, workplaces, and global networks</div>
+              <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Confidence, resilience, and purpose — the inner foundation that holds everything else together</div>
+            </div>
+
+            <div class="panel-cta">
+              <a class="btn-navy" href="become-a-mentee.html"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg> Apply for ISEP</a>
+              <a class="btn-gold" href="mailto:info@light4refugee.org"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg> Contact ISEP Team</a>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /prog-panels -->
+    </div><!-- /prog-layout -->
+  </div>
+</div>
+
+<!-- ══ LIGHT CLUB UPDATES ══ -->
+<div class="updates-section" id="club-updates">
+  <div class="updates-inner">
+    <div class="updates-heading">
+      <div class="section-eyebrow">Light Club Updates</div>
+      <h2>What's Happening in the Club</h2>
+      <p>Live moments, session highlights, student reflections, and program milestones — this is what the Light Club looks like from the inside.</p>
+    </div>
+
+    <div class="updates-grid">
+
+      <!-- UPDATE 1: FEATURED — ECP launch -->
+      <div class="update-card featured" onclick="toggleUpdate('u1', event)">
+        <div class="uc-img">
+          <!-- img/club-ecp-launch.jpg -->
+          <img src="img/club-ecp-launch.jpg" alt="ECP session launch"
+               onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>club-ecp-launch.jpg</span></div>'">
+          <span class="uc-prog-badge badge-ecp">ECP</span>
+        </div>
+        <div class="uc-body">
+          <div class="uc-meta"><span class="uc-tag">Program Update</span><span class="uc-date">July 2025</span></div>
+          <h3>ECP Cohort 1 Launches — 120 Students, One English Classroom at a Time</h3>
+          <div class="uc-quote">"We're not just learning English. We're learning how to tell the world who we are."</div>
+          <p>The English Communication Program opened its first cohort at G.S. Paysannat L in Mahama — the very school that once housed our founding team. Over 120 students attended. What began as an English class became something far more powerful: a conversation about identity, aspiration, and what language makes possible.</p>
+          <button class="uc-expand">Read full update <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="uc-full" id="u1">
+            <p>The English Communication Program officially launched as part of Cohort 1 of the L4R Scholars Bootcamp held July 21–25, 2025 at G.S. Paysannat L, Mahama Refugee Camp. Over 120 students — nearly three times the expected number — showed up ready. What followed was five days of intensive English instruction, structured debate, reading and writing sessions, and vocabulary-building workshops.</p>
+            <p>Students were grouped by academic level on Day 2, allowing ECP sessions to target each learner where they were. Graduate-track scholars received dedicated support on scholarship essay writing and university application language — a clear, practical bridge from the classroom to the future.</p>
+            <div class="pull">"The college application process stopped being a mystery. It became a map — and for the first time, they were the ones reading it."</div>
+            <p>Sessions ran daily alongside ISEP modules, allowing students to practice what they learned in ECP — communicating clearly, writing precisely, and speaking with confidence — within the same day's interpersonal skills work. The integration was intentional and its impact immediate.</p>
+            <div class="uc-tags">
+              <span class="uc-hash">#ECP</span><span class="uc-hash">#EnglishProgram</span>
+              <span class="uc-hash">#LightClub</span><span class="uc-hash">#Mahama</span><span class="uc-hash">#ScholarsBootcamp</span>
+            </div>
+            <button class="uc-close" onclick="closeUpdate('u1', event)"><svg viewBox="0 0 24 24"><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg> Collapse</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- UPDATE 2: ISEP -->
+      <div class="update-card" onclick="toggleUpdate('u2', event)">
+        <div class="uc-img">
+          <!-- img/club-isep-session.jpg -->
+          <img src="img/club-isep-session.jpg" alt="ISEP session"
+               onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>club-isep-session.jpg</span></div>'">
+          <span class="uc-prog-badge badge-isep">ISEP</span>
+        </div>
+        <div class="uc-body">
+          <div class="uc-meta"><span class="uc-tag">Session Recap</span><span class="uc-date">July 24, 2025</span></div>
+          <h3>ISEP Gender Equity Seminar Sparks the Room</h3>
+          <div class="uc-quote">"When someone becomes better for themselves, they become better for everyone."</div>
+          <p>Day 4 ISEP sessions opened with guided reading on gender equality and equity — and what followed surprised everyone. Students didn't just analyze the topic — they lived it, challenged it, and began rewriting it.</p>
+          <button class="uc-expand">Read more <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="uc-full" id="u2">
+            <p>The Day 4 ISEP session began with guided reading on gender equality — a topic that cuts close to home for many refugee students whose communities have experienced both displacement and deep gender inequity. What started as a structured reading exercise became a powerful, organic seminar.</p>
+            <p>Students broke into small groups and confronted hard questions: What does equality look like inside our families? In our schools? In our futures? The answers varied, surprised, challenged — and ultimately inspired. By the end of the session, several students had drafted personal commitments to lead gender-inclusive spaces in their communities.</p>
+            <div class="pull">"You could see purpose arrive on their faces. It wasn't just a lesson. It was a decision."</div>
+            <div class="uc-tags"><span class="uc-hash">#ISEP</span><span class="uc-hash">#GenderEquity</span><span class="uc-hash">#PurposeInMotion</span><span class="uc-hash">#LightClub</span></div>
+            <button class="uc-close" onclick="closeUpdate('u2', event)"><svg viewBox="0 0 24 24"><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg> Collapse</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- UPDATE 3: UNHCR Webinar -->
+      <div class="update-card" onclick="toggleUpdate('u3', event)">
+        <div class="uc-img">
+          <!-- img/club-webinar.jpg -->
+          <img src="img/club-webinar.jpg" alt="UNHCR webinar"
+               onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>club-webinar.jpg</span></div>'">
+          <span class="uc-prog-badge badge-club">Light Club</span>
+        </div>
+        <div class="uc-body">
+          <div class="uc-meta"><span class="uc-tag">Partnership Event</span><span class="uc-date">December 10, 2025</span></div>
+          <h3>L4R &amp; UNHCR Rwanda Host Graduate School Application Webinar</h3>
+          <p>Co-facilitated by Ruth Nyabuto — Rhodes Scholar and Refugee-Led Research Hub contributor — this live webinar gave refugee students a direct window into what top graduate schools actually look for in applications.</p>
+          <button class="uc-expand">Read more <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="uc-full" id="u3">
+            <p>On December 10, 2025, Light4Refugee co-hosted a webinar with UNHCR Rwanda on crafting strong graduate school application documents. Facilitated by Ruth Nyabuto — an experienced Rhodes Alumni and contributor to the Refugee-Led Research Hub — the session walked refugee students through the often-intimidating world of graduate applications.</p>
+            <p>Key topics covered:</p>
+            <ul>
+              <li>What graduate admissions committees actually look for</li>
+              <li>How to write a compelling personal statement as a refugee applicant</li>
+              <li>What documents are required and how to strengthen each one</li>
+              <li>How to leverage scholarship opportunities like IRIS and Aspire</li>
+            </ul>
+            <p>The event was attended by students from Mahama, Kigeme, and urban refugee communities in Kigali — a testament to the growing reach of the Light Club's network.</p>
+            <div class="uc-tags"><span class="uc-hash">#UNHCR</span><span class="uc-hash">#GradApplications</span><span class="uc-hash">#LightClub</span><span class="uc-hash">#Scholarships</span></div>
+            <button class="uc-close" onclick="closeUpdate('u3', event)"><svg viewBox="0 0 24 24"><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg> Collapse</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- UPDATE 4: Day 3 ECP moment -->
+      <div class="update-card" onclick="toggleUpdate('u4', event)">
+        <div class="uc-img">
+          <!-- img/club-day3-writing.jpg -->
+          <img src="img/club-day3-writing.jpg" alt="ECP Day 3 writing session"
+               onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>club-day3-writing.jpg</span></div>'">
+          <span class="uc-prog-badge badge-ecp">ECP</span>
+        </div>
+        <div class="uc-body">
+          <div class="uc-meta"><span class="uc-tag">Student Milestone</span><span class="uc-date">July 23, 2025</span></div>
+          <h3>From Blank Page to Bold Statement — ECP Day 3 Writing Session</h3>
+          <div class="uc-quote">"Words That Move, Dreams That Speak."</div>
+          <p>Day 3 ECP writing sessions saw students draft their first personal statements — some for the very first time. The room was quiet. Then it wasn't. By the end, students were reading their work aloud to each other.</p>
+          <button class="uc-expand">Read more <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="uc-full" id="u4">
+            <p>On Day 3 of the Scholars Bootcamp, ECP sessions shifted focus from foundations to application — introducing students to the personal statement, the most powerful piece of writing a scholarship applicant will ever craft. For many, this was the first time they had written about themselves with the intention of being seen.</p>
+            <p>Facilitators guided students through drafting structures, prompting reflection on their journeys, their values, and their visions for the future. Some students wrote in near silence. Others asked for help with every sentence. All of them finished with something on the page — and that was the point.</p>
+            <div class="pull">"Seeing a student read their own story aloud — often for the first time — is one of the most powerful things we have witnessed in this program."</div>
+            <div class="uc-tags"><span class="uc-hash">#ECP</span><span class="uc-hash">#PersonalStatement</span><span class="uc-hash">#Day3</span><span class="uc-hash">#LightClub</span></div>
+            <button class="uc-close" onclick="closeUpdate('u4', event)"><svg viewBox="0 0 24 24"><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg> Collapse</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- UPDATE 5: ISEP confidence -->
+      <div class="update-card" onclick="toggleUpdate('u5', event)">
+        <div class="uc-img">
+          <!-- img/club-isep-confidence.jpg -->
+          <img src="img/club-isep-confidence.jpg" alt="ISEP confidence building"
+               onerror="this.parentElement.innerHTML='<div class=\'img-slot\'><svg viewBox=\'0 0 24 24\'><path d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/></svg><span>club-isep-confidence.jpg</span></div>'">
+          <span class="uc-prog-badge badge-isep">ISEP</span>
+        </div>
+        <div class="uc-body">
+          <div class="uc-meta"><span class="uc-tag">Reflection</span><span class="uc-date">July 25, 2025</span></div>
+          <h3>Cohort 1 Closing: Confidence Wasn't Taught — It Was Earned</h3>
+          <div class="uc-quote">"Knowing is not enough. You must take action."</div>
+          <p>The final ISEP session of Cohort 1 closed with a student sharing exercise — and what came out of the room proved that five days of interpersonal skills work leaves a mark that doesn't wash away.</p>
+          <button class="uc-expand">Read more <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button>
+          <div class="uc-full" id="u5">
+            <p>The closing ISEP session of the L4R Scholars Bootcamp Cohort 1 was structured around a simple question: What are you taking with you? What followed was a hour that nobody in the room will forget — student after student standing to share what had shifted in them over five days.</p>
+            <p>One student spoke about finally understanding the difference between being heard and being understood. Another described practicing active listening with their family that very morning. A third committed out loud to becoming a mentor themselves one day — and was met with applause.</p>
+            <div class="pull">"Confidence wasn't taught in those five days. It was uncovered — from underneath all the doubt and displacement — and it belongs entirely to them."</div>
+            <div class="uc-tags"><span class="uc-hash">#ISEP</span><span class="uc-hash">#Cohort1</span><span class="uc-hash">#ConfidenceEarned</span><span class="uc-hash">#LightClub</span></div>
+            <button class="uc-close" onclick="closeUpdate('u5', event)"><svg viewBox="0 0 24 24"><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg> Collapse</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /updates-grid -->
+  </div>
+</div>
+
+<!-- ══ JOIN BAND ══ -->
+<div class="join-band">
+  <div class="join-inner">
+    <div class="join-text">
+      <h2>Ready to Join the<br><em>Light Club?</em></h2>
+      <p>The Light Club is where students become scholars, scholars become leaders, and leaders become the change they once needed. Applications for Cohort 2 are coming — and ECP and ISEP will be at the heart of it. Make sure you're ready when the door opens.</p>
+    </div>
+    <div class="join-actions">
+      <a class="join-act" href="become-a-mentee.html">
+        <div class="ja-icon"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
+        <div class="ja-text"><strong>Get Notified for Cohort 2</strong><span>Be first to know when ECP &amp; ISEP applications open</span></div>
+      </a>
+      <a class="join-act" href="become-a-mentor.html">
+        <div class="ja-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
+        <div class="ja-text"><strong>Become an ECP / ISEP Mentor</strong><span>Facilitate sessions. Shape skills. Change a life. 1–2 hrs/week.</span></div>
+      </a>
+      <a class="join-act" href="donate.html">
+        <div class="ja-icon"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+        <div class="ja-text"><strong>Fund the Light Club</strong><span>Your donation keeps ECP &amp; ISEP free for every eligible student</span></div>
+      </a>
+    </div>
+  </div>
+</div><hr>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Our Operational Locations</h4>
+      <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Mahama &amp; Kiziba Refugee Camps, <br>Kirehe &amp; Karongi Districts, Rwanda</p>
+      <p><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>+250 792 052 725</p>
+      <p><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>info@light4refugee.org</p>
+      <div class="footer-socials">
+        <a class="fsoc" href="https://www.facebook.com/61574731480102" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="fsoc" href="https://www.youtube.com/channel/UCKFczxvUGOmq7e7tJQ65HxA" target="_blank"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+        <a class="fsoc" href="https://instagram.com/light4refugee" target="_blank"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="var(--navy)" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="var(--navy)" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="var(--navy)"/></svg></a>
+        <a class="fsoc" href="https://linkedin.com/company/light4refugee/posts" target="_blank"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+      <br>
+      <a href="index.html"><img src="img/logo.png" alt="Light 4 Refugee" style="height:55px;width:auto;display:block;opacity:.85"></a>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="team.html">Our Team</a>
+        <a href="news-stories.html">News &amp; Stories</a>
+        <a href="applications-hu.html">Applications Hub</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact-us.html">Contact Us</a>
+        <a href="donate.html">Donate</a>
+        <a href="testimonies.html">Testimonials</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Our Programs</h4>
+      <div class="footer-links">
+        <a href="about-us.html">Academic Preparation</a>
+        <a href="about-us.html">College Counseling</a>
+        <a href="about-us.html">Career Guidance</a><br>
+        <h4>Get Involved</h4>
+        <a href="programs.html">Light Club (ECP &amp; ISEP)</a>
+        <a href="become-a-mentor.html">Become a Mentor</a>
+        <a href="become-a-mentee.html">Become a Mentee</a>
+        <a href="partners.html">Partner With Us</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>From the Gallery</h4>
+      <div class="ft-grid">
+        <a href="gallery.html"><img src="img/work.jpeg" alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/bckg.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-5.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/carousel-1.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/about.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+        <a href="gallery.html"><img src="img/carousel-2.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-ph\'></span>'"></a>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">
+    <span>&copy; 2026 <a href="https://light4refugee.org" target="_blank">Light 4 Refugee</a>, All Rights Reserved.</span>
+      <span style="display:inline-flex; gap:12px;">
+      <a href="terms-conditions.html" target="_blank" style="color:#2e6d04;">Terms/Conditions</a> |
+      <a href="privacy-policy.html" target="_blank" style="color:#2e6d04;">Privacy Policy</a>
+      </span>
+    <span>Designed By <a href="https://yvesnickylirf.com" target="_blank">Yves Nicky Lirf</a></span>
+  </div>
+</footer>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+</button>
+<script src="theme-logic.js"></script>
+<script>
+/* BOOT */
+window.addEventListener('load',()=>{const s=document.getElementById('spinner');s.classList.add('hide');setTimeout(()=>s.remove(),500)});
+
+/* STICKY NAV */
+const tb=document.getElementById('topbar'),nw=document.getElementById('nav-wrapper'),tbH=tb.offsetHeight;
+window.addEventListener('scroll',()=>{const s=window.scrollY>tbH;tb.classList.toggle('hidden',s);nw.classList.toggle('stuck',s);document.getElementById('back-top').classList.toggle('show',window.scrollY>300)},{passive:true});
+
+/* MOBILE NAV */
+document.getElementById('nav-toggle').addEventListener('click',function(){this.classList.toggle('open');document.getElementById('nav-collapse').classList.toggle('open')});
+function toggleDD(id){if(window.innerWidth>768)return;document.getElementById(id).classList.toggle('open')}
+
+/* PROGRAM PANEL SWITCHER */
+function openPanel(id){
+  document.querySelectorAll('.prog-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.prog-sel-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.getElementById('sel-'+id).classList.add('active');
+  document.getElementById('programs').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* UPDATE CARD EXPAND */
+function toggleUpdate(id, e){
+  e.stopPropagation();
+  const full=document.getElementById(id);
+  const card=full.closest('.update-card');
+  const btn=card.querySelector('.uc-expand');
+  if(full.classList.contains('open')){
+    full.classList.remove('open');
+    if(btn){btn.innerHTML='Read more <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor"><path d="M7 10l5 5 5-5z"/></svg>'}
+  }else{
+    full.classList.add('open');
+    if(btn){btn.innerHTML='Collapse <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor"><path d="M7 14l5-5 5 5z"/></svg>'}
+  }
+}
+function closeUpdate(id,e){
+  e.stopPropagation();
+  const full=document.getElementById(id);
+  const card=full.closest('.update-card');
+  const btn=card.querySelector('.uc-expand');
+  full.classList.remove('open');
+  if(btn){btn.innerHTML='Read more <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor"><path d="M7 10l5 5 5-5z"/></svg>'}
+}
+</script>
+</body>
+</html>

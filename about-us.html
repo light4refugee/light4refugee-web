@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us – L4R</title>
+<meta name="description" content="Empowering refugee youth in Rwanda through academic support, college counseling, and career guidance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="img/logo.jpg?v=2">
+<link rel="stylesheet" href="theme-style.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:     #0d1b2e;
+    --navy-mid: #162540;
+    --navy-lt:  #1e3258;
+    --gold:     #f0a500;
+    --gold-dk:  #c98a00;
+    --white:    #ffffff;
+    --cream:    #f5f0e8;
+    --text:     #1a1a1a;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--white); overflow-x: hidden; }
+
+  /* ── SPINNER ──────────────────────────────────────────── */
+  #spinner {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity .4s;
+  }
+  #spinner.hide { opacity: 0; pointer-events: none; }
+  .spin-ring {
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 4px solid #ddd; border-top-color: var(--gold);
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── TOPBAR ───────────────────────────────────────────── */
+  #topbar {
+    background: var(--navy);
+    padding: 10px 40px;
+    display: flex; align-items: center;
+    transition: transform .35s ease, opacity .35s ease;
+  }
+  #topbar.hidden {
+    transform: translateY(-100%); opacity: 0; pointer-events: none;
+    position: absolute; width: 100%;
+  }
+  .topbar-inner {
+    display: flex; align-items: center;
+    width: 100%; max-width: 1320px; margin: 0 auto;
+  }
+  .brand {
+    font-family: 'Oswald', sans-serif; font-size: 2rem;
+    color: var(--gold); text-decoration: none; letter-spacing: 1px;
+  }
+  .topbar-contacts { display: flex; gap: 32px; margin-left: auto; }
+  .contact-item { display: flex; align-items: center; gap: 10px; }
+  .contact-icon {
+    width: 36px; height: 36px; background: var(--gold);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .contact-icon svg { width: 16px; height: 16px; fill: var(--navy); }
+  .contact-text p  { font-size: .75rem; color: var(--gold); font-weight: 600; margin-bottom: 1px; }
+  .contact-text span { font-size: .8rem; color: var(--white); }
+
+  /* ── NAVBAR ───────────────────────────────────────────── */
+  #nav-wrapper {
+    background: var(--navy);
+    padding: 0 40px 12px;
+    position: sticky; top: 0; z-index: 100;
+    transition: padding .35s ease;
+  }
+  #nav-wrapper.stuck { padding: 0; }
+  nav {
+    background: var(--gold);
+    max-width: 1320px; margin: 0 auto;
+    display: flex; align-items: stretch;
+    transition: max-width .35s ease;
+    border-radius: 0 0 4px 4px; position: relative;
+  }
+  #nav-wrapper.stuck nav { max-width: 100%; border-radius: 0; }
+  .nav-links { display: flex; align-items: stretch; list-style: none; }
+  .nav-links a, .nav-links > li > button {
+    display: flex; align-items: center; padding: 14px 20px;
+    color: var(--navy); font-size: .95rem; font-weight: 600;
+    text-decoration: none; background: none; border: none; cursor: pointer;
+    transition: color .2s, background .2s;
+  }
+  .nav-links a:hover, .nav-links > li > button:hover,
+  .nav-links a.active { color: var(--white); background: rgba(0,0,0,.15); border-radius: 10px;}
+  .dropdown { position: relative; }
+  .dropdown-menu {
+    display: none; position: absolute; top: 100%; left: 0;
+    background: var(--white); min-width: 180px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.18); z-index: 200;
+  }
+  .dropdown:hover .dropdown-menu { display: block; }
+  .dropdown-menu a {
+    display: block; padding: 10px 18px; color: var(--text);
+    font-size: .9rem; text-decoration: none; transition: background .2s;
+  }
+  .dropdown-menu a:hover { background: var(--gold); color: var(--navy); }
+  .nav-caret { margin-left: 4px; font-size: .7rem; }
+  .nav-socials { margin-left: auto; display: flex; align-items: center; gap: 6px; padding-right: 14px; }
+  .soc-btn {
+    width: 34px; height: 34px; background: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 2px; text-decoration: none; transition: background .2s;
+  }
+  .soc-btn:hover { background: #1a2d4a; }
+  .soc-btn svg { width: 16px; height: 16px; fill: var(--white); }
+  .nav-toggle {
+    display: none; background: none; border: none; cursor: pointer;
+    padding: 12px 16px; margin-left: auto;
+  }
+  .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--navy); margin: 5px 0; transition: .3s; }
+  .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-collapse { display: contents; }
+
+  /* ── PAGE HERO ────────────────────────────────────────── */
+  .page-hero { background: var(--navy); padding: 70px 40px; position: relative; overflow: hidden; }
+  .page-hero::before { content: ''; position: absolute; inset: -20px; background-image: url('img/work.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat; filter: blur(1px); background-blend-mode: multiply; background-image: linear-gradient(135deg, rgba(240,165,0,.12) 0%, transparent 60%), linear-gradient(rgba(10, 25, 47, 0.75), rgba(10, 25, 47, 0.75)), url('img/work.jpeg'); }
+  .page-hero-inner { max-width: 1320px; margin: 0 auto; position: relative; z-index: 1; }
+  .breadcrumb { display: flex; align-items: center; gap: 10px; font-size: .85rem; color: #a8b8cc; margin-bottom: 20px; }
+  .breadcrumb a { color: var(--gold); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb span { color: #556; }
+  .page-hero h1 { font-family: 'Oswald', sans-serif; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 700; color: var(--white); text-transform: uppercase; line-height: 1.05; margin-bottom: 16px; }
+  .page-hero h1 em { color: var(--gold); font-style: normal; }
+  .page-hero p { font-size: 1.1rem; color: #a8b8cc; max-width: 620px; line-height: 1.7; }
+  .hero-stat-row { display: flex; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
+  .hero-stat { display: flex; flex-direction: column; }
+  .hero-stat strong { font-family: 'Oswald', sans-serif; font-size: 2.2rem; color: var(--gold); font-weight: 700; line-height: 1; }
+  .hero-stat span { font-size: .85rem; color: #a8b8cc; margin-top: 4px; }
+
+  /* gold accent bar below hero */
+  .hero-accent { height: 6px; background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dk) 50%, var(--navy) 100%); }
+
+  /* ── SECTION UTILITIES ────────────────────────────────── */
+  .section-label {
+    display: flex; align-items: center; gap: 12px;
+    color: var(--gold); font-size: .82rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2px; margin-bottom: 14px;
+  }
+  .section-label::after {
+    content: ''; display: block; width: 50px; height: 2px; background: var(--gold);
+  }
+  .check-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: .95rem; color: #444; margin-bottom: 10px; line-height: 1.5;
+  }
+  .check-item svg { width: 18px; height: 18px; fill: var(--gold); flex-shrink: 0; margin-top: 2px; }
+  .btn-gold, .btn-navy {
+    padding: 13px 28px; font-size: .95rem; font-weight: 700;
+    cursor: pointer; border: none; text-decoration: none; display: inline-flex;
+    align-items: center; gap: 8px;
+    transition: opacity .2s, transform .15s;
+  }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .btn-gold:hover { opacity: .88; transform: translateY(-2px); }
+  .btn-navy { background: var(--navy); color: var(--white); }
+  .btn-navy:hover { background: var(--navy-mid); transform: translateY(-2px); }
+
+  /* ── INTRO STRIP ──────────────────────────────────────── */
+.intro-strip{background:var(--gold);padding:22px 40px;display:flex;align-items:center;gap:24px;box-sizing:border-box}
+.intro-strip-inner{max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:24px;width:100%;box-sizing:border-box}
+.intro-strip svg{width:36px;height:36px;fill:var(--navy);flex-shrink:0}
+.intro-strip p{font-size:1.05rem;font-weight:600;color:var(--navy);line-height:1.5;flex:1}
+.intro-strip blockquote{font-style:italic;font-size:.9rem;color:var(--navy-mid);border-left:3px solid var(--navy);padding-left:14px;flex-shrink:0;max-width:280px;box-sizing:border-box;margin:0}
+
+  /* ── PROGRAM SECTIONS ─────────────────────────────────── */
+  /* alternating layout: image left / right */
+  .program-section {
+    padding: 90px 40px;
+  }
+  .program-section:nth-child(even) { background: var(--cream); }
+  .program-section:nth-child(odd)  { background: var(--white); }
+
+  .program-inner {
+    max-width: 1320px; margin: 0 auto;
+    display: flex; align-items: center; gap: 70px;
+  }
+  .program-inner.reverse { flex-direction: row-reverse; }
+
+  /* image block with gold accent */
+  .prog-img-wrap {
+    flex: 1; position: relative; min-height: 420px; max-width: 520px;
+  }
+  .prog-img-wrap .gold-accent {
+    position: absolute; top: 0; left: 0;
+    width: 80%; height: 88%;
+    background: var(--gold); z-index: 0;
+  }
+  .program-inner.reverse .prog-img-wrap .gold-accent {
+    left: auto; right: 0;
+  }
+  .prog-img-wrap img {
+    position: absolute; bottom: 0; right: 0;
+    width: 86%; height: auto; object-fit: cover;
+    display: block; z-index: 1;
+  }
+  .program-inner.reverse .prog-img-wrap img {
+    right: auto; left: 0;
+  }
+  .prog-img-wrap .img-ph {
+    position: absolute; bottom: 0; right: 0;
+    width: 86%; aspect-ratio: 4/3; background: #c5cfe0; z-index: 1;
+  }
+  .program-inner.reverse .prog-img-wrap .img-ph { right: auto; left: 0; }
+
+  /* program number badge */
+  .prog-badge {
+    position: absolute; top: -18px; right: -18px;
+    width: 56px; height: 56px; background: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Oswald', sans-serif; font-size: 1.4rem;
+    font-weight: 700; color: var(--gold); z-index: 2;
+  }
+  .program-inner.reverse .prog-badge { right: auto; left: -18px; }
+
+  /* text side */
+  .prog-text { flex: 1; }
+  .prog-text h2 {
+    font-family: 'Oswald', sans-serif; font-size: 2rem;
+    font-weight: 700; color: var(--navy); margin-bottom: 8px; line-height: 1.15;
+  }
+  .prog-text .tagline {
+    font-style: italic; color: var(--gold); font-size: .95rem;
+    font-weight: 600; margin-bottom: 14px; display: block;
+  }
+  .prog-text .quote-block {
+    border-left: 4px solid var(--gold); padding: 10px 18px;
+    background: rgba(240,165,0,.06); margin-bottom: 20px;
+    font-style: italic; color: #555; font-size: .95rem; line-height: 1.6;
+  }
+  .prog-text > p {
+    color: #555; font-size: .97rem; line-height: 1.75; margin-bottom: 14px;
+  }
+  .prog-text h4 {
+    font-size: 1rem; font-weight: 700; color: var(--navy);
+    margin: 18px 0 10px;
+  }
+  .prog-checks { margin-bottom: 24px; }
+  .prog-stat {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--navy); padding: 12px 20px; margin-bottom: 24px;
+  }
+  .prog-stat strong {
+    font-family: 'Oswald', sans-serif; font-size: 1.6rem;
+    color: var(--gold); font-weight: 700;
+  }
+  .prog-stat span { font-size: .82rem; color: #a8b8cc; line-height: 1.3; }
+  .prog-email {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--gold); font-size: .88rem; font-weight: 600;
+    text-decoration: none; border-bottom: 1px solid transparent;
+    transition: border-color .2s;
+  }
+  .prog-email svg { width: 16px; height: 16px; fill: var(--gold); }
+  .prog-email:hover { border-color: var(--gold); }
+
+  /* ── IMPACT NUMBERS BAND ──────────────────────────────── */
+  .impact-band {
+    background: var(--navy);
+    padding: 60px 40px;
+  }
+  .impact-band-inner {
+    max-width: 1320px; margin: 0 auto;
+    text-align: center; margin-bottom: 40px;
+  }
+  .impact-band-inner h2 {
+    font-family: 'Oswald', sans-serif; font-size: 2rem;
+    color: var(--white); margin-bottom: 8px;
+  }
+  .impact-band-inner p { color: #a8b8cc; font-size: .95rem; }
+  .impact-grid {
+    max-width: 1320px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+  }
+  .impact-tile {
+    background: var(--navy-mid);
+    padding: 36px 24px; text-align: center;
+    border-top: 3px solid var(--gold);
+  }
+  .impact-tile svg { width: 40px; height: 40px; fill: var(--gold); margin-bottom: 14px; }
+  .impact-tile strong {
+    display: block; font-family: 'Oswald', sans-serif;
+    font-size: 2.4rem; color: var(--gold); line-height: 1;
+    margin-bottom: 6px;
+  }
+  .impact-tile span { font-size: .85rem; color: #a8b8cc; line-height: 1.4; display: block; }
+
+  /* ── CTA BAND ─────────────────────────────────────────── */
+  .cta-band {
+    background: var(--gold); padding: 60px 40px;
+    text-align: center;
+  }
+  .cta-band h2 {
+    font-family: 'Oswald', sans-serif; font-size: 2.2rem;
+    color: var(--navy); margin-bottom: 12px;
+  }
+  .cta-band p { color: var(--navy-mid); font-size: 1rem; margin-bottom: 28px; max-width: 540px; margin-inline: auto; }
+  .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* ── FOOTER ───────────────────────────────────────────── */
+  footer {
+    background: var(--navy); padding: 60px 40px 0;
+    color: #a8b8cc; font-size: .92rem; line-height: 1.75;
+  }
+  .footer-grid {
+    max-width: 1320px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 40px; padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+  .footer-col h4 {
+    color: var(--white); font-size: 1.1rem; font-weight: 600; margin-bottom: 18px;
+  }
+  .footer-col p { margin-bottom: 6px; display: flex; align-items: flex-start; gap: 10px; }
+  .footer-col p svg { width: 15px; height: 15px; fill: var(--gold); flex-shrink: 0; margin-top: 4px; }
+  .footer-links { display: flex; flex-direction: column; gap: 4px; }
+  .footer-links a {
+    color: #a8b8cc; text-decoration: none; padding: 3px 0;
+    display: flex; align-items: center; gap: 8px; transition: color .2s;
+  }
+  .footer-links a::before { content: '›'; color: var(--gold); font-size: 1.1rem; }
+  .footer-links a:hover { color: var(--gold); padding-left: 4px; }
+  .hours-row { margin-bottom: 10px; }
+  .hours-row p  { color: #a8b8cc; margin-bottom: 2px; }
+  .hours-row h6 { color: var(--white); font-size: .9rem; font-weight: 600; margin: 0; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .gallery-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; transition: opacity .2s; }
+  .gallery-grid img:hover { opacity: .75; }
+  .gallery-grid .gal-ph { width: 100%; aspect-ratio: 1; background: var(--navy-lt); display: block; }
+  .footer-socials { display: flex; gap: 8px; margin-top: 16px; }
+  .fsoc {
+    width: 36px; height: 36px; background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; transition: background .2s;
+  }
+  .fsoc:hover { background: var(--gold-dk); }
+  .fsoc svg { width: 15px; height: 15px; fill: var(--navy); }
+  .copyright {
+    max-width: 1320px; margin: 0 auto; padding: 20px 0;
+    display: flex; flex-wrap: wrap; gap: 8px;
+    justify-content: space-between; font-size: .85rem; color: #7a8fa6;
+  }
+  .copyright a { color: var(--gold); text-decoration: none; }
+  .copyright a:hover { text-decoration: underline; }
+
+  /* ── BACK TO TOP ──────────────────────────────────────── */
+  #back-top {
+    position: fixed; bottom: 28px; right: 28px;
+    width: 44px; height: 44px; background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; border: none; z-index: 500;
+    opacity: 0; pointer-events: none; transition: opacity .3s, transform .2s;
+  }
+  #back-top.show { opacity: 1; pointer-events: auto; }
+  #back-top:hover { background: var(--gold-dk); transform: translateY(-3px); }
+  #back-top svg { width: 20px; height: 20px; fill: var(--navy); }
+
+ /* ── RESPONSIVE ───────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
+  .impact-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .program-inner, .program-inner.reverse { flex-direction: column; gap: 40px; }
+  .prog-img-wrap { max-width: 100%; width: 100%; min-height: 300px; }
+  .program-section { padding: 50px 20px; }
+  .impact-band { padding: 50px 20px; }
+  .topbar-contacts { display: none; }
+  #topbar { padding: 10px 16px; }
+  .page-hero { padding: 50px 20px; }
+  /* INTRO STRIP FIXED MOBILE STYLING */
+  .intro-strip { padding: 30px 20px; }
+  .intro-strip-inner { flex-direction: column; text-align: center; gap: 16px; }
+  .intro-strip svg { margin: 0 auto; }
+  .intro-strip blockquote { max-width: 100%; width: 100%; border-left: none; border-top: 2px solid rgba(13,27,46,0.15); padding-left: 0; padding-top: 14px; margin-top: 4px; }
+  .hero-stat-row { gap: 24px; }
+}
+@media (max-width: 768px) {
+  #nav-wrapper { padding: 0; }
+  nav { flex-wrap: wrap; border-radius: 0; }
+  .nav-brand-mobile { font-family: 'Oswald', sans-serif; font-size: 1.3rem; color: var(--navy); font-weight: 700; padding: 12px 16px; display: flex; align-items: center; }
+  .nav-toggle { display: flex; flex-direction: column; }
+  .nav-collapse { display: none; width: 100%; flex-direction: column; background: var(--navy-mid); contents: unset; }
+  .nav-collapse.open { display: flex; }
+  .nav-links { flex-direction: column; width: 100%; }
+  .nav-links a, .nav-links > li > button { color: var(--white); padding: 12px 20px; width: 100%; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .nav-links a:hover, .nav-links > li > button:hover { background: rgba(255,255,255,.08); color: var(--gold); }
+  .nav-links a.active { color: var(--gold); background: rgba(255,255,255,.06); }
+  .dropdown-menu { position: static; box-shadow: none; background: rgba(0,0,0,.2); }
+  .dropdown-menu a { color: #ccc; padding-left: 36px; }
+  .dropdown-menu a:hover { color: var(--gold); background: transparent; }
+  .dropdown:hover .dropdown-menu { display: none; }
+  .dropdown.open .dropdown-menu { display: block; }
+  .nav-socials { display: none; }
+  footer { padding: 40px 16px 0; }
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  .copyright { flex-direction: column; text-align: center; }
+  #back-top { bottom: 16px; right: 16px; }
+  .impact-grid { grid-template-columns: 1fr 1fr; }
+  .cta-band { padding: 50px 20px; }
+}
+@media (max-width: 480px) {
+  .impact-grid { grid-template-columns: 1fr; }
+}
+/* Logo css*/
+.brand-logo{ height: 70px; width: auto; display: block; }
+/*For L4R Menu*/
+@media (min-width: 769px) {
+  .nav-brand-mobile { display: none; }
+}
+@media (max-width: 768px) {
+  .nav-brand-mobile{font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--navy);font-weight:700;padding:12px 16px;display:flex;align-items:center}
+}
+
+</style>
+</head>
+<body id="top">
+<div id="global-scroll-bar"></div>
+<div id="spinner"><div class="spin-ring"></div></div>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="topbar-inner">
+    <a href="index.html"><img src="img/Logocolored.png" alt="Light 4 Refugee" class="brand-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span style="display:none;font-family:'Oswald',sans-serif;font-size:1.5rem;color:var(--gold);font-weight:700;text-decoration:none">Light 4 Refugee</span></a>
+    <div class="topbar-contacts">
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+        </div>
+        <div class="contact-text"><p>Call Us</p><span>+250 792 052 725</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </div>
+        <div class="contact-text"><p>Mail Us</p><span>info@light4refugee.org</span></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+        <div class="contact-text"><p>Location</p><span>Mahama Camp, Kirehe, Rwanda</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<div id="nav-wrapper">
+  <nav>
+    <span class="nav-brand-mobile">L4R Menu</span>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <div class="nav-collapse" id="nav-collapse">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">About Us<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="about-us.html" style="color:var(--gold);font-weight:700;">About What We Do</a>
+            <a href="team.html">About Our Team</a>
+            <a href="gallery.html">About L4R Gallery</a>
+            <a href="testimonies.html">Testimonials</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')" class="active">Programs<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="programs.html">Light Club & iSpeakLead</a>
+            <a href="applications-hub.html">Applications Hub</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-pages">
+          <button onclick="toggleDD('dd-pages')">Get Involved<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="become-a-mentor.html">Become a Mentor</a>
+            <a href="become-a-mentee.html">Become a Mentee</a>
+            <a href="partners.html">Partners</a>
+          </div>
+        </li>
+        <li><a href="news-stories.html">News &amp; Stories</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact-us.html">Contact</a></li>
+        <li><a href="donate.html" style="background:var(--navy);color:var(--gold);font-weight:700; border-radius:5px;">Donate</a></li>
+      </ul>
+      <div class="nav-socials">
+        <button id="theme-toggle" aria-label="Toggle Theme Mode"></button>
+        <a class="soc-btn" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="soc-btn" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="var(--white)" stroke-width="2"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="var(--white)" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="var(--white)" stroke-width="2"/></svg></a>
+        <a class="soc-btn" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span style="color:#fff;">Our Work</span>
+    </div>
+    <h1>Ferrying Futures<br><em>Beyond Refugee Camps</em></h1>
+    <p>We empower refugee youth in Rwanda through academic preparation, college counseling, and career guidance — turning displacement into a launchpad for lifelong opportunity.</p>
+    <div class="hero-stat-row">
+      <div class="hero-stat">
+        <strong>70%</strong>
+        <span>of refugee youth complete<br>secondary school</span>
+      </div>
+      <div class="hero-stat">
+        <strong>4%</strong>
+        <span>access tertiary education<br>(UNHCR)</span>
+      </div>
+      <div class="hero-stat">
+        <strong>3</strong>
+        <span>core programs closing<br>that gap every day</span>
+      </div>
+      <div class="hero-stat">
+        <strong>2</strong>
+        <span>refugee camps served:<br>Mahama &amp; Kiziba</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="hero-accent"></div>
+
+<!-- INTRO STRIP -->
+<div class="intro-strip">
+  <div class="intro-strip-inner">
+    <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm-8 7.18L12 16l8-4.82V9L12 6 4 10.18z"/></svg>
+    <p>Light 4 Refugee is a refugee-led organisation operating in Mahama &amp; Kiziba refugee camps in Rwanda. We believe education is the most reliable path to a dignified, self-reliant future.</p>
+    <blockquote>"For many, becoming a refugee feels like the end. But with a second chance, they can rewrite their story." — L4R</blockquote>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PROGRAM 1: ACADEMIC PREPARATION                        -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="program-section">
+  <div class="program-inner">
+
+    <div class="prog-img-wrap">
+      <div class="gold-accent"></div>
+      <img src="img/gallery-5.jpg" alt="Academic Preparation – unlocking opportunity"
+           onerror="this.outerHTML='<span class=\'img-ph\'></span>'">
+      <div class="prog-badge">01</div>
+    </div>
+
+    <div class="prog-text">
+      <div class="section-label">Academic Preparation</div>
+      <h2>📘 Unlocking Opportunity Through Language</h2>
+      <span class="tagline">Closing the English gap that stands between talent and opportunity.</span>
+      <div class="quote-block">
+        "Education is the most powerful weapon which you can use to change the world." — Nelson Mandela
+      </div>
+      <p>Refugee students graduating from high school in Rwanda often show extraordinary academic potential. But a critical barrier stands in their way: English proficiency. Due to disrupted schooling and limited resources inside refugee settlements, many face serious challenges mastering English — a non-negotiable skill for higher education and global competition.</p>
+      <p>The numbers tell the story. According to UNHCR, while <strong>70% of refugee youth complete secondary school</strong>, only <strong>4% go on to access tertiary education</strong>. The language gap, compounded by a shortage of scholarship opportunities, makes that statistic painfully real.</p>
+      <h4>Our Response</h4>
+      <div class="prog-checks">
+        <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Rigorous English immersion programme tailored to refugee learners</div>
+        <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Intensive language training with ongoing academic challenges</div>
+        <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Local &amp; global scholarship preparation support</div>
+        <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Personalised academic growth tracking and mentorship</div>
+      </div>
+      <div class="prog-stat">
+        <strong>70%</strong>
+        <span>complete secondary school<br>but only 4% reach university</span>
+      </div>
+      <br>
+      <a class="prog-email" href="mailto:academicservices@light4refugee.org">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        Talk to the Academic Preps Team →
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PROGRAM 2: COLLEGE COUNSELING                          -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="program-section">
+  <div class="program-inner reverse">
+
+    <div class="prog-img-wrap">
+      <div class="gold-accent"></div>
+      <img src="img/carousel-1.jpg" alt="College Counseling – guiding potential to possibility"
+           onerror="this.outerHTML='<span class=\'img-ph\'></span>'">
+      <div class="prog-badge">02</div>
+    </div>
+
+    <div class="prog-text">
+      <div class="section-label">College Counseling</div>
+      <h2>🎓 Guiding Potential to Possibility</h2>
+      <span class="tagline">Because refugee voices deserve a place in lecture halls across the world.</span>
+      <div class="quote-block">
+        "Refugee voices deserve a place in lecture halls across the world."
+      </div>
+      <p>For refugees in Rwanda, protracted displacement is the norm. Camps like Kiziba have existed since 1996 and continue receiving new arrivals. With hopes of return diminishing, education becomes the most reliable path to a dignified, self-reliant future.</p>
+      <p>Yet from the 70% of refugee youth who complete high school, only 4% access higher education. Financial hardship, limited support systems, and unfamiliarity with the college application process all stand in the way.</p>
+      <h4>Our Response</h4>
+      <div class="prog-checks">
+        <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Coaching on writing compelling college essays and personal statements</div>
+        <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Guidance on application forms, deadlines &amp; scholarship portals</div>
+        <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Supporting recommendation letter requests from teachers</div>
+        <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Interview preparation and scholarship awareness campaigns</div>
+      </div>
+      <div class="prog-stat">
+        <strong>4%</strong>
+        <span>of refugee youth access<br>tertiary education — we change that</span>
+      </div>
+      <br>
+      <a class="prog-email" href="mailto:collegecounseling@light4refugee.org">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        Talk to the College Counseling Team →
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PROGRAM 3: CAREER GUIDANCE                             -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="program-section">
+  <div class="program-inner">
+
+    <div class="prog-img-wrap">
+      <div class="gold-accent"></div>
+      <img src="img/team_together.png" alt="Career Guidance – from graduation to vocation"
+           onerror="this.outerHTML='<span class=\'img-ph\'></span>'">
+      <div class="prog-badge">03</div>
+    </div>
+
+    <div class="prog-text">
+      <div class="section-label">Career Guidance</div>
+      <h2>💼 From Graduation to Vocation</h2>
+      <span class="tagline">We're not just preparing students for jobs — we're preparing them for leadership.</span>
+      <div class="quote-block">
+        "We're not just preparing students for jobs — we're preparing them for leadership."
+      </div>
+      <p>Many refugee university graduates in Rwanda display incredible resilience and talent — yet a gap remains: a lack of professional readiness. Graduates face uncertainty about career paths, limited guidance, and scarce resources to break into the workforce.</p>
+      <p>Rwanda's unemployment rate stood at 24.3% in 2022 (UNHCR), with opportunities especially scarce for refugees. Many end up returning to camps after graduation, unable to leverage their hard-earned degrees. Our 11-week programme changes that.</p>
+      <h4>Our 11-Week Programme Equips Students With</h4>
+      <div class="prog-checks">
+        <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Career mapping and professional pathway planning</div>
+        <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Resume, cover letter writing and LinkedIn profile building</div>
+        <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Professional communication &amp; soft skills training</div>
+        <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Mock interviews, networking strategies and job placement</div>
+      </div>
+      <div class="prog-stat">
+        <strong>11</strong>
+        <span>weeks of intensive professional<br>development &amp; mentorship</span>
+      </div>
+      <br>
+      <a class="prog-email" href="mailto:careerguidance@light4refugee.org">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        Talk to the Career Guidance Team →
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<!-- IMPACT NUMBERS BAND -->
+<div class="impact-band">
+  <div class="impact-band-inner">
+    <h2>Our Impact in Numbers</h2>
+    <p>Every figure represents a life changed, a door opened, a future rewritten.</p>
+  </div>
+  <div class="impact-grid">
+    <div class="impact-tile">
+      <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+      <strong class="counter" data-target="500">0</strong>
+      <span>Students Supported<br>Across All Programs</span>
+    </div>
+    <div class="impact-tile">
+      <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm-8 7.18L12 16l8-4.82V9L12 6 4 10.18z"/></svg>
+      <strong class="counter" data-target="2">0</strong>
+      <span>Refugee Camps<br>Served in Rwanda</span>
+    </div>
+    <div class="impact-tile">
+      <svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.86.18-1a3 3 0 0 0-6 0c0 .14.11.56.18 1H10C8.9 6 8 6.9 8 8v12c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-1a1 1 0 0 1 2 0c0 .14-.08.44-.18 1h-1.64c-.1-.56-.18-.86-.18-1zm7 15H10V8h2l2 3 2-3h4v12z"/></svg>
+      <strong class="counter" data-target="70">0</strong>
+      <span>Scholarships Pursued<br>Through College Counseling</span>
+    </div>
+    <div class="impact-tile">
+      <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+      <strong class="counter" data-target="11">0</strong>
+      <span>Weeks Career Guidance<br>Programme Duration</span>
+    </div>
+  </div>
+</div>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <h2>Ready to Change a Life?</h2>
+  <p>Your support directly funds English immersion classes, college application guidance, and career mentorship for refugee youth in Rwanda.</p>
+  <div class="cta-btns">
+    <a class="btn-navy" href="donate.html">
+      <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:var(--gold);"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      Donate Now
+    </a>
+    <a class="btn-navy" href="become-a-mentor.html" style="background:var(--navy-lt);">Become a Mentor</a>
+    <a class="btn-navy" href="partners.html" style="background:var(--navy-lt);">Partner With Us</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Our Operational Location</h4>
+      <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Mahama &amp; Kiziba Refugee Camps, Kirehe &amp; Karongi Districts, Rwanda</p>
+      <p><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>+250 792 052 725</p>
+      <p><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>info@light4refugee.org</p>
+      <div class="footer-socials">
+        <a class="fsoc" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="fsoc" href="https://www.youtube.com/channel/UCKFczxvUGOmq7e7tJQ65HxA" target="_blank" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+        <a class="fsoc" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="var(--navy)" stroke-width="2"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="var(--navy)" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="var(--navy)" stroke-width="2"/></svg></a>
+        <a class="fsoc" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div><br>
+      <a class="brand" href="index.html"><img src="img/logo.png" alt="Light 4 Refugee" class="brand-logo"></a>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="team.html">Our Team</a>
+        <a href="news-stories.html">News &amp; Stories</a>
+        <a href="applications-hu.html">Applications Hub</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact-us.html">Contact Us</a>
+        <a href="donate.html">Donate</a>
+        <a href="testimonies.html">Testimonials</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Our Programs</h4>
+      <div class="footer-links">
+        <a href="about-us.html">Academic Preparation</a>
+        <a href="about-us.html">College Counseling</a>
+        <a href="about-us.html">Career Guidance</a><br>
+        <h4>Get Involved</h4>
+        <a href="programs.html">Light Club (ECP &amp; ISEP)</a>
+        <a href="become-a-mentor.html">Become a Mentor</a>
+        <a href="become-a-mentee.html">Become a Mentee</a>
+        <a href="partners.html">Partner With Us</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Gallery</h4>
+      <div class="gallery-grid">
+        <a href="gallery.html"><img src="img/gallery-1.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-2.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-3.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-4.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-5.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-6.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">
+    <span>&copy; 2026 <a href="https://light4refugee.org" target="_blank">Light 4 Refugee</a>, All Rights Reserved.</span>
+      <span style="display:inline-flex; gap:12px;">
+      <a href="terms-conditions.html" target="_blank" style="color:#2e6d04;">Terms/Conditions</a> |
+      <a href="privacy-policy.html" target="_blank" style="color:#2e6d04;">Privacy Policy</a>
+      </span>
+    <span>Designed By <a href="https://yvesnickylirf.com" target="_blank">Yves Nicky Lirf</a></span>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button id="back-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+</button>
+<script src="theme-logic.js"></script>
+<script>
+  /* Spinner */
+  document.addEventListener('DOMContentLoaded', () => {
+    const sp = document.getElementById('spinner');
+    sp.classList.add('hide');
+    setTimeout(() => sp.remove(), 500);
+  });
+
+  /* Sticky nav + topbar hide */
+  const topbar  = document.getElementById('topbar');
+  const navWrap = document.getElementById('nav-wrapper');
+  const tbH = topbar ? topbar.offsetHeight : 0;
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY > tbH;
+    topbar.classList.toggle('hidden', scrolled);
+    navWrap.classList.toggle('stuck', scrolled);
+    document.getElementById('back-top').classList.toggle('show', window.scrollY > 300);
+  }, { passive: true });
+
+  /* Mobile nav */
+  document.getElementById('nav-toggle').addEventListener('click', function() {
+    this.classList.toggle('open');
+    document.getElementById('nav-collapse').classList.toggle('open');
+  });
+  function toggleDD(id) {
+    if (window.innerWidth > 768) return;
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  /* Counter animation on impact tiles */
+  function animateCounter(el) {
+    const target = +el.dataset.target;
+    const duration = 1600;
+    const step = Math.ceil(target / (duration / 16));
+    let current = 0;
+    const tick = () => {
+      current = Math.min(current + step, target);
+      el.textContent = current.toLocaleString();
+      if (current < target) requestAnimationFrame(tick);
+    };
+    tick();
+  }
+  const counters = document.querySelectorAll('.counter');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); obs.unobserve(e.target); } });
+  }, { threshold: 0.4 });
+  counters.forEach(c => obs.observe(c));
+</script>
+</body>
+</html>
+
+
+
