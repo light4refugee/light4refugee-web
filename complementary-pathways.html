@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complementary Pathways | Light 4 Refugee — Skills & Talent Database</title>
+<meta name="description" content="The Complementary Pathways program connects skilled refugees in Rwanda with meaningful opportunities through a verified talent database built in partnership with UNHCR. Serving Mahama, Kiziba, and beyond.">
+<meta name="keywords" content="refugee skills database Rwanda, UNHCR refugee talent, Mahama refugee camp skills, refugee employment Rwanda, Light4Refugee complementary pathways">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Light 4 Refugee">
+<meta name="theme-color" content="#0d1b2e">
+<link rel="canonical" href="https://light4refugee.org/complementary-pathways">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://light4refugee.org/complementary-pathways">
+<meta property="og:title" content="Complementary Pathways | Light 4 Refugee">
+<meta property="og:description" content="A verified skills and talent database connecting qualified refugees in Rwanda with emerging opportunities — in partnership with UNHCR Rwanda.">
+<meta property="og:image" content="https://light4refugee.org/img/og-home.png">
+<meta property="og:site_name" content="Light 4 Refugee">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Complementary Pathways | Light 4 Refugee">
+<meta name="twitter:description" content="A verified talent database helping skilled refugees in Rwanda be seen and considered when real opportunities emerge.">
+<meta name="twitter:image" content="https://light4refugee.org/img/og-home.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Source+Sans+3:wght@400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="img/logo.jpg?v=2">
+<link rel="stylesheet" href="theme-style.css">
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0d1b2e;--navy-mid:#162540;--navy-lt:#1e3258;
+  --gold:#f0a500;--gold-dk:#c98a00;--gold-pale:#fff8e6;
+  --white:#ffffff;--cream:#f5f0e8;--text:#1a1a1a;--muted:#666;
+  --green:#2d9e6b;--red:#e53935;--border:#e4e4e4;
+  --shadow:0 4px 24px rgba(13,27,46,.08);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Source Sans 3',sans-serif;background:var(--cream);overflow-x:hidden;color:var(--text)}
+
+/* SPINNER */
+#spinner{position:fixed;inset:0;z-index:9999;background:var(--white);display:flex;align-items:center;justify-content:center;transition:opacity .4s}
+#spinner.hide{opacity:0;pointer-events:none}
+.spin-ring{width:48px;height:48px;border-radius:50%;border:4px solid #ddd;border-top-color:var(--gold);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* TOPBAR */
+#topbar{background:var(--navy);padding:10px 40px;display:flex;align-items:center;transition:transform .35s ease,opacity .35s ease}
+#topbar.hidden{transform:translateY(-100%);opacity:0;pointer-events:none;position:absolute;width:100%}
+.topbar-inner{display:flex;align-items:center;width:100%;max-width:1320px;margin:0 auto}
+.brand-logo{height:60px;width:auto;display:block}
+.topbar-contacts{display:flex;gap:32px;margin-left:auto}
+.contact-item{display:flex;align-items:center;gap:10px}
+.contact-icon{width:36px;height:36px;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-icon svg{width:16px;height:16px;fill:var(--navy)}
+.contact-text p{font-size:.75rem;color:var(--gold);font-weight:600;margin-bottom:1px}
+.contact-text span{font-size:.8rem;color:var(--white)}
+
+/* NAVBAR */
+#nav-wrapper{background:var(--navy);padding:0 40px 12px;position:sticky;top:0;z-index:100;transition:padding .35s ease}
+#nav-wrapper.stuck{padding:0}
+nav{background:var(--gold);max-width:1320px;margin:0 auto;display:flex;align-items:stretch;transition:max-width .35s ease,border-radius .35s ease;border-radius:0 0 4px 4px;position:relative}
+#nav-wrapper.stuck nav{max-width:100%;border-radius:0}
+.nav-links{display:flex;align-items:stretch;list-style:none}
+.nav-links a,.nav-links>li>button{display:flex;align-items:center;padding:14px 20px;color:var(--navy);font-family:'Source Sans 3',sans-serif;font-size:.95rem;font-weight:600;text-decoration:none;background:none;border:none;cursor:pointer;transition:color .2s,background .2s}
+.nav-links a:hover,.nav-links>li>button:hover,.nav-links a.active{color:var(--white);background:rgba(0,0,0,.15)}
+.dropdown{position:relative}
+.dropdown-menu{display:none;position:absolute;top:100%;left:0;background:var(--white);min-width:200px;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:200}
+.dropdown:hover .dropdown-menu{display:block}
+.dropdown-menu a{display:block;padding:10px 18px;color:var(--text);font-size:.9rem;text-decoration:none;transition:background .2s,color .2s}
+.dropdown-menu a:hover{background:var(--gold);color:var(--navy)}
+.nav-caret{margin-left:4px;font-size:.7rem}
+.nav-socials{margin-left:auto;display:flex;align-items:center;gap:6px;padding-right:14px}
+.soc-btn{width:34px;height:34px;background:var(--navy);display:flex;align-items:center;justify-content:center;border-radius:2px;text-decoration:none;transition:background .2s}
+.soc-btn:hover{background:#1a2d4a}
+.soc-btn svg{width:16px;height:16px;fill:var(--white)}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:12px 16px;margin-left:auto}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--navy);margin:5px 0;transition:.3s}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-collapse{display:contents}
+
+/* ════════════════════════════
+   PAGE HERO
+════════════════════════════ */
+.page-hero{
+  background:var(--navy);padding:90px 40px 0;
+  position:relative;overflow:hidden;
+}
+.page-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(240,165,0,.1) 0%,transparent 60%)}
+.page-hero::after{
+  content:'⟳';font-size:28rem;color:rgba(240,165,0,.03);
+  position:absolute;right:-1%;bottom:-12%;pointer-events:none;z-index:0;line-height:1
+}
+.hero-inner{max-width:1320px;margin:0 auto;position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:flex-end;padding-bottom:0}
+.hero-text{padding-bottom:60px}
+.breadcrumb{display:flex;align-items:center;gap:10px;font-size:.85rem;color:#a8b8cc;margin-bottom:20px}
+.breadcrumb a{color:var(--gold);text-decoration:none}
+.breadcrumb span{color:#556}
+.hero-chip{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--navy);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;padding:5px 14px;margin-bottom:20px}
+.hero-chip svg{width:13px;height:13px;fill:var(--navy)}
+.page-hero h1{font-family:'Oswald',sans-serif;font-size:clamp(2.2rem,4.5vw,3.8rem);font-weight:700;color:var(--white);text-transform:uppercase;line-height:1.05;margin-bottom:16px}
+.page-hero h1 em{color:var(--gold);font-style:normal}
+.page-hero .sub{font-size:1rem;color:#a8b8cc;max-width:520px;line-height:1.75;margin-bottom:28px}
+
+/* partner badge inside hero */
+.uhcr-badge{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.06);border:1px solid rgba(240,165,0,.2);padding:14px 18px;width:fit-content}
+.unhcr-icon{width:44px;height:44px;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.unhcr-icon svg{width:22px;height:22px;fill:var(--navy)}
+.uhcr-badge p{font-size:.8rem;color:#a8b8cc;line-height:1.4}
+.uhcr-badge strong{display:block;font-size:.88rem;color:var(--white);margin-bottom:2px}
+
+/* hero right — office card */
+.hero-office{
+  background:rgba(255,255,255,.05);border:1px solid rgba(240,165,0,.2);
+  padding:32px 28px;align-self:flex-end;margin-bottom:0;
+}
+.ho-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.ho-label::before{content:'';display:inline-block;width:20px;height:2px;background:var(--gold)}
+.hero-office h3{font-family:'Oswald',sans-serif;font-size:1.35rem;color:var(--white);margin-bottom:14px;line-height:1.2}
+.ho-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:.87rem;color:#a8b8cc;line-height:1.5}
+.ho-row svg{width:15px;height:15px;fill:var(--gold);flex-shrink:0;margin-top:2px}
+.ho-photo{width:100%;height:180px;overflow:hidden;margin-top:18px;position:relative}
+.ho-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.ho-photo .photo-ph{width:100%;height:100%;background:var(--navy-lt);display:flex;align-items:center;justify-content:center}
+.ho-photo .photo-ph svg{width:40px;height:40px;fill:rgba(240,165,0,.2)}
+.ho-caption{font-size:.72rem;color:#a8b8cc;text-align:center;margin-top:6px;padding-bottom:18px;font-style:italic}
+
+.hero-accent{height:6px;background:linear-gradient(90deg,var(--gold) 0%,var(--gold-dk) 50%,var(--navy) 100%)}
+
+/* ════════════════════════════
+   WHAT IS THIS SECTION
+════════════════════════════ */
+.what-section{padding:80px 40px;background:var(--white)}
+.what-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.what-text h2{font-family:'Oswald',sans-serif;font-size:2rem;color:var(--navy);margin-bottom:16px;line-height:1.15}
+.what-text p{font-size:.97rem;color:var(--muted);line-height:1.85;margin-bottom:16px}
+.what-text p:last-child{margin-bottom:0}
+.what-text strong{color:var(--navy)}
+.eyebrow{display:flex;align-items:center;gap:12px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--gold);margin-bottom:18px}
+.eyebrow::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+
+/* honesty box */
+.honesty-box{background:var(--gold-pale);border-left:5px solid var(--gold);padding:22px 24px;margin-top:24px}
+.honesty-box h4{font-family:'Oswald',sans-serif;font-size:1rem;color:var(--navy);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.honesty-box h4 svg{width:18px;height:18px;fill:var(--gold)}
+.honesty-box p{font-size:.9rem;color:var(--navy-mid);line-height:1.75}
+
+/* how it works — numbered steps */
+.steps-col{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:18px;padding:22px 0;border-bottom:1px solid var(--border);align-items:flex-start}
+.step:last-child{border-bottom:none}
+.step-num{width:48px;height:48px;background:var(--navy);color:var(--gold);font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-body h4{font-family:'Oswald',sans-serif;font-size:1rem;color:var(--navy);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.step-body p{font-size:.88rem;color:var(--muted);line-height:1.7}
+
+/* ════════════════════════════
+   SKILLS THEY BRING
+════════════════════════════ */
+.skills-section{padding:80px 40px;background:var(--cream)}
+.skills-inner{max-width:1320px;margin:0 auto}
+.skills-heading{text-align:center;margin-bottom:52px}
+.skills-heading h2{font-family:'Oswald',sans-serif;font-size:2.2rem;color:var(--navy);margin-bottom:10px}
+.skills-heading p{font-size:.97rem;color:var(--muted);max-width:620px;margin:0 auto;line-height:1.7}
+.section-label-center{display:flex;align-items:center;justify-content:center;gap:14px;color:var(--gold);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;margin-bottom:14px}
+.section-label-center .lines{display:flex;flex-direction:column;gap:4px}
+.section-label-center .lines span{display:block;width:36px;height:2px;background:var(--gold)}
+
+/* skill category cards */
+.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.skill-cat{background:var(--white);border:1px solid var(--border);padding:24px 20px;transition:box-shadow .2s,transform .2s;border-top:4px solid var(--gold)}
+.skill-cat:hover{box-shadow:0 8px 24px rgba(0,0,0,.09);transform:translateY(-4px)}
+.skill-cat-icon{width:48px;height:48px;background:var(--navy);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.skill-cat-icon svg{width:24px;height:24px;fill:var(--gold)}
+.skill-cat h3{font-family:'Oswald',sans-serif;font-size:1rem;color:var(--navy);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px}
+.skill-tags{display:flex;flex-wrap:wrap;gap:5px}
+.stag{font-size:.7rem;font-weight:600;padding:3px 9px;background:var(--gold-pale);color:var(--gold-dk)}
+
+/* languages band */
+.lang-band{background:var(--navy);padding:28px 40px;display:flex;align-items:center;gap:32px;flex-wrap:wrap;justify-content:center;margin-top:0}
+.lang-band p{font-size:.85rem;color:#a8b8cc;font-weight:600;text-transform:uppercase;letter-spacing:1px;flex-shrink:0}
+.lang-pills{display:flex;gap:10px;flex-wrap:wrap}
+.lang-pill{background:rgba(240,165,0,.12);border:1px solid rgba(240,165,0,.25);color:var(--gold);font-size:.82rem;font-weight:700;padding:6px 16px}
+
+/* ════════════════════════════
+   REGISTRATION FORM
+════════════════════════════ */
+.form-section{padding:80px 40px;background:var(--white)}
+.form-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1fr 1.6fr;gap:64px;align-items:flex-start}
+
+/* left: info panel */
+.form-info h2{font-family:'Oswald',sans-serif;font-size:2rem;color:var(--navy);margin-bottom:14px;line-height:1.15}
+.form-info>p{font-size:.95rem;color:var(--muted);line-height:1.8;margin-bottom:24px}
+.info-point{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px}
+.ip-icon{width:38px;height:38px;background:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ip-icon svg{width:18px;height:18px;fill:var(--gold)}
+.ip-text h4{font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:3px}
+.ip-text p{font-size:.83rem;color:var(--muted);line-height:1.6}
+
+.privacy-note{background:var(--gold-pale);border-left:4px solid var(--gold);padding:16px 18px;margin-top:24px}
+.privacy-note h4{font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.privacy-note h4 svg{width:14px;height:14px;fill:var(--gold)}
+.privacy-note p{font-size:.8rem;color:var(--navy-mid);line-height:1.65}
+
+/* right: form */
+.form-wrap{background:var(--white);border:1px solid var(--border);overflow:hidden}
+.form-header{background:var(--navy);padding:24px 28px}
+.form-header h3{font-family:'Oswald',sans-serif;font-size:1.4rem;color:var(--white);margin-bottom:4px}
+.form-header p{font-size:.85rem;color:#a8b8cc}
+
+.form-body{padding:28px}
+.form-section-title{font-family:'Oswald',sans-serif;font-size:.9rem;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin:20px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.form-section-title:first-child{margin-top:0}
+.f-group{margin-bottom:14px}
+.f-group label{display:block;font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:6px}
+.f-group label .req{color:var(--gold)}
+.f-group label .opt{font-weight:400;color:#aaa}
+.f-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);font-size:.9rem;font-family:'Source Sans 3',sans-serif;color:var(--navy);background:var(--white);outline:none;transition:border-color .2s,box-shadow .2s}
+.f-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(240,165,0,.1)}
+.f-input.err{border-color:var(--red)}
+.f-err{font-size:.74rem;color:var(--red);margin-top:4px;display:none}
+.f-input.err~.f-err{display:block}
+.f-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%230d1b2e' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:20px;padding-right:40px}
+.f-textarea{min-height:90px;resize:vertical}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* checkboxes */
+.check-group{display:flex;flex-direction:column;gap:8px}
+.check-item-row{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:.88rem;color:var(--navy)}
+.check-item-row input[type=checkbox]{width:16px;height:16px;accent-color:var(--gold);cursor:pointer;flex-shrink:0}
+
+/* file upload */
+.file-upload-wrap{border:2px dashed var(--border);padding:20px;text-align:center;transition:border-color .2s;background:var(--cream);cursor:pointer}
+.file-upload-wrap:hover{border-color:var(--gold)}
+.file-upload-wrap svg{width:32px;height:32px;fill:#ccc;margin-bottom:8px}
+.file-upload-wrap p{font-size:.82rem;color:var(--muted);line-height:1.5}
+.file-upload-wrap .note{font-size:.72rem;color:#aaa;margin-top:4px}
+.file-upload-wrap input[type=file]{display:none}
+#file-label{display:block;cursor:pointer}
+
+/* submit */
+.form-submit-btn{width:100%;padding:15px;background:var(--navy);color:var(--white);border:none;font-size:.97rem;font-weight:700;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:background .2s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:10px}
+.form-submit-btn:hover{background:var(--gold);color:var(--navy)}
+.form-submit-btn svg{width:17px;height:17px;fill:currentColor}
+.form-note{font-size:.75rem;color:#aaa;text-align:center;margin-top:10px;line-height:1.6}
+
+/* success */
+.form-success{display:none;text-align:center;padding:52px 28px}
+.form-success.show{display:block}
+.suc-icon{width:68px;height:68px;background:var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.suc-icon svg{width:34px;height:34px;fill:var(--navy)}
+.form-success h4{font-family:'Oswald',sans-serif;font-size:1.8rem;color:var(--navy);margin-bottom:10px}
+.form-success p{font-size:.95rem;color:var(--muted);line-height:1.75;max-width:360px;margin:0 auto}
+
+/* ════════════════════════════
+   VISIT IN PERSON BAND
+════════════════════════════ */
+.office-band{background:var(--navy);padding:60px 40px}
+.office-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.office-text h2{font-family:'Oswald',sans-serif;font-size:2rem;color:var(--white);margin-bottom:14px;line-height:1.15}
+.office-text h2 em{color:var(--gold);font-style:normal}
+.office-text p{font-size:.97rem;color:#a8b8cc;line-height:1.8;margin-bottom:20px}
+.office-details{display:flex;flex-direction:column;gap:12px}
+.od-row{display:flex;align-items:flex-start;gap:12px;font-size:.9rem;color:#a8b8cc;line-height:1.55}
+.od-row svg{width:16px;height:16px;fill:var(--gold);flex-shrink:0;margin-top:2px}
+.od-row strong{color:var(--white);display:block;margin-bottom:1px}
+.office-photo{position:relative}
+.office-photo img{width:100%;display:block;object-fit:cover;max-height:360px}
+.office-photo .img-ph{width:100%;height:320px;background:var(--navy-lt);display:flex;align-items:center;justify-content:center}
+.office-photo .img-ph svg{width:60px;height:60px;fill:rgba(240,165,0,.15)}
+
+/* ════════════════════════════
+   FAQ MINI
+════════════════════════════ */
+.faq-section{padding:70px 40px;background:var(--cream)}
+.faq-inner{max-width:880px;margin:0 auto}
+.faq-heading{text-align:center;margin-bottom:40px}
+.faq-heading h2{font-family:'Oswald',sans-serif;font-size:2rem;color:var(--navy);margin-bottom:8px}
+.faq-heading p{font-size:.93rem;color:var(--muted)}
+.faq-item{background:var(--white);border:1px solid var(--border);margin-bottom:8px;overflow:hidden}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;gap:16px;font-weight:700;font-size:.95rem;color:var(--navy);transition:background .2s}
+.faq-q:hover{background:var(--gold-pale)}
+.faq-q.open{background:var(--navy);color:var(--gold)}
+.faq-arrow{width:20px;height:20px;flex-shrink:0;transition:transform .3s}
+.faq-q.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease;font-size:.9rem;color:var(--muted);line-height:1.78}
+.faq-a.open{max-height:400px;padding:0 20px 18px}
+
+/* ════════════════════════════
+   FOOTER
+════════════════════════════ */
+footer{background:var(--navy);padding:60px 40px 0;color:#a8b8cc;font-size:.92rem;line-height:1.75}
+.footer-grid{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.1)}
+.footer-col h4{color:var(--white);font-size:1.1rem;font-weight:600;margin-bottom:18px}
+.footer-col p{margin-bottom:6px;display:flex;align-items:flex-start;gap:10px}
+.footer-col p svg{width:15px;height:15px;fill:var(--gold);flex-shrink:0;margin-top:4px}
+.footer-links{display:flex;flex-direction:column;gap:4px}
+.footer-links a{color:#a8b8cc;text-decoration:none;padding:3px 0;display:flex;align-items:center;gap:8px;transition:color .2s,padding-left .2s}
+.footer-links a::before{content:'›';color:var(--gold);font-size:1.1rem}
+.footer-links a:hover{color:var(--gold);padding-left:4px}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.gallery-grid img{width:100%;aspect-ratio:1;object-fit:cover;display:block;transition:opacity .2s}
+.gallery-grid img:hover{opacity:.75}
+.gallery-grid .gal-placeholder{width:100%;aspect-ratio:1;background:var(--navy-lt);display:block}
+.footer-socials{display:flex;gap:8px;margin-top:16px}
+.fsoc{width:36px;height:36px;background:var(--gold);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:background .2s}
+.fsoc:hover{background:var(--gold-dk)}
+.fsoc svg{width:15px;height:15px;fill:var(--navy)}
+.copyright{max-width:1320px;margin:0 auto;padding:20px 0;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;font-size:.85rem;color:#7a8fa6}
+.copyright a{color:var(--gold);text-decoration:none}
+.copyright a:hover{text-decoration:underline}
+#back-top{position:fixed;bottom:28px;right:28px;width:44px;height:44px;background:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;z-index:500;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s}
+#back-top.show{opacity:1;pointer-events:auto}
+#back-top:hover{background:var(--gold-dk);transform:translateY(-3px)}
+#back-top svg{width:20px;height:20px;fill:var(--navy)}
+
+/* ════════════════════════════
+   RESPONSIVE
+════════════════════════════ */
+@media(max-width:1200px){.skills-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1024px){
+  .footer-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-inner{grid-template-columns:1fr}
+  .hero-office{display:none}
+  .what-inner,.form-inner,.office-inner{grid-template-columns:1fr;gap:40px}
+  .office-photo{display:none}
+}
+@media(max-width:900px){
+  .topbar-contacts{display:none}
+  #topbar{padding:10px 16px}
+  .page-hero,.what-section,.skills-section,.form-section,.office-band,.faq-section{padding-left:20px;padding-right:20px}
+  .lang-band{padding:20px}
+  .skills-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  #nav-wrapper{padding:0}
+  nav{width:100%;flex-wrap:wrap;border-radius:0}
+  .nav-brand-mobile{font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--navy);font-weight:700;padding:12px 16px;display:flex;align-items:center}
+  .nav-toggle{display:flex;flex-direction:column}
+  .nav-collapse{display:none;width:100%;flex-direction:column;background:var(--navy-mid);contents:unset}
+  .nav-collapse.open{display:flex}
+  .nav-links{flex-direction:column;width:100%}
+  .nav-links a,.nav-links>li>button{color:var(--white);padding:12px 20px;width:100%;border-bottom:1px solid rgba(255,255,255,.06)}
+  .nav-links a:hover,.nav-links>li>button:hover{background:rgba(255,255,255,.08);color:var(--gold)}
+  .nav-links a.active{color:var(--gold);background:rgba(255,255,255,.06)}
+  .dropdown-menu{position:static;box-shadow:none;background:rgba(0,0,0,.2)}
+  .dropdown-menu a{color:#ccc;padding-left:36px}
+  .dropdown-menu a:hover{color:var(--gold);background:transparent}
+  .dropdown:hover .dropdown-menu{display:none}
+  .dropdown.open .dropdown-menu{display:block}
+  .nav-socials{display:none}
+  footer{padding:40px 16px 0}
+  .footer-grid{grid-template-columns:1fr;gap:28px}
+  .copyright{flex-direction:column;text-align:center;gap:12px}
+  #back-top{bottom:16px;right:16px}
+  .row-2{grid-template-columns:1fr}
+  .skills-grid{grid-template-columns:1fr}
+}
+@media(min-width:769px){.nav-brand-mobile{display:none}}
+</style>
+</head>
+<body id="top">
+<div id="global-scroll-bar"></div>
+<div id="spinner"><div class="spin-ring"></div></div>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="topbar-inner">
+    <a href="index.html">
+      <img src="img/Logocolored.png" alt="Light 4 Refugee" class="brand-logo"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <span style="display:none;font-family:'Oswald',sans-serif;font-size:1.5rem;color:var(--gold);font-weight:700">Light 4 Refugee</span>
+    </a>
+    <div class="topbar-contacts">
+      <div class="contact-item"><div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></div><div class="contact-text"><p>Call Us</p><span>+250 792 052 725</span></div></div>
+      <div class="contact-item"><div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div><div class="contact-text"><p>Mail Us</p><span>info@light4refugee.org</span></div></div>
+      <div class="contact-item"><div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div><div class="contact-text"><p>Address</p><span>Mahama Refugee Camp, Kirehe, Rwanda</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<div id="nav-wrapper">
+  <nav>
+    <span class="nav-brand-mobile">L4R Menu</span>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <div class="nav-collapse" id="nav-collapse">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="dropdown" id="dd-about">
+          <button onclick="toggleDD('dd-about')">About Us<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="about-us.html">About What We Do</a>
+            <a href="team.html">About Our Team</a>
+            <a href="gallery.html">About L4R Gallery</a>
+            <a href="testimonies.html">Testimonials</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-programs">
+          <button onclick="toggleDD('dd-programs')" class="active">Programs<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="programs.html">Light Club &amp; iSpeakLead</a>
+            <a href="applications-hub.html">Applications Hub</a>
+            <a href="complementary-pathways.html" style="color:var(--gold);font-weight:700;">Complementary Pathways</a>
+          </div>
+        </li>
+        <li class="dropdown" id="dd-involve">
+          <button onclick="toggleDD('dd-involve')">Get Involved<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="become-a-mentor.html">Become a Mentor</a>
+            <a href="become-a-mentee.html">Become a Mentee</a>
+            <a href="partners.html">Partners</a>
+          </div>
+        </li>
+        <li><a href="news-stories.html">News &amp; Stories</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact-us.html">Contact</a></li>
+        <li><a href="donate.html" style="background:var(--navy);color:var(--gold);font-weight:700;border-radius:5px;">Donate</a></li>
+      </ul>
+      <div class="nav-socials">
+        <button id="theme-toggle" aria-label="Toggle Theme Mode"></button>
+        <a class="soc-btn" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="soc-btn" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="var(--white)"/></svg></a>
+        <a class="soc-btn" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- ════ HERO ════ -->
+<div class="page-hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><a href="programs.html">Programs</a><span>›</span><span style="color:#fff">Complementary Pathways</span></div>
+      <div class="hero-chip"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.86.18-1a3 3 0 0 0-6 0c0 .14.11.56.18 1H10C8.9 6 8 6.9 8 8v12c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>New Program — Now Open</div>
+      <h1>Complementary<br><em>Pathways</em></h1>
+      <p class="sub">A refugee talent database built in partnership with UNHCR Rwanda — making sure that when real opportunities emerge, the right people are already known, documented, and ready.</p>
+      <div class="uhcr-badge">
+        <div class="unhcr-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
+        <div>
+          <strong>In partnership with UNHCR Rwanda</strong>
+          <p>Skills and qualifications shared with UNHCR go through their verification process to match candidates with appropriate opportunities.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero right: Office Card -->
+    <div class="hero-office">
+      <div class="ho-label">Our Physical Office</div>
+      <h3>Now Open at Mahama Refugee Camp</h3>
+      <div class="ho-row"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Mahama Refugee Camp, Kirehe District, Eastern Rwanda</div>
+      <div class="ho-row"><svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-2 .9-2 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>Open Monday – Friday, 8:00 AM – 5:00 PM</div>
+      <div class="ho-row"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>+250 792 052 725</div>
+      <div class="ho-photo">
+        <!-- Replace with: img/office-mahama.jpg — the WhatsApp image you shared works perfectly here -->
+        <img src="img/office-mahama2.jpeg" alt="L4R Office at Mahama Refugee Camp"
+             onerror="this.parentElement.innerHTML='<div class=\'img-ph\'><svg viewBox=\'0 0 24 24\'><path d=\'M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z\'/></svg></div>'">
+      </div>
+      <p class="ho-caption">L4R team meeting at the Mahama Camp office with beneficiaries — July 2026</p>
+    </div>
+  </div>
+</div>
+<div class="hero-accent"></div>
+
+<!-- ════ WHAT IS THIS ════ -->
+<div class="what-section">
+  <div class="what-inner">
+    <div class="what-text">
+      <div class="eyebrow">What This Program Is</div>
+      <h2>A Database That Puts Skilled Refugees in the Right Room When the Right Door Opens</h2>
+      <p>Refugees living in camps across Rwanda often carry impressive educational backgrounds, professional qualifications, and practical skills — built before displacement and often quietly maintained after. The problem isn't the talent. It's visibility.</p>
+      <p>When organizations — including UNHCR Rwanda, NGOs, businesses, and programs — look for candidates with specific expertise, refugee communities are frequently missed. <strong>Not because they don't qualify, but because no organized, accessible record of their skills exists.</strong></p>
+      <p>Complementary Pathways exists to change that. We collect, verify where possible, and organize the skills and qualifications of refugees in our network — then work with UNHCR Rwanda to ensure that when real opportunities emerge, the right people are already documented and reachable.</p>
+
+      <div class="honesty-box">
+        <h4><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>What We Want to Be Clear About</h4>
+        <p>Registering with Complementary Pathways does not guarantee employment, a scholarship, a position, or any specific outcome. We are not a placement agency. What we do is maintain a credible, organized record of skills so that you are not invisible when opportunities your qualifications match become available. We notify — we do not decide. Decisions rest with UNHCR and the organizations they work with.</p>
+      </div>
+    </div>
+
+    <div class="steps-col">
+      <div class="eyebrow" style="margin-bottom:24px">How It Works</div>
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h4>You Submit Your Profile</h4>
+          <p>In person at our Mahama office, or online through the form on this page. You share your qualifications, skills, languages, and any supporting documents you have.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h4>L4R Reviews and Records</h4>
+          <p>Our team reviews each submission. We organize profiles by field and skill type, note what documentation exists, and flag where verification may be needed. Accuracy matters more than volume.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h4>Shared with UNHCR Rwanda</h4>
+          <p>Aggregated, organized skill data is shared with UNHCR Rwanda. Where individual profiles are relevant to a specific opportunity, they are surfaced through UNHCR's coordination channels — always with appropriate data handling protocols.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h4>When an Opportunity Matches You</h4>
+          <p>If a relevant opportunity emerges and your profile matches, we or UNHCR will reach out through your registered contact. You are never submitted anywhere without your awareness.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-body">
+          <h4>Verification Along the Way</h4>
+          <p>For qualifications that cannot be immediately verified (e.g., documents lost during displacement), you note the issuing institution. Background and credential verification happens as part of the opportunity process — not as a barrier to registering.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ SKILLS WE COLLECT ════ -->
+<div class="skills-section">
+  <div class="skills-inner">
+    <div class="skills-heading">
+      <div class="section-label-center">
+        <div class="lines"><span></span><span></span></div>
+        Skills in the Database
+        <div class="lines"><span></span><span></span></div>
+      </div>
+      <h2>The Talent Already Exists. We Just Make It Visible.</h2>
+      <p>These are the skill categories we currently collect — with more being added as our community grows. If your expertise isn't listed here, register anyway and describe it. Every skill matters.</p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-cat">
+        <div class="skill-cat-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg></div>
+        <h3>Healthcare &amp; Medical</h3>
+        <div class="skill-tags">
+          <span class="stag">Public Health</span><span class="stag">Nursing</span><span class="stag">Community Health</span><span class="stag">Child Protection</span><span class="stag">Psychosocial Support</span><span class="stag">Medical Practice</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-icon"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 1.5L20.39 9 12 13.5 3.61 9 12 4.5zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg></div>
+        <h3>Education &amp; Training</h3>
+        <div class="skill-tags">
+          <span class="stag">Teaching</span><span class="stag">Curriculum Design</span><span class="stag">Language Facilitation</span><span class="stag">Literacy Coaching</span><span class="stag">Community Training</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.86.18-1a3 3 0 0 0-6 0c0 .14.11.56.18 1H10C8.9 6 8 6.9 8 8v12c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg></div>
+        <h3>Technical &amp; Vocational</h3>
+        <div class="skill-tags">
+          <span class="stag">Electrical / Electronic</span><span class="stag">Carpentry</span><span class="stag">Tailoring</span><span class="stag">Construction</span><span class="stag">Mechanics</span><span class="stag">Plumbing</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-icon"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg></div>
+        <h3>Social Work &amp; Community</h3>
+        <div class="skill-tags">
+          <span class="stag">Social Work</span><span class="stag">Community Development</span><span class="stag">Human Rights</span><span class="stag">Disability Support</span><span class="stag">Child Safeguarding</span><span class="stag">Volunteer Coordination</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-icon"><svg viewBox="0 0 24 24"><path d="M2 5h2v2H2zm0 4h2v2H2zm0 4h2v2H2zm4-8h14v2H6zm0 4h14v2H6zm0 4h14v2H6z"/></svg></div>
+        <h3>Business &amp; Finance</h3>
+        <div class="skill-tags">
+          <span class="stag">Statistics</span><span class="stag">Financial Management</span><span class="stag">Project Planning</span><span class="stag">Budgeting</span><span class="stag">Field Monitoring</span><span class="stag">Research</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-icon"><svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg></div>
+        <h3>Technology &amp; Computing</h3>
+        <div class="skill-tags">
+          <span class="stag">Computer Skills</span><span class="stag">Data Entry</span><span class="stag">IT Maintenance</span><span class="stag">Digital Literacy</span><span class="stag">Freelancing</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-icon"><svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20c8 0 9-8 9-8zm4-5.23l-1.5.44A9 9 0 0 1 22 8a8.88 8.88 0 0 1-4.29 7.63L15 12a5.83 5.83 0 0 0-2.56-1.34"/></svg></div>
+        <h3>Agriculture &amp; Environment</h3>
+        <div class="skill-tags">
+          <span class="stag">Agronomy</span><span class="stag">Permaculture</span><span class="stag">Livestock</span><span class="stag">Farming</span><span class="stag">Food Production</span><span class="stag">Zoology</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-icon"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
+        <h3>Arts, Culture &amp; Hospitality</h3>
+        <div class="skill-tags">
+          <span class="stag">Catering &amp; Hospitality</span><span class="stag">Event Decoration</span><span class="stag">Pastry</span><span class="stag">Poetry &amp; Arts</span><span class="stag">Acting</span><span class="stag">Hair Dressing</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="lang-band">
+      <p>Languages Spoken</p>
+      <div class="lang-pills">
+        <span class="lang-pill">French</span>
+        <span class="lang-pill">English</span>
+        <span class="lang-pill">Kinyarwanda</span>
+        <span class="lang-pill">Swahili</span>
+        <span class="lang-pill">Kirundi</span>
+        <span class="lang-pill">Arabic</span>
+        <span class="lang-pill">Other — specify in your form</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ REGISTRATION FORM ════ -->
+<div class="form-section" id="register">
+  <div class="form-inner">
+
+    <!-- Info panel -->
+    <div class="form-info">
+      <div class="eyebrow">Register Your Skills</div>
+      <h2>You're More Than What Displacement Left Behind</h2>
+      <p>Whether you come in person to our Mahama office or complete this form online — your skills deserve to be on record. Registration is free, takes about 10 minutes, and keeps your profile in a system watched by people who may one day have exactly the right opportunity for you.</p>
+
+      <div class="info-point">
+        <div class="ip-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+        <div class="ip-text"><h4>Open to all refugees in Rwanda</h4><p>Mahama, Kiziba, Kigeme, Mugombwa, Nyabiheke, and urban refugees in Kigali — all welcome.</p></div>
+      </div>
+      <div class="info-point">
+        <div class="ip-icon"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg></div>
+        <div class="ip-text"><h4>All education levels</h4><p>Degree, diploma, certificate, vocational training, or self-taught practical skills — all are valuable and all are recorded.</p></div>
+      </div>
+      <div class="info-point">
+        <div class="ip-icon"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
+        <div class="ip-text"><h4>Missing documents? Still register.</h4><p>Forced displacement means some documents didn't make it. Note where you studied or trained — verification is a process, not a gate.</p></div>
+      </div>
+      <div class="info-point">
+        <div class="ip-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+        <div class="ip-text"><h4>Prefer in-person?</h4><p>Walk into our office at Mahama Refugee Camp. Our team will complete the form with you directly.</p></div>
+      </div>
+
+      <div class="privacy-note">
+        <h4><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2z"/></svg> Your Privacy Is Protected</h4>
+        <p>Personal details — including your UNHCR case number, phone number, and nationality — are stored securely and never displayed publicly. They are accessed only by the L4R team and shared with UNHCR Rwanda in accordance with established data protection protocols. You may request to update or remove your profile at any time by contacting <strong>complementary-pathways@light4refugee.org</strong>.</p>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="form-wrap">
+      <div class="form-header">
+        <h3>Skill Registration Form</h3>
+        <p>Complete all required fields. Takes approximately 10 minutes.</p>
+      </div>
+
+      <div id="form-content">
+        <div class="form-body">
+
+          <div class="form-section-title">1. Personal Information</div>
+          <div class="row-2">
+            <div class="f-group">
+              <label>First Name <span class="req">*</span></label>
+              <input type="text" class="f-input" id="f_first" placeholder="Your first name" required>
+              <div class="f-err">Required</div>
+            </div>
+            <div class="f-group">
+              <label>Last Name <span class="req">*</span></label>
+              <input type="text" class="f-input" id="f_last" placeholder="Your last name" required>
+              <div class="f-err">Required</div>
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="f-group">
+              <label>Gender <span class="req">*</span></label>
+              <select class="f-input f-select" id="f_gender" required>
+                <option value="">— Select —</option>
+                <option>Male</option><option>Female</option><option>Prefer not to say</option>
+              </select>
+            </div>
+            <div class="f-group">
+              <label>Age <span class="req">*</span></label>
+              <input type="number" class="f-input" id="f_age" placeholder="Your age" min="16" max="80" required>
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="f-group">
+              <label>Nationality <span class="req">*</span></label>
+              <input type="text" class="f-input" id="f_nationality" placeholder="Country of origin" required>
+            </div>
+            <div class="f-group">
+              <label>Phone Number <span class="req">*</span></label>
+              <input type="tel" class="f-input" id="f_phone" placeholder="+250 or local format" required>
+            </div>
+          </div>
+          <div class="f-group">
+            <label>Email Address <span class="opt">(optional but recommended)</span></label>
+            <input type="email" class="f-input" id="f_email" placeholder="your@email.com">
+          </div>
+          <div class="f-group">
+            <label>Current Camp / Location <span class="req">*</span></label>
+            <select class="f-input f-select" id="f_location" required>
+              <option value="">— Select your location —</option>
+              <option>Mahama Refugee Camp, Kirehe</option>
+              <option>Kiziba Refugee Camp, Karongi</option>
+              <option>Kigeme Refugee Camp, Nyamagabe</option>
+              <option>Mugombwa Refugee Camp, Gisagara</option>
+              <option>Nyabiheke Refugee Camp, Gatsibo</option>
+              <option>Urban — Kigali</option>
+              <option>Other location in Rwanda</option>
+            </select>
+          </div>
+          <div class="f-group">
+            <label>UNHCR Case Number <span class="opt">(optional — helps with verification)</span></label>
+            <input type="text" class="f-input" id="f_case" placeholder="e.g. RWA-00000-00000">
+            <div style="font-size:.72rem;color:#aaa;margin-top:4px">This is kept confidential and used only for UNHCR coordination purposes.</div>
+          </div>
+
+          <div class="form-section-title">2. Qualifications & Education</div>
+          <div class="f-group">
+            <label>Highest Level of Education <span class="req">*</span></label>
+            <select class="f-input f-select" id="f_edu_level" required>
+              <option value="">— Select —</option>
+              <option>Primary School</option>
+              <option>Secondary School (O-Level / S3)</option>
+              <option>Secondary School (A-Level / S6)</option>
+              <option>Vocational / Technical Certificate</option>
+              <option>Diploma</option>
+              <option>Bachelor's Degree</option>
+              <option>Master's Degree</option>
+              <option>Doctorate / PhD</option>
+              <option>Self-taught / No formal qualification</option>
+            </select>
+          </div>
+          <div class="f-group">
+            <label>Field of Study / Area of Qualification <span class="req">*</span></label>
+            <input type="text" class="f-input" id="f_edu_field" placeholder="e.g. Public Health, Social Work, Agronomy, Electrical Engineering" required>
+          </div>
+          <div class="f-group">
+            <label>Institution Name <span class="opt">(if known)</span></label>
+            <input type="text" class="f-input" id="f_institution" placeholder="Name of school, university, or training centre">
+          </div>
+          <div class="f-group">
+            <label>Country Where You Studied</label>
+            <input type="text" class="f-input" id="f_country_study" placeholder="Country where qualification was obtained">
+          </div>
+          <div class="f-group">
+            <label>Year of Completion <span class="opt">(approximate if unsure)</span></label>
+            <input type="text" class="f-input" id="f_year" placeholder="e.g. 2018 or 'approximately 2015'">
+          </div>
+          <div class="f-group">
+            <label>Do you have a copy of your qualification document?</label>
+            <select class="f-input f-select" id="f_has_cert">
+              <option value="">— Select —</option>
+              <option>Yes — I have the original</option>
+              <option>Yes — I have a photocopy</option>
+              <option>No — lost during displacement</option>
+              <option>No — but I can contact the institution</option>
+              <option>Partially — I have some documents</option>
+            </select>
+          </div>
+
+          <div class="form-section-title">3. Skills & Experience</div>
+          <div class="f-group">
+            <label>Primary Skill / Expertise <span class="req">*</span></label>
+            <input type="text" class="f-input" id="f_skill_primary" placeholder="Your strongest / most practiced skill" required>
+          </div>
+          <div class="f-group">
+            <label>Additional Skills <span class="opt">(list all that apply)</span></label>
+            <textarea class="f-input f-textarea" id="f_skills_other" placeholder="List other skills, separated by commas or on separate lines. E.g. Carpentry, Community Facilitation, Data Entry, Pastry..."></textarea>
+          </div>
+          <div class="f-group">
+            <label>Years of Experience in Primary Skill</label>
+            <select class="f-input f-select" id="f_experience">
+              <option value="">— Select —</option>
+              <option>Less than 1 year</option>
+              <option>1 – 2 years</option>
+              <option>3 – 5 years</option>
+              <option>6 – 10 years</option>
+              <option>More than 10 years</option>
+            </select>
+          </div>
+          <div class="f-group">
+            <label>Brief Work or Volunteer History <span class="opt">(optional)</span></label>
+            <textarea class="f-input f-textarea" id="f_history" placeholder="Briefly describe any work or volunteer experience — roles held, organisations you worked with, projects you contributed to. Keep it short."></textarea>
+          </div>
+
+          <div class="form-section-title">4. Languages</div>
+          <div class="f-group">
+            <label>Languages You Speak <span class="req">*</span></label>
+            <div class="check-group">
+              <label class="check-item-row"><input type="checkbox" name="lang" value="French"> French</label>
+              <label class="check-item-row"><input type="checkbox" name="lang" value="English"> English</label>
+              <label class="check-item-row"><input type="checkbox" name="lang" value="Kinyarwanda"> Kinyarwanda</label>
+              <label class="check-item-row"><input type="checkbox" name="lang" value="Swahili"> Swahili / Kiswahili</label>
+              <label class="check-item-row"><input type="checkbox" name="lang" value="Kirundi"> Kirundi</label>
+              <label class="check-item-row"><input type="checkbox" name="lang" value="Arabic"> Arabic</label>
+            </div>
+          </div>
+          <div class="f-group">
+            <label>Other Languages Not Listed</label>
+            <input type="text" class="f-input" id="f_lang_other" placeholder="e.g. Lingala, Somali, Amharic...">
+          </div>
+
+          <div class="form-section-title">5. Supporting Documents</div>
+          <div class="f-group">
+            <label>Upload Certificate, Degree, or Supporting Document <span class="opt">(optional but helpful)</span></label>
+            <label for="file-upload" id="file-label">
+              <div class="file-upload-wrap">
+                <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+                <p>Click to upload a file</p>
+                <p class="note">PDF, JPG, or PNG — max 5MB. If you don't have documents, proceed without uploading.</p>
+                <input type="file" id="file-upload" accept=".pdf,.jpg,.jpeg,.png">
+              </div>
+            </label>
+            <div id="file-name" style="font-size:.78rem;color:var(--green);margin-top:6px;display:none"></div>
+          </div>
+
+          <div class="form-section-title">6. Consent</div>
+          <div class="f-group">
+            <label class="check-item-row" style="align-items:flex-start;gap:12px;cursor:default">
+              <input type="checkbox" id="f_consent" style="margin-top:3px">
+              <span style="font-size:.88rem;color:var(--navy);line-height:1.6">I understand that submitting this form adds my skills profile to the L4R Complementary Pathways database. My personal information will be handled with confidentiality and may be shared with UNHCR Rwanda for coordination purposes. I understand this registration does not guarantee any specific opportunity or outcome. <span class="req">*</span></span>
+            </label>
+          </div>
+
+          <button class="form-submit-btn" onclick="submitForm()">
+            <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            Submit My Skills Profile
+          </button>
+          <p class="form-note">We respond to every submission within 5 business days. In-person registrations are also welcome at our Mahama office.</p>
+
+        </div><!-- /form-body -->
+      </div><!-- /form-content -->
+
+      <!-- Success state -->
+      <div class="form-success" id="form-success">
+        <div class="suc-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+        <h4>Profile Received!</h4>
+        <p>Thank you for registering. Your skills are now on record with Light4Refugee. We'll be in touch within 5 business days to confirm your profile has been added to the database.</p>
+      </div>
+
+    </div><!-- /form-wrap -->
+  </div>
+</div>
+
+<!-- ════ VISIT IN PERSON ════ -->
+<div class="office-band">
+  <div class="office-inner">
+    <div class="office-text">
+      <div class="eyebrow" style="color:var(--gold)">Our Office</div>
+      <h2>Come See Us<br><em>At Mahama 2, <span style="font-size: 0.75em; font-style: normal; font-weight: normal;">Near Library</span></em></h2>
+      <p>Not everyone has reliable internet access, and not every form tells the full story. That's exactly why we opened a physical office — so you can come in, sit down, and register your skills with a member of our team who speaks your language and understands your context.</p>
+      <p>No appointment needed. Just come in during working hours and we'll do the rest together.</p>
+      <div class="office-details">
+        <div class="od-row"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><div><strong>Location</strong>Mahama Refugee Camp, Kirehe District, Eastern Province, Rwanda</div></div>
+        <div class="od-row"><svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-2 .9-2 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg><div><strong>Hours</strong>Monday – Friday · 8:00 AM – 5:00 PM</div></div>
+        <div class="od-row"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg><div><strong>Phone</strong>+250 792 052 725</div></div>
+        <div class="od-row"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg><div><strong>Email</strong>complementary-pathways@light4refugee.org</div></div>
+        <div class="od-row"><svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20c8 0 9-8 9-8z"/></svg><div><strong>Languages at the office</strong>French, English, Kinyarwanda, Kirundi</div></div>
+      </div>
+    </div>
+    <div class="office-photo">
+      <!-- Rename your WhatsApp image to: img/office-mahama.jpg -->
+      <img src="img/office-mahama.jpeg" alt="L4R team at the Mahama office"
+           onerror="this.parentElement.innerHTML='<div class=\'img-ph\'><svg viewBox=\'0 0 24 24\'><path d=\'M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z\'/></svg></div>'">
+    </div>
+  </div>
+</div>
+
+<!-- ════ MINI FAQ ════ -->
+<div class="faq-section">
+  <div class="faq-inner">
+    <div class="faq-heading">
+      <h2>Common Questions</h2>
+      <p>A few things people often ask before registering.</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Will registering guarantee me a job or opportunity?
+        <svg class="faq-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </div>
+      <div class="faq-a">No — and we want to be honest about that. Complementary Pathways is a skills database, not a placement service. What it does is make sure your qualifications are on record and organized, so that when real, relevant opportunities emerge through UNHCR or its partners, your name is part of the conversation. We surface candidates — we do not control decisions.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What if I lost my certificates during displacement?
+        <svg class="faq-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </div>
+      <div class="faq-a">Still register. Many refugees lost documents when they were forced to flee — that is a reality, not a disqualification. In your form, name the institution where you studied, the country, and the approximate year. Verification is a process that happens over time, not a barrier to being included in the database today.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Who will see my personal information?
+        <svg class="faq-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </div>
+      <div class="faq-a">Your personal details — including your phone number, case number, and nationality — are stored securely and only accessible to the L4R team. Aggregated, organised skill data is shared with UNHCR Rwanda for program coordination. Individual profiles are only shared when directly relevant to a specific opportunity, and always in accordance with data protection protocols. Your profile will never appear publicly on this website.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        I don't live in Mahama. Can I still register?
+        <svg class="faq-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </div>
+      <div class="faq-a">Absolutely. The online form on this page works for any refugee living anywhere in Rwanda — Kiziba, Kigeme, Mugombwa, Nyabiheke, urban Kigali, or elsewhere. The Mahama office is our base of operations, but the database is open to all.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Can I update or remove my profile later?
+        <svg class="faq-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </div>
+      <div class="faq-a">Yes. Email us at complementary-pathways@light4refugee.org with your name and the changes you'd like made. We'll update your profile within 5 business days. If you want your profile removed entirely, we'll do that too — no questions asked.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What types of opportunities might this lead to?
+        <svg class="faq-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </div>
+      <div class="faq-a">This varies and we cannot predict specific outcomes. UNHCR Rwanda and its partner organizations work across health, education, livelihoods, social services, technical fields, and more. When their work requires specific expertise and qualified candidates are needed, the database is one of the resources they consult. The scope of what might arise is broad — which is exactly why capturing a wide range of skills matters.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Our Operational Locations</h4>
+      <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Mahama &amp; Kiziba Refugee Camps,<br>Kirehe &amp; Karongi Districts, Rwanda</p>
+      <p><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>+250 792 052 725</p>
+      <p><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>info@light4refugee.org</p>
+      <div class="footer-socials">
+        <a class="fsoc" href="https://www.facebook.com/61574731480102" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="fsoc" href="https://www.youtube.com/channel/UCKFczxvUGOmq7e7tJQ65HxA" target="_blank"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+        <a class="fsoc" href="https://instagram.com/light4refugee" target="_blank"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="var(--navy)" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="var(--navy)" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="var(--navy)"/></svg></a>
+        <a class="fsoc" href="https://linkedin.com/company/light4refugee/posts" target="_blank"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+      <br>
+      <a href="index.html"><img src="img/logo.png" alt="Light 4 Refugee" style="height:55px;width:auto;display:block;opacity:.85"></a>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="team.html">Our Team</a>
+        <a href="news-stories.html">News &amp; Stories</a>
+        <a href="applications-hub.html">Applications Hub</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact-us.html">Contact Us</a>
+        <a href="donate.html">Donate</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Our Programs</h4>
+      <div class="footer-links">
+        <a href="about-us.html">Academic Preparation</a>
+        <a href="about-us.html">College Counseling</a>
+        <a href="about-us.html">Career Guidance</a>
+        <h4 style="margin-top:14px;margin-bottom:10px">Get Involved</h4>
+        <a href="programs.html">Light Club (ECP &amp; iSpeakLead)</a>
+        <a href="complementary-pathways.html">Complementary Pathways</a>
+        <a href="become-a-mentor.html">Become a Mentor</a>
+        <a href="become-a-mentee.html">Become a Mentee</a>
+        <a href="partners.html">Partner With Us</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Gallery</h4>
+      <div class="gallery-grid">
+        <a href="gallery.html"><img src="img/gallery-1.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-2.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-3.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-4.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-5.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-6.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">
+    <span>&copy; 2026 <a href="https://light4refugee.org" target="_blank">Light 4 Refugee</a>, All Rights Reserved.</span>
+    <span style="display:inline-flex;gap:12px;">
+      <a href="terms-conditions.html" style="color:#2e6d04;">Terms/Conditions</a> |
+      <a href="privacy-policy.html" style="color:#2e6d04;">Privacy Policy</a>
+    </span>
+    <span>Designed By <a href="https://yvesnickylirf.com" target="_blank">Yves Nicky Lirf</a></span>
+  </div>
+</footer>
+
+<button id="back-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+</button>
+
+<script src="theme-logic.js"></script>
+<script>
+/* === BOOT === */
+document.addEventListener('DOMContentLoaded', () => {
+  const sp = document.getElementById('spinner');
+  sp.classList.add('hide');
+  setTimeout(() => sp.remove(), 500);
+});
+
+/* === STICKY NAV === */
+const topbar  = document.getElementById('topbar');
+const navWrap = document.getElementById('nav-wrapper');
+const tbH     = topbar.offsetHeight;
+window.addEventListener('scroll', () => {
+  const s = window.scrollY > tbH;
+  topbar.classList.toggle('hidden', s);
+  navWrap.classList.toggle('stuck', s);
+  document.getElementById('back-top').classList.toggle('show', window.scrollY > 300);
+}, { passive: true });
+
+/* === MOBILE NAV === */
+document.getElementById('nav-toggle').addEventListener('click', function () {
+  this.classList.toggle('open');
+  document.getElementById('nav-collapse').classList.toggle('open');
+});
+function toggleDD(id) {
+  if (window.innerWidth > 768) return;
+  document.getElementById(id).classList.toggle('open');
+}
+
+/* === FILE UPLOAD LABEL === */
+document.getElementById('file-upload').addEventListener('change', function () {
+  const el = document.getElementById('file-name');
+  if (this.files.length) {
+    el.textContent = '✓ ' + this.files[0].name;
+    el.style.display = 'block';
+  }
+});
+
+/* === FAQ TOGGLE === */
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  document.querySelectorAll('.faq-q.open').forEach(b => {
+    b.classList.remove('open');
+    b.nextElementSibling.classList.remove('open');
+  });
+  if (!isOpen) {
+    btn.classList.add('open');
+    answer.classList.add('open');
+  }
+}
+
+/* === FORM SUBMIT === */
+function submitForm() {
+  const required = ['f_first','f_last','f_gender','f_age','f_nationality','f_phone','f_location','f_edu_level','f_edu_field','f_skill_primary'];
+  let ok = true;
+
+  required.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('err');
+    if (!el.value.trim()) { el.classList.add('err'); ok = false; }
+  });
+
+  const consent = document.getElementById('f_consent');
+  if (!consent.checked) {
+    consent.style.outline = '2px solid var(--red)';
+    ok = false;
+  } else {
+    consent.style.outline = '';
+  }
+
+  if (!ok) {
+    const firstErr = document.querySelector('.f-input.err');
+    if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  /* Collect languages */
+  const langs = Array.from(document.querySelectorAll('input[name="lang"]:checked')).map(c => c.value);
+  const otherLang = document.getElementById('f_lang_other').value.trim();
+  if (otherLang) langs.push(otherLang);
+
+  /* Build form data for Google Forms (replace entry IDs with real ones) */
+  const fd = new FormData();
+  fd.append('entry.first',        document.getElementById('f_first').value);
+  fd.append('entry.last',         document.getElementById('f_last').value);
+  fd.append('entry.gender',       document.getElementById('f_gender').value);
+  fd.append('entry.age',          document.getElementById('f_age').value);
+  fd.append('entry.nationality',  document.getElementById('f_nationality').value);
+  fd.append('entry.phone',        document.getElementById('f_phone').value);
+  fd.append('entry.email',        document.getElementById('f_email').value);
+  fd.append('entry.location',     document.getElementById('f_location').value);
+  fd.append('entry.case',         document.getElementById('f_case').value);
+  fd.append('entry.edu_level',    document.getElementById('f_edu_level').value);
+  fd.append('entry.edu_field',    document.getElementById('f_edu_field').value);
+  fd.append('entry.institution',  document.getElementById('f_institution').value);
+  fd.append('entry.country_study',document.getElementById('f_country_study').value);
+  fd.append('entry.year',         document.getElementById('f_year').value);
+  fd.append('entry.has_cert',     document.getElementById('f_has_cert').value);
+  fd.append('entry.skill_primary',document.getElementById('f_skill_primary').value);
+  fd.append('entry.skills_other', document.getElementById('f_skills_other').value);
+  fd.append('entry.experience',   document.getElementById('f_experience').value);
+  fd.append('entry.history',      document.getElementById('f_history').value);
+  fd.append('entry.languages',    langs.join(', '));
+
+  fetch('https://docs.google.com/forms/d/e/1FAIpQLSd6PdlFsUqYXmZs1OKTWe0Oxvt__MIwCBs6W6u4S834cuemaA/formResponse', {
+    method: 'POST', mode: 'no-cors', body: fd
+  }).catch(() => {});
+
+  document.getElementById('form-content').style.display = 'none';
+  document.getElementById('form-success').classList.add('show');
+  document.getElementById('register').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+</body>
+</html>
