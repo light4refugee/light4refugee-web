@@ -1052,7 +1052,10 @@ function submitForm() {
     const el = document.getElementById(id);
     if (!el) return;
     el.classList.remove('err');
-    if (!el.value.trim()) { el.classList.add('err'); ok = false; }
+    if (!el.value.trim()) {
+      el.classList.add('err');
+      ok = false;
+    }
   });
 
   const consent = document.getElementById('f_consent');
@@ -1074,37 +1077,105 @@ function submitForm() {
   const otherLang = document.getElementById('f_lang_other').value.trim();
   if (otherLang) langs.push(otherLang);
 
-  /* Build form data for Google Forms (replace entry IDs with real ones) */
-  const fd = new FormData();
-  fd.append('entry.first',        document.getElementById('f_first').value);
-  fd.append('entry.last',         document.getElementById('f_last').value);
-  fd.append('entry.gender',       document.getElementById('f_gender').value);
-  fd.append('entry.age',          document.getElementById('f_age').value);
-  fd.append('entry.nationality',  document.getElementById('f_nationality').value);
-  fd.append('entry.phone',        document.getElementById('f_phone').value);
-  fd.append('entry.email',        document.getElementById('f_email').value);
-  fd.append('entry.location',     document.getElementById('f_location').value);
-  fd.append('entry.case',         document.getElementById('f_case').value);
-  fd.append('entry.edu_level',    document.getElementById('f_edu_level').value);
-  fd.append('entry.edu_field',    document.getElementById('f_edu_field').value);
-  fd.append('entry.institution',  document.getElementById('f_institution').value);
-  fd.append('entry.country_study',document.getElementById('f_country_study').value);
-  fd.append('entry.year',         document.getElementById('f_year').value);
-  fd.append('entry.has_cert',     document.getElementById('f_has_cert').value);
-  fd.append('entry.skill_primary',document.getElementById('f_skill_primary').value);
-  fd.append('entry.skills_other', document.getElementById('f_skills_other').value);
-  fd.append('entry.experience',   document.getElementById('f_experience').value);
-  fd.append('entry.history',      document.getElementById('f_history').value);
-  fd.append('entry.languages',    langs.join(', '));
+  /* Build payload matching the Apps Script routing parameters */
+  const payload = {
+    formType: "skillRegistration",
+    firstName: document.getElementById('f_first').value.trim(),
+    lastName: document.getElementById('f_last').value.trim(),
+    gender: document.getElementById('f_gender').value,
+    age: document.getElementById('f_age').value,
+    nationality: document.getElementById('f_nationality').value.trim(),
+    phone: document.getElementById('f_phone').value.trim(),
+    email: document.getElementById('f_email').value.trim(),
+    location: document.getElementById('f_location').value,
+    caseNumber: document.getElementById('f_case').value.trim(),
+    eduLevel: document.getElementById('f_edu_level').value,
+    eduField: document.getElementById('f_edu_field').value.trim(),
+    institution: document.getElementById('f_institution').value.trim(),
+    countryStudy: document.getElementById('f_country_study').value.trim(),
+    year: document.getElementById('f_year').value.trim(),
+    hasCert: document.getElementById('f_has_cert').value,
+    skillPrimary: document.getElementById('f_skill_primary').value.trim(),
+    skillsOther: document.getElementById('f_skills_other').value.trim(),
+    experience: document.getElementById('f_experience').value,
+    history: document.getElementById('f_history').value.trim(),
+    languages: langs.join(', '),
+    fileData: "",
+    fileName: "",
+    fileType: ""
+  };
 
-  fetch('https://docs.google.com/forms/d/e/1FAIpQLSd6PdlFsUqYXmZs1OKTWe0Oxvt__MIwCBs6W6u4S834cuemaA/formResponse', {
-    method: 'POST', mode: 'no-cors', body: fd
-  }).catch(() => {});
+  // Visual visual updates to the submit button
+  const submitBtn = document.querySelector('.form-submit-btn');
+  const originalBtnText = submitBtn.innerHTML;
+  submitBtn.disabled = true;
+  submitBtn.innerText = "Submitting profile...";
 
-  document.getElementById('form-content').style.display = 'none';
-  document.getElementById('form-success').classList.add('show');
-  document.getElementById('register').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  /* Handle file upload if present */
+  const fileInput = document.getElementById('file-upload');
+  if (fileInput && fileInput.files.length > 0) {
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+      payload.fileData = e.target.result; // This converts it to Base64
+      payload.fileName = file.name;
+      payload.fileType = file.type;
+      sendToAppsScript(payload, submitBtn, originalBtnText);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    sendToAppsScript(payload, submitBtn, originalBtnText);
+  }
 }
+
+/* Helper function to transmit data via urlencoded format */
+function sendToAppsScript(payload, btn, originalText) {
+  // PASTE YOUR GOOGLE APPS SCRIPT WEB APP API URL HERE
+  const url = 'https://script.google.com/macros/s/AKfycbz-oKSORT4mjqvtxNOeURbwybv2jKlmMaHACKaOWBHLY1WOyXmP1dBBZUBgI0JE3WLfOw/exec';
+
+  // Convert payload data into form-urlencoded content format
+  const formBody = [];
+  for (const property in payload) {
+    const encodedKey = encodeURIComponent(property);
+    const encodedValue = encodeURIComponent(payload[property]);
+    formBody.push(encodedKey + "=" + encodedValue);
+  }
+  const serializedBody = formBody.join("&");
+
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    },
+    body: serializedBody
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.result === "success") {
+      document.getElementById('form-content').style.display = 'none';
+      document.getElementById('form-success').classList.add('show');
+      
+      const registerEl = document.getElementById('register');
+      if (registerEl) {
+        registerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } else {
+      alert("Error: " + data.error);
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert("An error occurred during submission. Please try again.");
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+  });
+}
+
 </script>
 </body>
 </html>
