@@ -88,8 +88,8 @@
     background: var(--navy); padding: 80px 40px;
     position: relative; overflow: hidden;
   }
-  .page-hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(240,165,0,.13) 0%, transparent 55%); }
-  .page-hero::after {
+ .page-hero::before { content: ''; position: absolute; inset: -20px; background-image: url('https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/gallery-3.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; filter: blur(1px); background-blend-mode: multiply; background-image: linear-gradient(135deg, rgba(240,165,0,.12) 0%, transparent 60%), linear-gradient(rgba(10, 25, 47, 0.75), rgba(10, 25, 47, 0.75)), url('https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/gallery-3.jpg'); }  
+ .page-hero::after {
     content: '✦';
     position: absolute; right: 6%; top: 50%; transform: translateY(-50%);
     font-size: 16rem; color: rgba(240,165,0,.06); pointer-events: none; z-index: 0;
