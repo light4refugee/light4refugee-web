@@ -809,7 +809,7 @@
     </div>
   </div>
 
-  <!-- ── REFINED: 3-CARD COMPACT INFINITE SLIDER ── -->
+  <!-- ── REFINED: 3-CARD COMPACT AUTOMATIC STEP SLIDER WITH ARROWS ── -->
   <div class="bootcamp-slider-container">
     <style>
       .bootcamp-slider-container {
@@ -817,7 +817,6 @@
         margin: 50px auto 0 auto;
         padding: 40px 20px 0 20px;
         border-top: 1px solid rgba(240, 165, 0, 0.2);
-        overflow: hidden; /* Clips anything outside the 3-card window */
         position: relative;
       }
       .bootcamp-slider-title {
@@ -829,25 +828,20 @@
         text-align: center;
         margin-bottom: 30px;
       }
-      /* Viewport track wrapper */
+      /* Viewport window container hiding excess items */
       .bootcamp-slider-track {
-        display: flex;
         width: 100%;
         overflow: hidden;
       }
-      /* Moving train holding the cards */
+      /* Moving slider assembly line row */
       .bootcamp-slider-mover {
         display: flex;
         gap: 24px;
-        /* Loops smoothly over exactly half the elements (the first 6) */
-        animation: marqueeScroll 35s linear infinite;
-      }
-      /* Pauses seamlessly on hover */
-      .bootcamp-slider-mover:hover {
-        animation-play-state: paused;
+        transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        will-change: transform;
       }
       .bootcamp-card {
-        /* Calculates a strict size so exactly 3 fit into the 1320px wrapper */
+        /* Evaluates precise element width proportions mapping 3 visible positions */
         width: calc((1320px - 88px) / 3); 
         flex-shrink: 0;
         aspect-ratio: 1 / 1;
@@ -858,7 +852,7 @@
         transition: transform 0.3s ease, border-color 0.3s ease;
       }
       .bootcamp-card:hover {
-        transform: scale(1.02);
+        transform: scale(1.015);
         border-color: var(--gold);
       }
       .bootcamp-card img {
@@ -868,57 +862,171 @@
         display: block;
       }
 
-      /* Infinite looping point mapping */
-      @keyframes marqueeScroll {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(calc(-50% - 12px)); } /* Shifts exactly 6 cards down */
+      /* NAVIGATION ARROWS STYLING */
+      .bootcamp-arrow {
+        position: absolute;
+        top: calc(50% + 20px);
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
+        background: var(--navy);
+        border: 2px solid rgba(240, 165, 0, 0.4);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.25s ease;
       }
+      .bootcamp-arrow:hover {
+        background: var(--gold);
+        border-color: var(--gold);
+      }
+      .bootcamp-arrow svg {
+        width: 20px;
+        height: 20px;
+        fill: var(--gold);
+        transition: fill 0.25s ease;
+      }
+      .bootcamp-arrow:hover svg {
+        fill: var(--navy);
+      }
+      .bootcamp-arrow.prev { left: -10px; }
+      .bootcamp-arrow.next { right: -10px; }
 
-      /* Fluid breakdown for tablets and mobile screens */
+      /* Fluid breakdown adaptive thresholds */
+      @media (max-width: 1360px) {
+        .bootcamp-arrow.prev { left: 10px; }
+        .bootcamp-arrow.next { right: 10px; }
+      }
       @media (max-width: 1320px) {
-        .bootcamp-card {
-          width: calc((100vw - 88px) / 3); /* Maintains 3 items smoothly scaled */
-        }
+        .bootcamp-card { width: calc((100vw - 88px) / 3); }
       }
       @media (max-width: 900px) {
         .bootcamp-slider-title { font-size: 1.5rem; }
-        .bootcamp-card {
-          width: calc((100vw - 64px) / 2); /* Shifts to 2 visible cards on tablets */
-        }
+        .bootcamp-card { width: calc((100vw - 64px) / 2); } /* 2 visible items */
       }
       @media (max-width: 550px) {
-        .bootcamp-card {
-          width: calc(100vw - 40px); /* Shifts to 1 single focused card on mobile devices */
-        }
+        .bootcamp-card { width: calc(100vw - 40px); } /* 1 visible item */
+        .bootcamp-arrow { width: 36px; height: 36px; }
       }
     </style>
 
     <h4 class="bootcamp-slider-title">Meet Our Bootcamp Cohort II Mentors</h4>
     
+    <!-- LEFT NAVIGATION ARROW -->
+    <button class="bootcamp-arrow prev" id="slide-prev-btn" aria-label="Previous mentor profile">
+      <svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>
+    </button>
+
     <div class="bootcamp-slider-track">
-      <div class="bootcamp-slider-mover">
-        <!-- ORIGINAL CHRONOLOGICAL ARRAY (6 SLIDES) -->
-        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/7.png" alt="Christian Mupenzi - Mentor"></div>
-        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/6.png" alt="Eugene Musafiri - Mentor"></div>
-        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/5.png" alt="Jean Berchimas N. - Mentor"></div>
-        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/4.png" alt="Jean Marie Nib. - Mentor"></div>
-        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/3.png" alt="Olga Igabe - Mentor"></div>
-        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/2.png" alt="Divine Nyiraburanga - Mentor"></div>
-        
-        <!-- CLONED DUPLICATE ARRAY (Allows the train to loop seamlessly back to card 7) -->
-        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/7.png" alt="Christian Mupenzi - Mentor"></div>
-        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/6.png" alt="Eugene Musafiri - Mentor"></div>
-        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/5.png" alt="Jean Berchimas N. - Mentor"></div>
-        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/4.png" alt="Jean Marie Nib. - Mentor"></div>
-        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/3.png" alt="Olga Igabe - Mentor"></div>
-        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/2.png" alt="Divine Nyiraburanga - Mentor"></div>
+      <div class="bootcamp-slider-mover" id="bootcamp-mover">
+        <!-- CHRONOLOGICAL ARRAY MATCHING YOUR ACTIVE ASSETS (6 CARDS) -->
+        <div class="bootcamp-card"><img src="https://vercel-storage.com" alt="Christian Mupenzi"></div>
+        <div class="bootcamp-card"><img src="https://vercel-storage.com" alt="Eugene Musafiri"></div>
+        <div class="bootcamp-card"><img src="https://vercel-storage.com" alt="Jean Berchimas N."></div>
+        <div class="bootcamp-card"><img src="https://vercel-storage.com" alt="Jean Marie Nib."></div>
+        <div class="bootcamp-card"><img src="https://vercel-storage.com" alt="Olga Igabe"></div>
+        <div class="bootcamp-card"><img src="https://vercel-storage.com" alt="Divine Nyiraburanga"></div>
       </div>
     </div>
+
+    <!-- RIGHT NAVIGATION ARROW -->
+    <button class="bootcamp-arrow next" id="slide-next-btn" aria-label="Next mentor profile">
+      <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+    </button>
   </div>
+
+  <script>
+    (function() {
+      const mover = document.getElementById('bootcamp-mover');
+      const cards = mover.getElementsByClassName('bootcamp-card');
+      const prevBtn = document.getElementById('slide-prev-btn');
+      const nextBtn = document.getElementById('slide-next-btn');
+      
+      let index = 0;
+      let timer = null;
+      const stepInterval = 3000; // Exact 3-second cycle interval execution rate
+
+      function getVisibleCount() {
+        if (window.innerWidth <= 550) return 1;
+        if (window.innerWidth <= 900) return 2;
+        return 3;
+      }
+
+      function updateSliderPosition() {
+        const visibleCards = getVisibleCount();
+        const maxIndex = cards.length - visibleCards;
+        
+        // Safety lock mapping limits
+        if (index > maxIndex) index = 0;
+        if (index < 0) index = maxIndex;
+
+        // Computes dynamic card pixel weights + row structural gap parameters
+        const cardWidth = cards[0].getBoundingClientRect().width;
+        const gap = 24; // Matches style rules markup layout settings
+        
+        const moveAmount = index * (cardWidth + gap);
+        mover.style.transform = `translateX(-${moveAmount}px)`;
+      }
+
+      function nextSlide() {
+        const visibleCards = getVisibleCount();
+        if (index >= cards.length - visibleCards) {
+          index = 0; // Return instantly to origin
+        } else {
+          index++; // Progress step one by one
+        }
+        updateSliderPosition();
+      }
+
+      function prevSlide() {
+        const visibleCards = getVisibleCount();
+        if (index <= 0) {
+          index = cards.length - visibleCards; // Wrap smoothly around to rear limit
+        } else {
+          index--;
+        }
+        updateSliderPosition();
+      }
+
+      function startTimer() {
+        stopTimer();
+        timer = setInterval(nextSlide, stepInterval);
+      }
+
+      function stopTimer() {
+        if (timer) clearInterval(timer);
+      }
+
+      // Interactive Action Handlers
+      nextBtn.addEventListener('click', () => {
+        nextSlide();
+        startTimer(); // Soft cycles timeout ticker clock resets on clicks
+      });
+
+      prevBtn.addEventListener('click', () => {
+        prevSlide();
+        startTimer();
+      });
+
+      // Hover Protection Engine — pauses step transitions when mouse is actively over cards
+      mover.addEventListener('mouseenter', stopTimer);
+      mover.addEventListener('mouseleave', startTimer);
+
+      // Window Re-render Scaling updates
+      window.addEventListener('resize', () => {
+        updateSliderPosition();
+      });
+
+      // Initialize Workspace
+      startTimer();
+    })();
+  </script>
   <!-- ── END OF SPOTLIGHT GALLERY ── -->
 
 </div>
-
 
 
 <!-- FOOTER -->
