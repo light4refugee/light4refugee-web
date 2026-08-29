@@ -808,7 +808,111 @@
       </div>
     </div>
   </div>
+
+  <!-- ── NEW: BOOTCAMP COHORT II SPOTLIGHT GALLERY ── -->
+  <div class="bootcamp-gallery-wrapper">
+    <style>
+      .bootcamp-gallery-wrapper {
+        max-width: 1320px;
+        margin: 50px auto 0 auto;
+        padding-top: 40px;
+        border-top: 1px solid rgba(240, 165, 0, 0.2);
+      }
+      .bootcamp-gallery-title {
+        font-family: 'Oswald', sans-serif;
+        font-size: 1.8rem;
+        color: var(--gold);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .bootcamp-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .bootcamp-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(240, 165, 0, 0.15);
+        border-radius: 4px;
+        overflow: hidden;
+        aspect-ratio: 1 / 1;
+        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+      .bootcamp-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--gold);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      }
+      .bootcamp-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      
+      /* Responsive Adaptations */
+      @media (max-width: 900px) {
+        .bootcamp-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 16px;
+        }
+        .bootcamp-gallery-title {
+          font-size: 1.5rem;
+        }
+      }
+      @media (max-width: 550px) {
+        /* On small mobile screens, it transforms into an elegant touch-swipe horizontal slider automatically! */
+        .bootcamp-grid {
+          display: flex;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          gap: 14px;
+          padding-bottom: 15px;
+          scrollbar-width: thin;
+          scrollbar-color: var(--gold) transparent;
+        }
+        .bootcamp-card {
+          flex: 0 0 85%;
+          scroll-snap-align: center;
+        }
+      }
+    </style>
+
+    <h4 class="bootcamp-gallery-title">Meet Our Bootcamp Cohort II Mentors</h4>
+    
+    <div class="bootcamp-grid">
+      <!-- Mentor 1 (Divine) -->
+      <div class="bootcamp-card">
+        <img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/2.png" alt="Divine Nyiraburanga - Mentor Spotlight">
+      </div>
+      <!-- Mentor 2 -->
+      <div class="bootcamp-card">
+        <img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/3.png" alt="Bootcamp Cohort II Mentor Spotlight">
+      </div>
+      <!-- Mentor 3 -->
+      <div class="bootcamp-card">
+        <img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/4.png" alt="Bootcamp Cohort II Mentor Spotlight">
+      </div>
+      <!-- Mentor 4 -->
+      <div class="bootcamp-card">
+        <img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/5.png" alt="Bootcamp Cohort II Mentor Spotlight">
+      </div>
+      <!-- Mentor 5 -->
+      <div class="bootcamp-card">
+        <img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/6.png" alt="Bootcamp Cohort II Mentor Spotlight">
+      </div>
+      <!-- Mentor 6 -->
+      <div class="bootcamp-card">
+        <img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/7.png" alt="Bootcamp Cohort II Mentor Spotlight">
+      </div>
+    </div>
+  </div>
+  <!-- ── END OF SPOTLIGHT GALLERY ── -->
+
 </div>
+
 
 <!-- FOOTER -->
 <footer>
