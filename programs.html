@@ -559,16 +559,24 @@ footer{background:var(--navy);padding:60px 40px 0;color:#a8b8cc;font-size:.92rem
       <!-- sticky selector -->
       <div class="prog-sticky">
         <h2>Choose a Program to Explore</h2>
-        <p>Both programs run inside the Light Club and are designed to work in tandem — language opens doors, and interpersonal skills determine what you do once you walk through them.</p>
+        <p>Three programs. One Light Club. Language opens the door — interpersonal skills determine what you do once you walk through it — and iLaunch turns that momentum into a future you design yourself.</p>
         <div class="prog-selector">
+
           <button class="prog-sel-btn active" id="sel-ecp" onclick="openPanel('ecp')">
             <div class="prog-sel-icon"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></div>
             <div class="prog-sel-text"><strong>ECP ^ Light Club</strong><span>English Communication Program</span></div>
           </button>
+
           <button class="prog-sel-btn" id="sel-isep" onclick="openPanel('isep')">
             <div class="prog-sel-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
-            <div class="prog-sel-text"><strong>ISEP ^ iSpeakLead</strong><span>Interpersonal Skills Enhancement Program</span></div>
+            <div class="prog-sel-text"><strong>iSpeakLead ^ ISEP</strong><span>O'Level Readiness &amp; Boarding Prep</span></div>
           </button>
+
+          <button class="prog-sel-btn" id="sel-ilaunch" onclick="openPanel('ilaunch')">
+            <div class="prog-sel-icon"><svg viewBox="0 0 24 24"><path d="M9.19 6.35c-2.04 2.29-3.44 5.58-3.57 5.89L2 10l4-4 3.19.35zM10 4l-1 1 4 4 1-1L10 4zm-4.5 16l3.5-3.5-2-2L4 18l1.5 2zm6.5-3l-4-4-6 6h4l6-6zM20 2s-5 0-8 3l-2 2 4 4 2-2c3-3 3-8 3-8z"/></svg></div>
+            <div class="prog-sel-text"><strong>iLaunch ^ Light Club</strong><span>A'Level Immersion &amp; Venture Genesis</span></div>
+          </button>
+
         </div>
       </div>
 
@@ -629,14 +637,30 @@ footer{background:var(--navy);padding:60px 40px 0;color:#a8b8cc;font-size:.92rem
           </div>
         </div>
 
-        <!-- ═══ ISEP PANEL ═══ -->
+        <!-- ═══ iSPEAKLEAD / ISEP PANEL ═══ -->
         <div class="prog-panel" id="panel-isep">
           <div class="panel-header">
-            <div class="panel-tag"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg> Interpersonal Skills Enhancement Program</div>
-            <h2>🤝 ISEP — The Skills No Classroom Can Ignore</h2>
+            <div class="panel-tag"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg> iSpeakLead — Interpersonal Skills Enhancement Program (ISEP)</div>
+            <h2>🤝 iSpeakLead — O'Level Readiness &amp; Boarding Prep</h2>
             <div class="tagline">"Technical knowledge opens the door. How you relate to people determines whether you stay."</div>
           </div>
           <div class="panel-body">
+
+            <!-- what / where band -->
+            <div class="prog-context-band">
+              <div class="ctx-item">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <span>Kirehe (Mahama) &amp; Karongi (Kiziba)</span>
+              </div>
+              <div class="ctx-item">
+                <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+                <span>O'Level — Grades 7 to 9</span>
+              </div>
+              <div class="ctx-item">
+                <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3z"/></svg>
+                <span>Operates inside refugee-affiliated secondary schools</span>
+              </div>
+            </div>
 
             <div class="panel-split">
               <div class="split-box">
@@ -645,26 +669,26 @@ footer{background:var(--navy);padding:60px 40px 0;color:#a8b8cc;font-size:.92rem
               </div>
               <div class="split-box dark">
                 <h4><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg> Our Response</h4>
-                <p>ISEP runs alongside ECP inside the Light Club, building the relationship, emotional, and professional skills that transform a student from a learner to a collaborator — from a graduate to a colleague. We work with partner schools in Rwanda to align ISEP content with what institutions actually need.</p>
+                <p>iSpeakLead targets promising O'Level scholars for rigorous instruction in public speaking, academic aspiration mentorship, interview preparation, peer leadership, and tutoring — preparing them to win competitive national boarding school scholarships and step beyond camp-based educational constraints into Rwanda's best schools.</p>
               </div>
             </div>
 
-            <div class="panel-quote">"When someone becomes better for themselves — more self-aware, more empathetic, more confident — they naturally become better for everyone around them. That's what ISEP builds."</div>
+            <div class="panel-quote">"When someone becomes better for themselves — more self-aware, more empathetic, more confident — they naturally become better for everyone around them. That's what iSpeakLead builds."</div>
 
-            <div class="module-label">ISEP Core Modules</div>
+            <div class="module-label">iSpeakLead Core Focus Areas</div>
             <div class="modules-grid">
-              <div class="module-card"><h5>Active Listening &amp; Empathy</h5><p>Understanding before being understood — the skill that transforms conversations, builds trust, and opens doors.</p></div>
-              <div class="module-card"><h5>Conflict Resolution</h5><p>How to navigate disagreements constructively in academic, team, and professional settings without burning bridges.</p></div>
-              <div class="module-card"><h5>Professional Communication</h5><p>Writing professional emails, contributing in meetings, presenting ideas, and giving feedback with clarity and confidence.</p></div>
-              <div class="module-card"><h5>Emotional Intelligence (EQ)</h5><p>Self-awareness, emotional regulation, and social awareness — the foundations of long-term academic and professional success.</p></div>
-              <div class="module-card"><h5>Teamwork &amp; Collaboration</h5><p>Group dynamics, shared responsibility, and how to work across cultural and language differences — essential in global institutions.</p></div>
-              <div class="module-card"><h5>Networking &amp; Relationship-Building</h5><p>How to build genuine professional relationships, leverage mentorship, and grow a network that opens doors over a lifetime.</p></div>
+              <div class="module-card"><h5>Public Speaking</h5><p>Structured speaking practice, debate, and presentation skills that build unshakeable confidence in front of any audience.</p></div>
+              <div class="module-card"><h5>Interview Preparation</h5><p>Mock interviews, panel practice, and coaching for national boarding school scholarship selection processes.</p></div>
+              <div class="module-card"><h5>Peer Leadership</h5><p>How to lead from within a peer group — facilitating, motivating, and taking ownership without a title.</p></div>
+              <div class="module-card"><h5>Academic Aspiration Mentorship</h5><p>One-to-one and group mentorship sessions connecting students with older scholars who have already made the journey.</p></div>
+              <div class="module-card"><h5>Tutoring &amp; Academic Support</h5><p>Targeted academic support across core subjects to strengthen overall performance alongside the leadership curriculum.</p></div>
+              <div class="module-card"><h5>Active Listening &amp; Empathy</h5><p>Understanding before being understood — the skill that transforms conversations, builds trust, and opens doors in every environment.</p></div>
             </div>
 
             <div class="panel-stats">
-              <div class="ps-stat"><strong>6</strong><span>Core skill<br>modules</span></div>
-              <div class="ps-stat"><strong>EQ</strong><span>Emotional intelligence<br>at the core</span></div>
-              <div class="ps-stat"><strong>3+</strong><span>Partner schools<br>aligned</span></div>
+              <div class="ps-stat"><strong>300+</strong><span>Scholars<br>mentored</span></div>
+              <div class="ps-stat"><strong>24</strong><span>Elite boarding<br>scholarships secured</span></div>
+              <div class="ps-stat"><strong>G7–9</strong><span>O'Level<br>target cohort</span></div>
               <div class="ps-stat"><strong>100%</strong><span>Free to eligible<br>students</span></div>
             </div>
 
@@ -682,23 +706,157 @@ footer{background:var(--navy);padding:60px 40px 0;color:#a8b8cc;font-size:.92rem
             <div class="module-label" style="margin-top:28px">What Students Gain</div>
             <div class="check-list">
               <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>The ability to build and maintain productive relationships in school and professional environments</div>
-              <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Emotional intelligence skills that underpin leadership, teamwork, and long-term career success</div>
-              <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Practical communication tools for navigating universities, workplaces, and global networks</div>
+              <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Interview and presentation skills that make the difference in boarding scholarship selection</div>
+              <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>A track record: 24 boarding scholarships won by iSpeakLead scholars since the program launched</div>
               <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Confidence, resilience, and purpose — the inner foundation that holds everything else together</div>
             </div>
 
             <div class="panel-cta">
-              <a class="btn-navy" href="become-a-mentee.html"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg> Apply for ISEP</a>
-              <a class="btn-gold" href="mailto:info@light4refugee.org"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg> Contact ISEP Team</a>
+              <a class="btn-navy" href="become-a-mentee.html"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg> Apply for iSpeakLead</a>
+              <a class="btn-gold" href="mailto:info@light4refugee.org"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg> Contact Program Team</a>
             </div>
           </div>
         </div>
+
+        <!-- ═══ iLAUNCH PANEL ═══ -->
+        <div class="prog-panel" id="panel-ilaunch">
+          <div class="panel-header">
+            <div class="panel-tag"><svg viewBox="0 0 24 24"><path d="M9.19 6.35c-2.04 2.29-3.44 5.58-3.57 5.89L2 10l4-4 3.19.35zM10 4l-1 1 4 4 1-1L10 4zm-4.5 16l3.5-3.5-2-2L4 18l1.5 2zm6.5-3l-4-4-6 6h4l6-6zM20 2s-5 0-8 3l-2 2 4 4 2-2c3-3 3-8 3-8z"/></svg> iLaunch — A'Level English Immersion &amp; Venture Genesis</div>
+            <h2>🚀 iLaunch — From Surviving to Building</h2>
+            <div class="tagline">"We don't prepare students to wait for an opportunity. We prepare them to create one."</div>
+          </div>
+          <div class="panel-body">
+
+            <!-- what / where band -->
+            <div class="prog-context-band">
+              <div class="ctx-item">
+                <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+                <span>A'Level — Upper Secondary (S5 &amp; S6)</span>
+              </div>
+              <div class="ctx-item">
+                <svg viewBox="0 0 24 24"><path d="M9.19 6.35c-2.04 2.29-3.44 5.58-3.57 5.89L2 10l4-4 3.19.35zM20 2s-5 0-8 3l-2 2 4 4 2-2c3-3 3-8 3-8z"/></svg>
+                <span>100% Market-Readiness Focus</span>
+              </div>
+              <div class="ctx-item">
+                <svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.86.18-1a3 3 0 0 0-6 0c0 .14.11.56.18 1H10C8.9 6 8 6.9 8 8v12c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
+                <span>Entrepreneurship · College Counseling · Career Entry</span>
+              </div>
+            </div>
+
+            <div class="panel-split">
+              <div class="split-box">
+                <h4><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg> The Shift We're Making</h4>
+                <p>Too many upper-secondary refugee students finish A'Level in passive mode — waiting to see what happens next. They have intelligence, lived experience, and a rare hunger that most students never develop. What they need is a program that meets that hunger and channels it into action — whether that's launching a business, securing a university place, or entering the workforce with confidence.</p>
+              </div>
+              <div class="split-box dark">
+                <h4><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg> What iLaunch Does</h4>
+                <p>iLaunch is an intensive immersion program combining advanced English fluency with entrepreneurial project design, professional public speaking, college counseling, and career exploration. It expands the mindset from passive survival to active innovation — so every scholar leaves with a clear next step, and the skills to take it.</p>
+              </div>
+            </div>
+
+            <div class="panel-quote">"iLaunch is where we stop teaching refugee students to adapt to the world and start teaching them to shape it."</div>
+
+            <div class="module-label">iLaunch Core Modules</div>
+            <div class="modules-grid">
+              <div class="module-card"><h5>Advanced English Fluency</h5><p>Professional-level speaking, writing, and presentation in English — built for university applications, job interviews, and entrepreneurial pitches.</p></div>
+              <div class="module-card"><h5>Entrepreneurial Project Design</h5><p>From idea to concept — students develop real business or social enterprise proposals grounded in their communities' actual needs.</p></div>
+              <div class="module-card"><h5>Public Speaking &amp; Pitching</h5><p>Structured practice in presenting ideas persuasively — in front of panels, classrooms, investors, and admissions committees.</p></div>
+              <div class="module-card"><h5>College Counseling</h5><p>Identifying the right universities and scholarship programs, building strong applications, and writing personal statements that stand out.</p></div>
+              <div class="module-card"><h5>Career Exploration</h5><p>Exposure to diverse professional fields, conversations with practitioners, and tools for mapping a career path that fits the student's strengths.</p></div>
+              <div class="module-card"><h5>Market Readiness</h5><p>CV building, professional digital presence, mock interviews, and the practical skills needed to enter employment or tertiary education directly.</p></div>
+            </div>
+
+            <div class="panel-stats">
+              <div class="ps-stat"><strong>A'Level</strong><span>Target<br>cohort</span></div>
+              <div class="ps-stat"><strong>100%</strong><span>Market-readiness<br>focus</span></div>
+              <div class="ps-stat"><strong>3</strong><span>Exit pathways:<br>uni · work · venture</span></div>
+              <div class="ps-stat"><strong>100%</strong><span>Free to eligible<br>students</span></div>
+            </div>
+
+            <div class="module-label" style="margin-top:28px">Three Pathways Out of iLaunch</div>
+            <div class="modules-grid" style="grid-template-columns: repeat(3, 1fr)">
+              <div class="module-card" style="border-top: 3px solid var(--gold)">
+                <h5>🎓 Tertiary Education</h5>
+                <p>A strong university application, a compelling personal statement, and the guidance to find and win the right scholarship — anywhere in the world.</p>
+              </div>
+              <div class="module-card" style="border-top: 3px solid var(--gold)">
+                <h5>💼 Employment</h5>
+                <p>A polished CV, proven interview skills, and professional communication ready for Rwanda's job market or international opportunities.</p>
+              </div>
+              <div class="module-card" style="border-top: 3px solid var(--gold)">
+                <h5>🚀 Entrepreneurship</h5>
+                <p>A validated business or social enterprise concept, a pitch, and the community network to launch and sustain it — from day one after graduation.</p>
+              </div>
+            </div>
+
+            <div class="module-label" style="margin-top:28px">What Students Gain</div>
+            <div class="check-list">
+              <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>Advanced English fluency that meets university and professional standards</div>
+              <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>A real entrepreneurial project — conceived, developed, and pitched during the program</div>
+              <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>A clear, personalized post-graduation pathway — university, employment, or entrepreneurship</div>
+              <div class="check-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>The shift in identity from refugee student to emerging leader — and everything that comes with it</div>
+            </div>
+
+            <div class="panel-cta">
+              <a class="btn-navy" href="become-a-mentee.html"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg> Apply for iLaunch</a>
+              <a class="btn-gold" href="mailto:info@light4refugee.org"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg> Contact iLaunch Team</a>
+            </div>
+
+          </div>
+        </div>
+        <!-- ═══ end iLAUNCH ═══ -->
 
       </div><!-- /prog-panels -->
     </div><!-- /prog-layout -->
   </div>
 </div>
+<!-- ══ END PROGRAM DEEP-DIVES ══ -->
 
+<!-- ── ADD THIS EXTRA CSS to your existing <style> block ─────────────────
+     (only new rules — nothing overrides what you already have)
+─────────────────────────────────────────────────────────────────────── -->
+<style>
+/* Context band — appears at the top of iSpeakLead and iLaunch panels */
+.prog-context-band {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: var(--navy);
+  padding: 16px 22px;
+  margin-bottom: 28px;
+}
+.ctx-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .85rem;
+  font-weight: 600;
+  color: #a8b8cc;
+}
+.ctx-item svg {
+  width: 15px;
+  height: 15px;
+  fill: var(--gold);
+  flex-shrink: 0;
+}
+
+/* Third selector button — same style as existing two, no extra override needed.
+   The .prog-sel-btn styles you already have cover it automatically. */
+</style>
+
+<!-- ── UPDATED JS — replace your existing openPanel() function with this ─
+     (adds ilaunch to the list of known panels)
+─────────────────────────────────────────────────────────────────────── -->
+<script>
+function openPanel(id) {
+  ['ecp', 'isep', 'ilaunch'].forEach(p => {
+    document.getElementById('panel-' + p).classList.remove('active');
+    document.getElementById('sel-'   + p).classList.remove('active');
+  });
+  document.getElementById('panel-' + id).classList.add('active');
+  document.getElementById('sel-'   + id).classList.add('active');
+}
+</script>
 <!-- ══ LIGHT CLUB UPDATES ══ -->
 <div class="updates-section" id="club-updates">
   <div class="updates-inner">
