@@ -809,16 +809,18 @@
     </div>
   </div>
 
-  <!-- ── NEW: BOOTCAMP COHORT II SPOTLIGHT GALLERY ── -->
-  <div class="bootcamp-gallery-wrapper">
+  <!-- ── REFINED: 3-CARD COMPACT INFINITE SLIDER ── -->
+  <div class="bootcamp-slider-container">
     <style>
-      .bootcamp-gallery-wrapper {
+      .bootcamp-slider-container {
         max-width: 1320px;
         margin: 50px auto 0 auto;
-        padding-top: 40px;
+        padding: 40px 20px 0 20px;
         border-top: 1px solid rgba(240, 165, 0, 0.2);
+        overflow: hidden; /* Clips anything outside the 3-card window */
+        position: relative;
       }
-      .bootcamp-gallery-title {
+      .bootcamp-slider-title {
         font-family: 'Oswald', sans-serif;
         font-size: 1.8rem;
         color: var(--gold);
@@ -827,23 +829,37 @@
         text-align: center;
         margin-bottom: 30px;
       }
-      .bootcamp-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
+      /* Viewport track wrapper */
+      .bootcamp-slider-track {
+        display: flex;
+        width: 100%;
+        overflow: hidden;
+      }
+      /* Moving train holding the cards */
+      .bootcamp-slider-mover {
+        display: flex;
         gap: 24px;
+        /* Loops smoothly over exactly half the elements (the first 6) */
+        animation: marqueeScroll 35s linear infinite;
+      }
+      /* Pauses seamlessly on hover */
+      .bootcamp-slider-mover:hover {
+        animation-play-state: paused;
       }
       .bootcamp-card {
+        /* Calculates a strict size so exactly 3 fit into the 1320px wrapper */
+        width: calc((1320px - 88px) / 3); 
+        flex-shrink: 0;
+        aspect-ratio: 1 / 1;
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(240, 165, 0, 0.15);
         border-radius: 4px;
         overflow: hidden;
-        aspect-ratio: 1 / 1;
-        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        transition: transform 0.3s ease, border-color 0.3s ease;
       }
       .bootcamp-card:hover {
-        transform: translateY(-6px);
+        transform: scale(1.02);
         border-color: var(--gold);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
       }
       .bootcamp-card img {
         width: 100%;
@@ -851,67 +867,58 @@
         object-fit: cover;
         display: block;
       }
-      
-      /* Responsive Adaptations */
-      @media (max-width: 900px) {
-        .bootcamp-grid {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 16px;
+
+      /* Infinite looping point mapping */
+      @keyframes marqueeScroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-50% - 12px)); } /* Shifts exactly 6 cards down */
+      }
+
+      /* Fluid breakdown for tablets and mobile screens */
+      @media (max-width: 1320px) {
+        .bootcamp-card {
+          width: calc((100vw - 88px) / 3); /* Maintains 3 items smoothly scaled */
         }
-        .bootcamp-gallery-title {
-          font-size: 1.5rem;
+      }
+      @media (max-width: 900px) {
+        .bootcamp-slider-title { font-size: 1.5rem; }
+        .bootcamp-card {
+          width: calc((100vw - 64px) / 2); /* Shifts to 2 visible cards on tablets */
         }
       }
       @media (max-width: 550px) {
-        /* On small mobile screens, it transforms into an elegant touch-swipe horizontal slider automatically! */
-        .bootcamp-grid {
-          display: flex;
-          overflow-x: auto;
-          scroll-snap-type: x mandatory;
-          gap: 14px;
-          padding-bottom: 15px;
-          scrollbar-width: thin;
-          scrollbar-color: var(--gold) transparent;
-        }
         .bootcamp-card {
-          flex: 0 0 85%;
-          scroll-snap-align: center;
+          width: calc(100vw - 40px); /* Shifts to 1 single focused card on mobile devices */
         }
       }
     </style>
 
-    <h4 class="bootcamp-gallery-title">Meet Our Bootcamp Cohort II Mentors</h4>
+    <h4 class="bootcamp-slider-title">Meet Our Bootcamp Cohort II Mentors</h4>
     
-    <div class="bootcamp-grid">
-      <!-- Mentor 1 (Divine) -->
-      <div class="bootcamp-card">
-        <img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/2.png" alt="Divine Nyiraburanga - Mentor Spotlight">
-      </div>
-      <!-- Mentor 2 -->
-      <div class="bootcamp-card">
-        <img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/3.png" alt="Bootcamp Cohort II Mentor Spotlight">
-      </div>
-      <!-- Mentor 3 -->
-      <div class="bootcamp-card">
-        <img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/4.png" alt="Bootcamp Cohort II Mentor Spotlight">
-      </div>
-      <!-- Mentor 4 -->
-      <div class="bootcamp-card">
-        <img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/5.png" alt="Bootcamp Cohort II Mentor Spotlight">
-      </div>
-      <!-- Mentor 5 -->
-      <div class="bootcamp-card">
-        <img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/6.png" alt="Bootcamp Cohort II Mentor Spotlight">
-      </div>
-      <!-- Mentor 6 -->
-      <div class="bootcamp-card">
-        <img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/7.png" alt="Bootcamp Cohort II Mentor Spotlight">
+    <div class="bootcamp-slider-track">
+      <div class="bootcamp-slider-mover">
+        <!-- ORIGINAL CHRONOLOGICAL ARRAY (6 SLIDES) -->
+        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/7.png" alt="Christian Mupenzi - Mentor"></div>
+        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/6.png" alt="Eugene Musafiri - Mentor"></div>
+        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/5.png" alt="Jean Berchimas N. - Mentor"></div>
+        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/4.png" alt="Jean Marie Nib. - Mentor"></div>
+        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/3.png" alt="Olga Igabe - Mentor"></div>
+        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/2.png" alt="Divine Nyiraburanga - Mentor"></div>
+        
+        <!-- CLONED DUPLICATE ARRAY (Allows the train to loop seamlessly back to card 7) -->
+        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/7.png" alt="Christian Mupenzi - Mentor"></div>
+        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/6.png" alt="Eugene Musafiri - Mentor"></div>
+        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/5.png" alt="Jean Berchimas N. - Mentor"></div>
+        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/4.png" alt="Jean Marie Nib. - Mentor"></div>
+        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/3.png" alt="Olga Igabe - Mentor"></div>
+        <div class="bootcamp-card"><img src="https://id7oiqc12cjqmb1q.public.blob.vercel-storage.com/2.png" alt="Divine Nyiraburanga - Mentor"></div>
       </div>
     </div>
   </div>
   <!-- ── END OF SPOTLIGHT GALLERY ── -->
 
 </div>
+
 
 
 <!-- FOOTER -->
