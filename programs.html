@@ -339,6 +339,112 @@ nav{background:var(--gold);max-width:1320px;margin:0 auto;display:flex;align-ite
 .uc-close svg{width:13px;height:13px;fill:currentColor}
 
 /* ════════════════════════════════════════════════════════
+   BOOTCAMP FEED (live feed)
+════════════════════════════════════════════════════════ */
+.bootcamp-band {
+  background: var(--navy);
+  padding: 40px;
+  border-top: 4px solid var(--gold);
+}
+.bootcamp-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.bootcamp-left { flex: 1; min-width: 260px; }
+ 
+.bootcamp-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--gold);
+  color: var(--navy);
+  font-size: .72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 4px 12px;
+  margin-bottom: 14px;
+}
+.bootcamp-tag svg { width: 12px; height: 12px; fill: var(--navy); }
+ 
+.bootcamp-left h3 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 4px;
+}
+.bootcamp-sub {
+  font-size: .82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+.bootcamp-desc {
+  font-size: .9rem;
+  color: #a8b8cc;
+  line-height: 1.75;
+  max-width: 540px;
+}
+ 
+/* stats strip */
+.bootcamp-stats {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(240,165,0,.2);
+  flex-wrap: wrap;
+}
+.bc-stat {
+  padding: 24px 32px;
+  text-align: center;
+}
+.bc-stat strong {
+  display: block;
+  font-family: 'Oswald', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.bc-stat span {
+  font-size: .75rem;
+  font-weight: 600;
+  color: #a8b8cc;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  max-width: 100px;
+  display: block;
+  line-height: 1.4;
+}
+.bc-divider {
+  width: 1px;
+  height: 60px;
+  background: rgba(255,255,255,.1);
+  flex-shrink: 0;
+}
+ 
+@media (max-width: 900px) {
+  .bootcamp-band { padding: 32px 20px; }
+  .bootcamp-inner { gap: 28px; }
+  .bootcamp-stats { width: 100%; justify-content: center; }
+}
+@media (max-width: 480px) {
+  .bc-divider { display: none; }
+  .bc-stat { flex: 1; min-width: 120px; padding: 18px 16px; }
+}
+
+/* ════════════════════════════════════════════════════════
    JOIN / APPLY BAND
 ════════════════════════════════════════════════════════ */
 .join-band{background:var(--navy);padding:70px 40px}
