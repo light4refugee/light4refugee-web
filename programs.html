@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Light Club & iSpeakLead | Light 4 Refugee Programs</title>
+<title>Light Club, iSpeakLead&iLaunch | Light 4 Refugee Programs</title>
 <meta name="description" content="Explore Light4Refugee's in-house programs — the English Communication Program (ECP) and Interpersonal Skills Enhancement Program (ISEP) — free for eligible refugee youth in Rwanda.">
 <meta name="keywords" content="Light Club Rwanda, iSpeakLead, ECP English refugee Rwanda, ISEP interpersonal skills, L4R programs, refugee education programs Rwanda">
 <link rel="canonical" href="https://light4refugee.org/programs">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://light4refugee.org/programs">
-<meta property="og:title" content="Light Club & iSpeakLead | Light 4 Refugee Programs">
+<meta property="og:title" content="Light Club, iSpeakLead & iLaunch | Light 4 Refugee Programs">
 <meta property="og:description" content="Two programs. One mission. English fluency and interpersonal skills for refugee youth — completely free inside the L4R Light Club.">
 <meta property="og:image" content="https://light4refugee.org/img/og-programs.png">
 <meta property="og:site_name" content="Light 4 Refugee">
@@ -255,6 +255,29 @@ nav{background:var(--gold);max-width:1320px;margin:0 auto;display:flex;align-ite
 .btn-gold{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--navy);padding:13px 24px;font-size:.9rem;font-weight:700;text-decoration:none;border:none;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:background .2s,transform .15s}
 .btn-gold:hover{background:var(--gold-dk);transform:translateY(-2px)}
 .btn-gold svg{width:15px;height:15px;fill:var(--navy)}
+
+.prog-context-band {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: var(--navy);
+  padding: 16px 22px;
+  margin-bottom: 28px;
+}
+.ctx-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .85rem;
+  font-weight: 600;
+  color: #a8b8cc;
+}
+.ctx-item svg {
+  width: 15px;
+  height: 15px;
+  fill: var(--gold);
+  flex-shrink: 0;
+}
 
 /* ════════════════════════════════════════════════════════
    LIGHT CLUB UPDATES (live feed)
@@ -812,38 +835,6 @@ footer{background:var(--navy);padding:60px 40px 0;color:#a8b8cc;font-size:.92rem
 </div>
 <!-- ══ END PROGRAM DEEP-DIVES ══ -->
 
-<!-- ── ADD THIS EXTRA CSS to your existing <style> block ─────────────────
-     (only new rules — nothing overrides what you already have)
-─────────────────────────────────────────────────────────────────────── -->
-<style>
-/* Context band — appears at the top of iSpeakLead and iLaunch panels */
-.prog-context-band {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  background: var(--navy);
-  padding: 16px 22px;
-  margin-bottom: 28px;
-}
-.ctx-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: .85rem;
-  font-weight: 600;
-  color: #a8b8cc;
-}
-.ctx-item svg {
-  width: 15px;
-  height: 15px;
-  fill: var(--gold);
-  flex-shrink: 0;
-}
-
-/* Third selector button — same style as existing two, no extra override needed.
-   The .prog-sel-btn styles you already have cover it automatically. */
-</style>
-
 <!-- ── UPDATED JS — replace your existing openPanel() function with this ─
      (adds ilaunch to the list of known panels)
 ─────────────────────────────────────────────────────────────────────── -->
@@ -857,6 +848,44 @@ function openPanel(id) {
   document.getElementById('sel-'   + id).classList.add('active');
 }
 </script>
+
+
+<!-- ══ ANNUAL SCHOLARS SUMMER BOOTCAMP — insert between programs panels and club updates ══ -->
+<div class="bootcamp-band">
+  <div class="bootcamp-inner">
+ 
+    <div class="bootcamp-left">
+      <div class="bootcamp-tag">
+        <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+        Annual Program
+      </div>
+      <h3>Scholars Summer Bootcamp</h3>
+      <p class="bootcamp-sub">Tertiary Transition &amp; Seed Accelerator</p>
+      <p class="bootcamp-desc">A two-week residential immersion bringing together high-achieving high school graduates for hands-on university application counseling — Common App, Mastercard Foundation, DAFI, UCAS — alongside project implementation workshops and seed funding through group contributions and micro-grants.</p>
+    </div>
+ 
+    <div class="bootcamp-stats">
+      <div class="bc-stat">
+        <strong>22</strong>
+        <span>Full university scholarships earned</span>
+      </div>
+      <div class="bc-divider"></div>
+      <div class="bc-stat">
+        <strong>3</strong>
+        <span>Micro-enterprises launched</span>
+      </div>
+      <div class="bc-divider"></div>
+      <div class="bc-stat">
+        <strong>2 weeks</strong>
+        <span>Residential immersion</span>
+      </div>
+    </div>
+ 
+  </div>
+</div>
+
+
+
 <!-- ══ LIGHT CLUB UPDATES ══ -->
 <div class="updates-section" id="club-updates">
   <div class="updates-inner">
