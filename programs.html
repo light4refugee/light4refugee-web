@@ -941,22 +941,8 @@ footer{background:var(--navy);padding:60px 40px 0;color:#a8b8cc;font-size:.92rem
 </div>
 <!-- ══ END PROGRAM DEEP-DIVES ══ -->
 
-<!-- ── UPDATED JS — replace your existing openPanel() function with this ─
-     (adds ilaunch to the list of known panels)
-─────────────────────────────────────────────────────────────────────── -->
-<script>
-function openPanel(id) {
-  ['ecp', 'isep', 'ilaunch'].forEach(p => {
-    document.getElementById('panel-' + p).classList.remove('active');
-    document.getElementById('sel-'   + p).classList.remove('active');
-  });
-  document.getElementById('panel-' + id).classList.add('active');
-  document.getElementById('sel-'   + id).classList.add('active');
-}
-</script>
-
-
 <!-- ══ ANNUAL SCHOLARS SUMMER BOOTCAMP — insert between programs panels and club updates ══ -->
+<div class="prog-panels">
 <div class="bootcamp-band">
   <div class="bootcamp-inner">
  
@@ -988,10 +974,8 @@ function openPanel(id) {
     </div>
  
   </div>
-</div>
-
-
-
+</div></div>
+   
 <!-- ══ LIGHT CLUB UPDATES ══ -->
 <div class="updates-section" id="club-updates">
   <div class="updates-inner">
@@ -1252,6 +1236,14 @@ function openPanel(id){
   document.getElementById('programs').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
+function openPanel(id) {
+  ['ecp', 'isep', 'ilaunch'].forEach(p => {
+    document.getElementById('panel-' + p).classList.remove('active');
+    document.getElementById('sel-'   + p).classList.remove('active');
+  });
+  document.getElementById('panel-' + id).classList.add('active');
+  document.getElementById('sel-'   + id).classList.add('active');
+}
 /* UPDATE CARD EXPAND */
 function toggleUpdate(id, e){
   e.stopPropagation();
