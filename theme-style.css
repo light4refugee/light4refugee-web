@@ -1,0 +1,856 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   L4R THEME  —  Light (the site's normal look) + Dark
+   • LIGHT = how every page already looks (white/cream sections, navy header + footer). Nothing is overridden.
+   • DARK  = html[data-theme="dark"] rules below. They only repaint colours; layout is never touched.
+   Why it is built this way: each page re-declares its own colours in its <style>, AFTER this file loads,
+   so swapping variables here cannot win. Dark mode therefore targets the page classes directly.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root { --navy:#0d1b2e; --navy-mid:#162540; --navy-lt:#1e3258; --gold:#f0a500; --gold-dk:#c98a00; --gold-pale:#fff8e6; --white:#ffffff; --cream:#f5f0e8; --muted:#5b6678; color-scheme: light; }
+
+/* Dark palette (only used inside dark mode) */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --d-bg:#0a1524;      /* page + "white" sections */
+  --d-alt:#0e1d33;     /* "cream" sections */
+  --d-card:#14294a;    /* cards, panels */
+  --d-line:rgba(255,255,255,.12);
+  --d-text:#e8eef7;    /* headings / strong text */
+  --d-soft:#a8b8cc;    /* paragraphs */
+  --muted:#a8b8cc; --text:#e8eef7;
+}
+
+/* ── Page + sections that are white/cream in light mode ───────────────────── */
+html[data-theme="dark"] body { background: var(--d-bg); color: var(--d-soft); }
+html[data-theme="dark"] .about-section, html[data-theme="dark"] .features-section, html[data-theme="dark"] .team-section,
+html[data-theme="dark"] .testi-section, html[data-theme="dark"] .partner-section, html[data-theme="dark"] .contact-section,
+html[data-theme="dark"] .give-section, html[data-theme="dark"] .donation-section, html[data-theme="dark"] .reassure-note, html[data-theme="dark"] .leadership-section, html[data-theme="dark"] .hub-section { background: var(--d-alt); border-color: var(--d-line); }
+html[data-theme="dark"] .program-section:nth-child(odd), html[data-theme="dark"] .tips-section { background: var(--d-bg); }
+html[data-theme="dark"] .program-section:nth-child(even) { background: var(--d-alt); }
+html[data-theme="dark"] .partner-section { border-top-color: var(--d-line); }
+html[data-theme="dark"] #spinner { background: var(--d-bg); }
+html[data-theme="dark"] .spin-ring { border-color: var(--d-line); border-top-color: var(--gold); }
+
+/* ── Cards and panels ─────────────────────────────────────────────────────── */
+html[data-theme="dark"] .give-card, html[data-theme="dark"] .donation-card, html[data-theme="dark"] .team-card,
+html[data-theme="dark"] .form-wrap, html[data-theme="dark"] .partner-logo-cell, html[data-theme="dark"] .modal-box,
+html[data-theme="dark"] .trust-pill, html[data-theme="dark"] .team-card .team-detail { background: var(--d-card); border-color: var(--d-line); }
+html[data-theme="dark"] .give-card.featured { border-color: var(--gold); box-shadow: 0 4px 24px rgba(240,165,0,.18); }
+html[data-theme="dark"] .give-card:hover, html[data-theme="dark"] .donation-card:hover, html[data-theme="dark"] .team-card:hover { box-shadow: 0 12px 36px rgba(0,0,0,.45); }
+html[data-theme="dark"] .partner-logos { border-color: var(--d-line); }
+html[data-theme="dark"] .partner-logo-cell { border-right-color: var(--d-line); }
+html[data-theme="dark"] .partner-logo-cell:hover { background: #1a3358; }
+html[data-theme="dark"] .gc-detail { border-bottom-color: var(--d-line); }
+html[data-theme="dark"] .gcd-icon, html[data-theme="dark"] .copy-btn, html[data-theme="dark"] .dept-row { background: var(--navy-lt); border-color: var(--d-line); }
+html[data-theme="dark"] .copy-btn { color: var(--d-text); }
+html[data-theme="dark"] .copy-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+html[data-theme="dark"] .copy-btn.copied { background: var(--green,#2d9e6b); border-color: var(--green,#2d9e6b); color: #fff; }
+html[data-theme="dark"] .testi-left, html[data-theme="dark"] .team-social { background: var(--d-card); }
+html[data-theme="dark"] .progress-track { background: #223552; }
+html[data-theme="dark"] .modal-header { border-bottom-color: var(--d-line); }
+html[data-theme="dark"] .modal-close { color: var(--d-soft); }
+html[data-theme="dark"] .modal-close:hover { color: var(--gold); }
+
+/* Dark-blue buttons/blocks that would vanish on a dark page → lift them one step */
+html[data-theme="dark"] .btn-navy, html[data-theme="dark"] .team-cta a, html[data-theme="dark"] .testi-arrow,
+html[data-theme="dark"] .quote-box, html[data-theme="dark"] .info-block-icon, html[data-theme="dark"] .csoc,
+html[data-theme="dark"] .don-badge { background: var(--navy-lt); border: 1px solid var(--d-line); }
+html[data-theme="dark"] .btn-navy:hover, html[data-theme="dark"] .team-cta a:hover, html[data-theme="dark"] .testi-arrow:hover { background: #28427a; }
+html[data-theme="dark"] .csoc:hover { background: var(--gold); }
+html[data-theme="dark"] .progress-fill { background: var(--gold-dk); }
+html[data-theme="dark"] .submit-btn { background: var(--gold); color: var(--navy); }
+html[data-theme="dark"] .submit-btn:hover { background: var(--gold-dk); }
+html[data-theme="dark"] .submit-btn svg { fill: var(--navy); }
+
+/* ── Text ─────────────────────────────────────────────────────────────────── */
+html[data-theme="dark"] .about-text h2, html[data-theme="dark"] .about-col h3, html[data-theme="dark"] .features-text h2,
+html[data-theme="dark"] .donation-heading h2, html[data-theme="dark"] .team-heading h2, html[data-theme="dark"] .team-detail h3,
+html[data-theme="dark"] .testi-left h2, html[data-theme="dark"] .testi-author-info h5, html[data-theme="dark"] .partner-heading h3,
+html[data-theme="dark"] .logo-text, html[data-theme="dark"] .give-header h2, html[data-theme="dark"] .gc-head h3,
+html[data-theme="dark"] .gcd-text strong, html[data-theme="dark"] .gcd-text .copy-val, html[data-theme="dark"] .info-side h2,
+html[data-theme="dark"] .info-block-header h4, html[data-theme="dark"] .dept-row span, html[data-theme="dark"] .form-field label,
+html[data-theme="dark"] .form-success h4, html[data-theme="dark"] .don-title, html[data-theme="dark"] .check-item,
+html[data-theme="dark"] .reassure-note strong, html[data-theme="dark"] .info-block strong, html[data-theme="dark"] .don-progress .raised-label,
+html[data-theme="dark"] .don-progress .goal-label, html[data-theme="dark"] .modal-header h5 { color: var(--d-text) !important; }
+html[data-theme="dark"] .don-title:hover { color: var(--gold) !important; }
+html[data-theme="dark"] .about-text > p, html[data-theme="dark"] .about-col p, html[data-theme="dark"] .features-text > p,
+html[data-theme="dark"] .donation-heading p, html[data-theme="dark"] .don-detail p, html[data-theme="dark"] .team-heading p,
+html[data-theme="dark"] .team-detail span, html[data-theme="dark"] .testi-left p, html[data-theme="dark"] .testi-item > p,
+html[data-theme="dark"] .testi-author-info span, html[data-theme="dark"] .give-header p, html[data-theme="dark"] .gc-head p,
+html[data-theme="dark"] .gcd-text span, html[data-theme="dark"] .info-side > p, html[data-theme="dark"] .info-block p,
+html[data-theme="dark"] .info-block a, html[data-theme="dark"] .reassure-note p, html[data-theme="dark"] .form-success p,
+html[data-theme="dark"] .form-note, html[data-theme="dark"] .logo-text small, html[data-theme="dark"] .don-progress .raised-val,
+html[data-theme="dark"] .don-progress .goal-val, html[data-theme="dark"] .trust-pill { color: var(--d-soft); }
+html[data-theme="dark"] .info-block a:hover { color: var(--gold); }
+html[data-theme="dark"] .info-block a.link-gold, html[data-theme="dark"] .dept-row a, html[data-theme="dark"] .reassure-note a { color: var(--gold); }
+html[data-theme="dark"] .gc-badge.international { background: rgba(61,220,151,.12); color: #3ddc97; }
+html[data-theme="dark"] .gc-badge.local { background: rgba(255,201,51,.12); color: #ffc933; }
+html[data-theme="dark"] .gc-badge.diaspora { background: rgba(91,184,255,.12); color: #5bb8ff; }
+
+/* ── Forms ────────────────────────────────────────────────────────────────── */
+html[data-theme="dark"] .form-field input, html[data-theme="dark"] .form-field select, html[data-theme="dark"] .form-field textarea,
+html[data-theme="dark"] .form-body input, html[data-theme="dark"] .form-body select, html[data-theme="dark"] .form-body textarea { background-color: #0e1d33; color: var(--d-text); border-color: rgba(255,255,255,.22); }
+html[data-theme="dark"] .form-field input::placeholder, html[data-theme="dark"] .form-field textarea::placeholder { color: #7f92ab; }
+html[data-theme="dark"] .form-field input:focus, html[data-theme="dark"] .form-field select:focus, html[data-theme="dark"] .form-field textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(240,165,0,.22); }
+html[data-theme="dark"] .form-field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); }
+html[data-theme="dark"] select option { background: #0e1d33; color: #fff; }
+
+/* ── About / Team / Applications Hub ──────────────────────────────────────── */
+html[data-theme="dark"] { --border: var(--d-line); }
+html[data-theme="dark"] .schol-card, html[data-theme="dark"] .tip-card, html[data-theme="dark"] .fpill, html[data-theme="dark"] .hub-card { background: var(--d-card); border-color: var(--d-line); }
+html[data-theme="dark"] .schol-card.featured { border-color: var(--gold); }
+html[data-theme="dark"] .sc-chip { background: var(--navy-lt); color: var(--d-soft); }
+html[data-theme="dark"] .sc-cover { background: rgba(240,165,0,.15); color: var(--gold); }
+html[data-theme="dark"] .sc-foot, html[data-theme="dark"] .sc-header { border-color: var(--d-line); }
+html[data-theme="dark"] .sc-apply, html[data-theme="dark"] .badge-l4r { background: var(--navy-lt); color: var(--d-text); }
+html[data-theme="dark"] .sc-apply:hover { background: var(--gold); color: var(--navy); }
+html[data-theme="dark"] .sc-apply.gold { background: var(--gold); color: var(--navy); }
+html[data-theme="dark"] .fpill.active { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+html[data-theme="dark"] .fpill:hover, html[data-theme="dark"] .sc-learn:hover { color: var(--gold); border-color: var(--gold); }
+html[data-theme="dark"] .badge-open { color: #3ddc97; background: rgba(61,220,151,.12); }
+html[data-theme="dark"] .badge-rolling { color: #6ab7ff; background: rgba(106,183,255,.12); }
+html[data-theme="dark"] .badge-closed { color: #ff8a80; background: rgba(255,138,128,.12); }
+html[data-theme="dark"] .sc-title, html[data-theme="dark"] .sc-deadline:not(.urgent), html[data-theme="dark"] .tip-card h4,
+html[data-theme="dark"] .tips-heading h2, html[data-theme="dark"] .group-label h3, html[data-theme="dark"] .prog-text h2,
+html[data-theme="dark"] .prog-text h4, html[data-theme="dark"] .region-header h2, html[data-theme="dark"] .hub-heading h2, html[data-theme="dark"] .hub-title { color: var(--d-text); }
+html[data-theme="dark"] .sc-org, html[data-theme="dark"] .sc-body p, html[data-theme="dark"] .sc-eli, html[data-theme="dark"] .sc-learn, html[data-theme="dark"] .fpill,
+html[data-theme="dark"] .region-header p, html[data-theme="dark"] .tip-card p, html[data-theme="dark"] .tips-heading p, html[data-theme="dark"] .team-heading .desc,
+html[data-theme="dark"] .prog-text > p, html[data-theme="dark"] .prog-text .quote-block, html[data-theme="dark"] .check-item { color: var(--d-soft); }
+html[data-theme="dark"] .prog-text .quote-block { background: rgba(240,165,0,.08); }
+html[data-theme="dark"] .prog-stat, html[data-theme="dark"] .group-label .gl-count { background: var(--navy-lt); }
+html[data-theme="dark"] .prog-badge { background: var(--navy-lt); border: 1px solid var(--d-line); }
+html[data-theme="dark"] .tip-num { color: rgba(240,165,0,.35); }
+html[data-theme="dark"] .progress-fill span { color: var(--navy); }
+html[data-theme="dark"] .hub-section input, html[data-theme="dark"] .hub-section select { background: #0e1d33; color: var(--d-text); border-color: rgba(255,255,255,.22); }
+
+/* ── Gallery / FAQ / Mentor / Mentee ──────────────────────────────────────── */
+html[data-theme="dark"] .gallery-section,
+html[data-theme="dark"] .faq-section,
+html[data-theme="dark"] .main-section,
+html[data-theme="dark"] .gains-section,
+html[data-theme="dark"] .eligibility-section,
+html[data-theme="dark"] .faq-teaser { background: var(--d-bg); }
+html[data-theme="dark"] .cat-overview,
+html[data-theme="dark"] .filter-bar,
+html[data-theme="dark"] .mentor-quote-strip,
+html[data-theme="dark"] .programs-section,
+html[data-theme="dark"] .voices-section,
+html[data-theme="dark"] .still-questions { background: var(--d-alt); border-color: var(--d-line); }
+html[data-theme="dark"] .benefit-card,
+html[data-theme="dark"] .gain-card,
+html[data-theme="dark"] .prog-card,
+html[data-theme="dark"] .voice-card,
+html[data-theme="dark"] .mentor-quote-card,
+html[data-theme="dark"] .form-body,
+html[data-theme="dark"] .filter-btn,
+html[data-theme="dark"] .radio-option,
+html[data-theme="dark"] .check-option,
+html[data-theme="dark"] .faq-tab,
+html[data-theme="dark"] .acc-item { background: var(--d-card); border-color: var(--d-line); }
+html[data-theme="dark"] .elig-note,
+html[data-theme="dark"] .note { background: rgba(240,165,0,.10); border-color: var(--gold); }
+html[data-theme="dark"] .cat-overview-heading h2,
+html[data-theme="dark"] .cat-heading h3,
+html[data-theme="dark"] .cat-heading .back-all,
+html[data-theme="dark"] .acc-q,
+html[data-theme="dark"] .acc-trigger.open .acc-q,
+html[data-theme="dark"] .acc-body-inner strong,
+html[data-theme="dark"] .benefit-card div h5,
+html[data-theme="dark"] .step-title,
+html[data-theme="dark"] .field label,
+html[data-theme="dark"] .form-success h3,
+html[data-theme="dark"] .gain-card h3,
+html[data-theme="dark"] .gains-heading h2,
+html[data-theme="dark"] .elig-left h2,
+html[data-theme="dark"] .elig-note strong,
+html[data-theme="dark"] .voices-heading h2,
+html[data-theme="dark"] .voice-name strong,
+html[data-theme="dark"] .faq-teaser h2,
+html[data-theme="dark"] .faq-mini-q,
+html[data-theme="dark"] .faq-group-title,
+html[data-theme="dark"] .faq-group-title h3,
+html[data-theme="dark"] .still-questions h3,
+html[data-theme="dark"] .still-questions h2 { color: var(--d-text); }
+html[data-theme="dark"] .cat-overview-heading p,
+html[data-theme="dark"] .filter-label,
+html[data-theme="dark"] .filter-btn,
+html[data-theme="dark"] .faq-tab,
+html[data-theme="dark"] .faq-group-title span,
+html[data-theme="dark"] .acc-body-inner p,
+html[data-theme="dark"] .acc-body-inner ul li,
+html[data-theme="dark"] .benefit-card div p,
+html[data-theme="dark"] .step-desc,
+html[data-theme="dark"] .field .hint,
+html[data-theme="dark"] .form-success p,
+html[data-theme="dark"] .mentor-quote-card p,
+html[data-theme="dark"] .gain-card p,
+html[data-theme="dark"] .gains-heading p,
+html[data-theme="dark"] .elig-left p,
+html[data-theme="dark"] .elig-note p,
+html[data-theme="dark"] .prog-card-body p,
+html[data-theme="dark"] .voices-heading p,
+html[data-theme="dark"] .voice-card p,
+html[data-theme="dark"] .voice-name span,
+html[data-theme="dark"] .faq-mini-a,
+html[data-theme="dark"] .still-questions p,
+html[data-theme="dark"] .radio-option,
+html[data-theme="dark"] .check-option { color: var(--d-soft); }
+html[data-theme="dark"] .filter-btn:hover, html[data-theme="dark"] .faq-tab:hover { background: var(--navy-lt); color: var(--d-text); border-color: var(--gold); }
+html[data-theme="dark"] .filter-btn.active, html[data-theme="dark"] .faq-tab.active { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+html[data-theme="dark"] .filter-btn .fb-count { background: var(--navy-lt); color: var(--d-soft); }
+html[data-theme="dark"] .filter-btn.active .fb-count { background: rgba(13,27,46,.18); color: var(--navy); }
+html[data-theme="dark"] .gain-icon, html[data-theme="dark"] .voice-avatar { background: var(--navy-lt); }
+html[data-theme="dark"] .acc-item, html[data-theme="dark"] .acc-item:first-of-type, html[data-theme="dark"] .faq-mini-item, html[data-theme="dark"] .faq-mini-item:first-of-type, html[data-theme="dark"] .form-divider { border-color: var(--d-line); }
+html[data-theme="dark"] .acc-item { background: transparent; }
+html[data-theme="dark"] .radio-option:has(input:checked) { background: rgba(240,165,0,.12); border-color: var(--gold); }
+html[data-theme="dark"] .field input, html[data-theme="dark"] .field select, html[data-theme="dark"] .field textarea, html[data-theme="dark"] .form-body input, html[data-theme="dark"] .form-body select, html[data-theme="dark"] .form-body textarea,
+html[data-theme="dark"] #faq-search-input, html[data-theme="dark"] #faq-search-input:focus { background-color: #0e1d33 !important; color: var(--d-text) !important; border-color: rgba(255,255,255,.22) !important; }
+html[data-theme="dark"] #faq-search-input:focus { border-color: var(--gold) !important; }
+html[data-theme="dark"] .field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); }
+html[data-theme="dark"] .field input::placeholder, html[data-theme="dark"] .field textarea::placeholder { color: #7f92ab; }
+.tl-content .tl-btn.disabled { color: #98a6ba; }
+
+/* ── More page-specific classes (FAQ, Mentor, Mentee) + any inline navy text ── */
+html[data-theme="dark"] .faq-sidebar { background: var(--d-card); border-color: var(--d-line); }
+html[data-theme="dark"] .info-panel h2, html[data-theme="dark"] .faq-sidebar h3, html[data-theme="dark"] .faq-group-title h2, html[data-theme="dark"] .programs-heading h2, html[data-theme="dark"] .attr-info strong, html[data-theme="dark"] .process-text h4, html[data-theme="dark"] .elig-right h2 { color: var(--d-text); }
+html[data-theme="dark"] .info-panel > p, html[data-theme="dark"] .programs-heading p, html[data-theme="dark"] .process-text p, html[data-theme="dark"] .acc-body-inner .note, html[data-theme="dark"] .note { color: var(--d-soft); }
+html[data-theme="dark"] .acc-icon { background: var(--navy-lt); color: var(--d-text); }
+html[data-theme="dark"] .prog-apply-btn.closed { background: rgba(255,138,128,.10); color: #ff8a80; border-color: rgba(255,138,128,.3); }
+html[data-theme="dark"] .prog-apply-btn.closed svg { fill: #ff8a80; }
+html[data-theme="dark"] [style*=";color:var(--navy)"], html[data-theme="dark"] [style*="; color:var(--navy)"], html[data-theme="dark"] [style^="color:var(--navy)"], html[data-theme="dark"] [style*=";color: var(--navy)"] { color: var(--d-text) !important; }
+
+/* ── Partners / Complementary Pathways / Programs / Testimonies / News / Privacy / Terms ── */
+html[data-theme="dark"] .why-section,
+html[data-theme="dark"] .what-section,
+html[data-theme="dark"] .form-section { background: var(--d-bg); }
+html[data-theme="dark"] .how-section,
+html[data-theme="dark"] .skills-section,
+html[data-theme="dark"] .updates-section { background: var(--d-alt); border-color: var(--d-line); }
+html[data-theme="dark"] .why-card,
+html[data-theme="dark"] .how-way,
+html[data-theme="dark"] .faq-item,
+html[data-theme="dark"] .update-card,
+html[data-theme="dark"] .feat-card,
+html[data-theme="dark"] .story-item,
+html[data-theme="dark"] .testi-card:not(.cta-card),
+html[data-theme="dark"] .policy-intro,
+html[data-theme="dark"] .policy-card,
+html[data-theme="dark"] .policy-sidebar,
+html[data-theme="dark"] .module-card,
+html[data-theme="dark"] .split-box:not(.dark),
+html[data-theme="dark"] .prog-sel-btn:not(.active),
+html[data-theme="dark"] .cp-req,
+html[data-theme="dark"] .prog-sel-btn:not(.active) .prog-sel-icon { background: var(--d-card); border-color: var(--d-line); }
+html[data-theme="dark"] .honesty-box,
+html[data-theme="dark"] .privacy-note,
+html[data-theme="dark"] .highlight-box { background: rgba(240,165,0,.10); border-color: rgba(240,165,0,.4); }
+html[data-theme="dark"] .module-card:hover, html[data-theme="dark"] .prog-sel-btn:not(.active):hover { background: var(--navy-lt); }
+html[data-theme="dark"] .policy-sidebar a { border-bottom-color: var(--d-line); }
+html[data-theme="dark"] .page-hero::after { background: linear-gradient(to top, var(--d-bg), transparent); }
+html[data-theme="dark"] .why-section h1,
+html[data-theme="dark"] .why-section h2,
+html[data-theme="dark"] .why-section h3,
+html[data-theme="dark"] .why-section h4,
+html[data-theme="dark"] .why-section h5,
+html[data-theme="dark"] .why-section strong,
+html[data-theme="dark"] .why-section label,
+html[data-theme="dark"] .why-section summary,
+html[data-theme="dark"] .what-section h1,
+html[data-theme="dark"] .what-section h2,
+html[data-theme="dark"] .what-section h3,
+html[data-theme="dark"] .what-section h4,
+html[data-theme="dark"] .what-section h5,
+html[data-theme="dark"] .what-section strong,
+html[data-theme="dark"] .what-section label,
+html[data-theme="dark"] .what-section summary,
+html[data-theme="dark"] .form-section h1,
+html[data-theme="dark"] .form-section h2,
+html[data-theme="dark"] .form-section h3,
+html[data-theme="dark"] .form-section h4,
+html[data-theme="dark"] .form-section h5,
+html[data-theme="dark"] .form-section strong,
+html[data-theme="dark"] .form-section label,
+html[data-theme="dark"] .form-section summary,
+html[data-theme="dark"] .how-section h1,
+html[data-theme="dark"] .how-section h2,
+html[data-theme="dark"] .how-section h3,
+html[data-theme="dark"] .how-section h4,
+html[data-theme="dark"] .how-section h5,
+html[data-theme="dark"] .how-section strong,
+html[data-theme="dark"] .how-section label,
+html[data-theme="dark"] .how-section summary,
+html[data-theme="dark"] .skills-section h1,
+html[data-theme="dark"] .skills-section h2,
+html[data-theme="dark"] .skills-section h3,
+html[data-theme="dark"] .skills-section h4,
+html[data-theme="dark"] .skills-section h5,
+html[data-theme="dark"] .skills-section strong,
+html[data-theme="dark"] .skills-section label,
+html[data-theme="dark"] .skills-section summary,
+html[data-theme="dark"] .updates-section h1,
+html[data-theme="dark"] .updates-section h2,
+html[data-theme="dark"] .updates-section h3,
+html[data-theme="dark"] .updates-section h4,
+html[data-theme="dark"] .updates-section h5,
+html[data-theme="dark"] .updates-section strong,
+html[data-theme="dark"] .updates-section label,
+html[data-theme="dark"] .updates-section summary,
+html[data-theme="dark"] .policy-intro h1,
+html[data-theme="dark"] .policy-intro h2,
+html[data-theme="dark"] .policy-intro h3,
+html[data-theme="dark"] .policy-intro h4,
+html[data-theme="dark"] .policy-intro h5,
+html[data-theme="dark"] .policy-intro strong,
+html[data-theme="dark"] .policy-intro label,
+html[data-theme="dark"] .policy-intro summary,
+html[data-theme="dark"] .policy-card h1,
+html[data-theme="dark"] .policy-card h2,
+html[data-theme="dark"] .policy-card h3,
+html[data-theme="dark"] .policy-card h4,
+html[data-theme="dark"] .policy-card h5,
+html[data-theme="dark"] .policy-card strong,
+html[data-theme="dark"] .policy-card label,
+html[data-theme="dark"] .policy-card summary,
+html[data-theme="dark"] .policy-sidebar h1,
+html[data-theme="dark"] .policy-sidebar h2,
+html[data-theme="dark"] .policy-sidebar h3,
+html[data-theme="dark"] .policy-sidebar h4,
+html[data-theme="dark"] .policy-sidebar h5,
+html[data-theme="dark"] .policy-sidebar strong,
+html[data-theme="dark"] .policy-sidebar label,
+html[data-theme="dark"] .policy-sidebar summary,
+html[data-theme="dark"] .feat-card h1,
+html[data-theme="dark"] .feat-card h2,
+html[data-theme="dark"] .feat-card h3,
+html[data-theme="dark"] .feat-card h4,
+html[data-theme="dark"] .feat-card h5,
+html[data-theme="dark"] .feat-card strong,
+html[data-theme="dark"] .feat-card label,
+html[data-theme="dark"] .feat-card summary,
+html[data-theme="dark"] .story-item h1,
+html[data-theme="dark"] .story-item h2,
+html[data-theme="dark"] .story-item h3,
+html[data-theme="dark"] .story-item h4,
+html[data-theme="dark"] .story-item h5,
+html[data-theme="dark"] .story-item strong,
+html[data-theme="dark"] .story-item label,
+html[data-theme="dark"] .story-item summary,
+html[data-theme="dark"] .testi-card:not(.cta-card) h1,
+html[data-theme="dark"] .testi-card:not(.cta-card) h2,
+html[data-theme="dark"] .testi-card:not(.cta-card) h3,
+html[data-theme="dark"] .testi-card:not(.cta-card) h4,
+html[data-theme="dark"] .testi-card:not(.cta-card) h5,
+html[data-theme="dark"] .testi-card:not(.cta-card) strong,
+html[data-theme="dark"] .testi-card:not(.cta-card) label,
+html[data-theme="dark"] .testi-card:not(.cta-card) summary,
+html[data-theme="dark"] .faq-item h1,
+html[data-theme="dark"] .faq-item h2,
+html[data-theme="dark"] .faq-item h3,
+html[data-theme="dark"] .faq-item h4,
+html[data-theme="dark"] .faq-item h5,
+html[data-theme="dark"] .faq-item strong,
+html[data-theme="dark"] .faq-item label,
+html[data-theme="dark"] .faq-item summary,
+html[data-theme="dark"] .update-card h1,
+html[data-theme="dark"] .update-card h2,
+html[data-theme="dark"] .update-card h3,
+html[data-theme="dark"] .update-card h4,
+html[data-theme="dark"] .update-card h5,
+html[data-theme="dark"] .update-card strong,
+html[data-theme="dark"] .update-card label,
+html[data-theme="dark"] .update-card summary,
+html[data-theme="dark"] .module-card h1,
+html[data-theme="dark"] .module-card h2,
+html[data-theme="dark"] .module-card h3,
+html[data-theme="dark"] .module-card h4,
+html[data-theme="dark"] .module-card h5,
+html[data-theme="dark"] .module-card strong,
+html[data-theme="dark"] .module-card label,
+html[data-theme="dark"] .module-card summary,
+html[data-theme="dark"] .split-box:not(.dark) h1,
+html[data-theme="dark"] .split-box:not(.dark) h2,
+html[data-theme="dark"] .split-box:not(.dark) h3,
+html[data-theme="dark"] .split-box:not(.dark) h4,
+html[data-theme="dark"] .split-box:not(.dark) h5,
+html[data-theme="dark"] .split-box:not(.dark) strong,
+html[data-theme="dark"] .split-box:not(.dark) label,
+html[data-theme="dark"] .split-box:not(.dark) summary,
+html[data-theme="dark"] .why-card h1,
+html[data-theme="dark"] .why-card h2,
+html[data-theme="dark"] .why-card h3,
+html[data-theme="dark"] .why-card h4,
+html[data-theme="dark"] .why-card h5,
+html[data-theme="dark"] .why-card strong,
+html[data-theme="dark"] .why-card label,
+html[data-theme="dark"] .why-card summary,
+html[data-theme="dark"] .how-way h1,
+html[data-theme="dark"] .how-way h2,
+html[data-theme="dark"] .how-way h3,
+html[data-theme="dark"] .how-way h4,
+html[data-theme="dark"] .how-way h5,
+html[data-theme="dark"] .how-way strong,
+html[data-theme="dark"] .how-way label,
+html[data-theme="dark"] .how-way summary,
+html[data-theme="dark"] .honesty-box h1,
+html[data-theme="dark"] .honesty-box h2,
+html[data-theme="dark"] .honesty-box h3,
+html[data-theme="dark"] .honesty-box h4,
+html[data-theme="dark"] .honesty-box h5,
+html[data-theme="dark"] .honesty-box strong,
+html[data-theme="dark"] .honesty-box label,
+html[data-theme="dark"] .honesty-box summary,
+html[data-theme="dark"] .privacy-note h1,
+html[data-theme="dark"] .privacy-note h2,
+html[data-theme="dark"] .privacy-note h3,
+html[data-theme="dark"] .privacy-note h4,
+html[data-theme="dark"] .privacy-note h5,
+html[data-theme="dark"] .privacy-note strong,
+html[data-theme="dark"] .privacy-note label,
+html[data-theme="dark"] .privacy-note summary,
+html[data-theme="dark"] .highlight-box h1,
+html[data-theme="dark"] .highlight-box h2,
+html[data-theme="dark"] .highlight-box h3,
+html[data-theme="dark"] .highlight-box h4,
+html[data-theme="dark"] .highlight-box h5,
+html[data-theme="dark"] .highlight-box strong,
+html[data-theme="dark"] .highlight-box label,
+html[data-theme="dark"] .highlight-box summary,
+html[data-theme="dark"] .cp-req h1,
+html[data-theme="dark"] .cp-req h2,
+html[data-theme="dark"] .cp-req h3,
+html[data-theme="dark"] .cp-req h4,
+html[data-theme="dark"] .cp-req h5,
+html[data-theme="dark"] .cp-req strong,
+html[data-theme="dark"] .cp-req label,
+html[data-theme="dark"] .cp-req summary,
+html[data-theme="dark"] .prog-sel-btn:not(.active) h1,
+html[data-theme="dark"] .prog-sel-btn:not(.active) h2,
+html[data-theme="dark"] .prog-sel-btn:not(.active) h3,
+html[data-theme="dark"] .prog-sel-btn:not(.active) h4,
+html[data-theme="dark"] .prog-sel-btn:not(.active) h5,
+html[data-theme="dark"] .prog-sel-btn:not(.active) strong,
+html[data-theme="dark"] .prog-sel-btn:not(.active) label,
+html[data-theme="dark"] .prog-sel-btn:not(.active) summary { color: var(--d-text) !important; }
+html[data-theme="dark"] .why-section p,
+html[data-theme="dark"] .why-section li,
+html[data-theme="dark"] .what-section p,
+html[data-theme="dark"] .what-section li,
+html[data-theme="dark"] .form-section p,
+html[data-theme="dark"] .form-section li,
+html[data-theme="dark"] .how-section p,
+html[data-theme="dark"] .how-section li,
+html[data-theme="dark"] .skills-section p,
+html[data-theme="dark"] .skills-section li,
+html[data-theme="dark"] .updates-section p,
+html[data-theme="dark"] .updates-section li,
+html[data-theme="dark"] .policy-intro p,
+html[data-theme="dark"] .policy-intro li,
+html[data-theme="dark"] .policy-card p,
+html[data-theme="dark"] .policy-card li,
+html[data-theme="dark"] .policy-sidebar p,
+html[data-theme="dark"] .policy-sidebar li,
+html[data-theme="dark"] .feat-card p,
+html[data-theme="dark"] .feat-card li,
+html[data-theme="dark"] .story-item p,
+html[data-theme="dark"] .story-item li,
+html[data-theme="dark"] .testi-card:not(.cta-card) p,
+html[data-theme="dark"] .testi-card:not(.cta-card) li,
+html[data-theme="dark"] .faq-item p,
+html[data-theme="dark"] .faq-item li,
+html[data-theme="dark"] .update-card p,
+html[data-theme="dark"] .update-card li,
+html[data-theme="dark"] .module-card p,
+html[data-theme="dark"] .module-card li,
+html[data-theme="dark"] .split-box:not(.dark) p,
+html[data-theme="dark"] .split-box:not(.dark) li,
+html[data-theme="dark"] .why-card p,
+html[data-theme="dark"] .why-card li,
+html[data-theme="dark"] .how-way p,
+html[data-theme="dark"] .how-way li,
+html[data-theme="dark"] .honesty-box p,
+html[data-theme="dark"] .honesty-box li,
+html[data-theme="dark"] .privacy-note p,
+html[data-theme="dark"] .privacy-note li,
+html[data-theme="dark"] .highlight-box p,
+html[data-theme="dark"] .highlight-box li,
+html[data-theme="dark"] .cp-req p,
+html[data-theme="dark"] .cp-req li,
+html[data-theme="dark"] .prog-sel-btn:not(.active) p,
+html[data-theme="dark"] .prog-sel-btn:not(.active) li { color: var(--d-soft) !important; }
+html[data-theme="dark"] .prog-sel-btn:not(.active) .prog-sel-text strong { color: var(--d-text); }
+html[data-theme="dark"] .prog-sel-btn:not(.active) .prog-sel-text span { color: var(--d-soft); }
+html[data-theme="dark"] .policy-sidebar a, html[data-theme="dark"] .policy-card ul, html[data-theme="dark"] .policy-card li { color: var(--d-soft); }
+html[data-theme="dark"] .policy-sidebar a:hover { color: var(--gold) !important; }
+html[data-theme="dark"] .policy-card h2 .num { background: rgba(240,165,0,.15); }
+html[data-theme="dark"] .tag, html[data-theme="dark"] .si-tag, html[data-theme="dark"] .uc-tag, html[data-theme="dark"] .stag { background: rgba(240,165,0,.15); color: var(--gold); }
+html[data-theme="dark"] .feat-quote, html[data-theme="dark"] .si-quote, html[data-theme="dark"] .uc-quote { color: var(--gold); }
+html[data-theme="dark"] .date, html[data-theme="dark"] .si-date, html[data-theme="dark"] .uc-date, html[data-theme="dark"] .reading-time, html[data-theme="dark"] .f-group label .opt, html[data-theme="dark"] .form-note, html[data-theme="dark"] .submit-note { color: var(--d-soft); }
+html[data-theme="dark"] .f-input, html[data-theme="dark"] .f-textarea, html[data-theme="dark"] .f-group input, html[data-theme="dark"] .f-group select, html[data-theme="dark"] .f-group textarea, html[data-theme="dark"] .form-section input, html[data-theme="dark"] .form-section select, html[data-theme="dark"] .form-section textarea { background-color: #0e1d33; color: var(--d-text); border-color: rgba(255,255,255,.22); }
+html[data-theme="dark"] .check-item-row, html[data-theme="dark"] .f-group label, html[data-theme="dark"] .doc-add { color: var(--d-text); }
+html[data-theme="dark"] .doc-add { background: var(--navy-lt); border-color: var(--d-line); }
+html[data-theme="dark"] .section-h2 { color: var(--d-text); }
+html[data-theme="dark"] .split-box.dark h4 { color: var(--gold) !important; } html[data-theme="dark"] .split-box.dark p { color: #a8b8cc !important; }
+
+/* ── Second pass: cards, bands and buttons found in the audit ── */
+html[data-theme="dark"] .skill-cat, html[data-theme="dark"] .form-wrap, html[data-theme="dark"] .sidebar-card { background: var(--d-card); border-color: var(--d-line); }
+html[data-theme="dark"] .mini-text h5, html[data-theme="dark"] .skill-cat h3, html[data-theme="dark"] .faq-heading h2, html[data-theme="dark"] .faq-q, html[data-theme="dark"] .prog-sticky h2, html[data-theme="dark"] .card-name, html[data-theme="dark"] .sidebar-card h3, html[data-theme="dark"] .sidebar-card h4 { color: var(--d-text) !important; }
+html[data-theme="dark"] .prog-sticky p, html[data-theme="dark"] .sidebar-card p, html[data-theme="dark"] .f-group > div:not([class]), html[data-theme="dark"] .faq-heading p, html[data-theme="dark"] .faq-a { color: var(--d-soft) !important; }
+html[data-theme="dark"] .uc-expand, html[data-theme="dark"] .si-cta { color: var(--gold); }
+/* gold "impact" band inside a dark-mode section keeps navy text */
+html[data-theme="dark"] .how-section .impact-band h2, html[data-theme="dark"] .how-section .impact-band strong, html[data-theme="dark"] .how-section .impact-band p, html[data-theme="dark"] .how-section .impact-band span { color: var(--navy) !important; }
+html:not([data-theme="dark"]) .f-group > div:not([class]), html:not([data-theme="dark"]) .f-group div[style*="aaa"] { color: #667085 !important; }
+html:not([data-theme="dark"]) .skills-heading .section-label-center { color: var(--gold-text); }
+/* navy bands: gold labels stay bright gold */
+html:not([data-theme="dark"]) .submit-section .section-tag, html:not([data-theme="dark"]) .submit-section .section-h2 span, html:not([data-theme="dark"]) .impact-band .section-tag { color: var(--gold); }
+
+/* ── Navigation dropdown (the gold bar stays gold in both modes) ──────────── */
+html[data-theme="dark"] .dropdown-menu { background: var(--d-card); box-shadow: 0 8px 24px rgba(0,0,0,.5); border: 1px solid var(--d-line); }
+html[data-theme="dark"] .dropdown-menu a { color: var(--d-text); }
+html[data-theme="dark"] .dropdown-menu a:hover { background: var(--gold); color: var(--navy); }
+
+/* Keep the gold accent lines on cards (the card styling above resets border colours) */
+html[data-theme="dark"] .why-card, html[data-theme="dark"] .gain-card, html[data-theme="dark"] .tip-card { border-top-color: var(--gold); }
+html[data-theme="dark"] .how-way, html[data-theme="dark"] .module-card, html[data-theme="dark"] .policy-intro, html[data-theme="dark"] .benefit-card, html[data-theme="dark"] .elig-note, html[data-theme="dark"] .honesty-box, html[data-theme="dark"] .privacy-note, html[data-theme="dark"] .highlight-box, html[data-theme="dark"] .note, html[data-theme="dark"] .sc-eli { border-left-color: var(--gold); }
+html[data-theme="dark"] .testi-card:not(.cta-card) { border-bottom-color: var(--gold); }
+html[data-theme="dark"] .give-card.featured, html[data-theme="dark"] .schol-card.featured { border-color: var(--gold); }
+
+/* Navy text stays navy inside the gold bands */
+html[data-theme="dark"] .subscribe-section [style*="var(--navy)"],
+html[data-theme="dark"] .impact-strip [style*="var(--navy)"],
+html[data-theme="dark"] .cta-band [style*="var(--navy)"],
+html[data-theme="dark"] .intro-strip [style*="var(--navy)"],
+html[data-theme="dark"] .mission-band [style*="var(--navy)"],
+html[data-theme="dark"] .why-strip [style*="var(--navy)"],
+html[data-theme="dark"] .video-bar [style*="var(--navy)"],
+html[data-theme="dark"] .donate-box [style*="var(--navy)"],
+html[data-theme="dark"] .how-section .impact-band [style*="var(--navy)"] { color: var(--navy) !important; }
+html[data-theme="dark"] .subscribe-section .section-label-center, html[data-theme="dark"] .subscribe-section .section-label,
+html[data-theme="dark"] .cta-band .section-label-center, html[data-theme="dark"] .cta-band .section-label,
+html[data-theme="dark"] .intro-strip .section-label-center, html[data-theme="dark"] .intro-strip .section-label { color: var(--navy) !important; }
+
+/* ── Map: darken instead of leaving a bright white block ──────────────────── */
+html[data-theme="dark"] .map-section iframe { filter: invert(.92) hue-rotate(180deg) saturate(.7) brightness(.9) contrast(.95); }
+
+/* ── Footer: navy in both modes; a touch deeper in dark so it separates from the page ── */
+html[data-theme="dark"] footer { background: #070f1c; border-top: 1px solid var(--d-line); }
+/* Terms / Privacy links were hard-coded dark green (#2e6d04) → unreadable on navy. Fixed for both modes. */
+footer .copyright a { color: var(--gold) !important; }
+
+/* ═══ LIGHT MODE POLISH — navy/black text, deeper gold for gold TEXT on white/cream (gold stays bright for buttons, bars, icons) ═══ */
+:root { --gold-text: #956100; }
+html:not([data-theme="dark"]) .about-section .section-label,
+html:not([data-theme="dark"]) .about-section .section-label-center,
+html:not([data-theme="dark"]) .about-section .tagline,
+html:not([data-theme="dark"]) .about-section .don-sub,
+html:not([data-theme="dark"]) .about-section .partner-heading p,
+html:not([data-theme="dark"]) .about-section .prog-email,
+html:not([data-theme="dark"]) .about-section .give-header .eyebrow,
+html:not([data-theme="dark"]) .about-section .dept-row a,
+html:not([data-theme="dark"]) .about-section .info-block a.link-gold,
+html:not([data-theme="dark"]) .features-section .section-label,
+html:not([data-theme="dark"]) .features-section .section-label-center,
+html:not([data-theme="dark"]) .features-section .tagline,
+html:not([data-theme="dark"]) .features-section .don-sub,
+html:not([data-theme="dark"]) .features-section .partner-heading p,
+html:not([data-theme="dark"]) .features-section .prog-email,
+html:not([data-theme="dark"]) .features-section .give-header .eyebrow,
+html:not([data-theme="dark"]) .features-section .dept-row a,
+html:not([data-theme="dark"]) .features-section .info-block a.link-gold,
+html:not([data-theme="dark"]) .donation-section .section-label,
+html:not([data-theme="dark"]) .donation-section .section-label-center,
+html:not([data-theme="dark"]) .donation-section .tagline,
+html:not([data-theme="dark"]) .donation-section .don-sub,
+html:not([data-theme="dark"]) .donation-section .partner-heading p,
+html:not([data-theme="dark"]) .donation-section .prog-email,
+html:not([data-theme="dark"]) .donation-section .give-header .eyebrow,
+html:not([data-theme="dark"]) .donation-section .dept-row a,
+html:not([data-theme="dark"]) .donation-section .info-block a.link-gold,
+html:not([data-theme="dark"]) .team-section .section-label,
+html:not([data-theme="dark"]) .team-section .section-label-center,
+html:not([data-theme="dark"]) .team-section .tagline,
+html:not([data-theme="dark"]) .team-section .don-sub,
+html:not([data-theme="dark"]) .team-section .partner-heading p,
+html:not([data-theme="dark"]) .team-section .prog-email,
+html:not([data-theme="dark"]) .team-section .give-header .eyebrow,
+html:not([data-theme="dark"]) .team-section .dept-row a,
+html:not([data-theme="dark"]) .team-section .info-block a.link-gold,
+html:not([data-theme="dark"]) .partner-section .section-label,
+html:not([data-theme="dark"]) .partner-section .section-label-center,
+html:not([data-theme="dark"]) .partner-section .tagline,
+html:not([data-theme="dark"]) .partner-section .don-sub,
+html:not([data-theme="dark"]) .partner-section .partner-heading p,
+html:not([data-theme="dark"]) .partner-section .prog-email,
+html:not([data-theme="dark"]) .partner-section .give-header .eyebrow,
+html:not([data-theme="dark"]) .partner-section .dept-row a,
+html:not([data-theme="dark"]) .partner-section .info-block a.link-gold,
+html:not([data-theme="dark"]) .testi-section .section-label,
+html:not([data-theme="dark"]) .testi-section .section-label-center,
+html:not([data-theme="dark"]) .testi-section .tagline,
+html:not([data-theme="dark"]) .testi-section .don-sub,
+html:not([data-theme="dark"]) .testi-section .partner-heading p,
+html:not([data-theme="dark"]) .testi-section .prog-email,
+html:not([data-theme="dark"]) .testi-section .give-header .eyebrow,
+html:not([data-theme="dark"]) .testi-section .dept-row a,
+html:not([data-theme="dark"]) .testi-section .info-block a.link-gold,
+html:not([data-theme="dark"]) .program-section .section-label,
+html:not([data-theme="dark"]) .program-section .section-label-center,
+html:not([data-theme="dark"]) .program-section .tagline,
+html:not([data-theme="dark"]) .program-section .don-sub,
+html:not([data-theme="dark"]) .program-section .partner-heading p,
+html:not([data-theme="dark"]) .program-section .prog-email,
+html:not([data-theme="dark"]) .program-section .give-header .eyebrow,
+html:not([data-theme="dark"]) .program-section .dept-row a,
+html:not([data-theme="dark"]) .program-section .info-block a.link-gold,
+html:not([data-theme="dark"]) .hub-section .section-label,
+html:not([data-theme="dark"]) .hub-section .section-label-center,
+html:not([data-theme="dark"]) .hub-section .tagline,
+html:not([data-theme="dark"]) .hub-section .don-sub,
+html:not([data-theme="dark"]) .hub-section .partner-heading p,
+html:not([data-theme="dark"]) .hub-section .prog-email,
+html:not([data-theme="dark"]) .hub-section .give-header .eyebrow,
+html:not([data-theme="dark"]) .hub-section .dept-row a,
+html:not([data-theme="dark"]) .hub-section .info-block a.link-gold,
+html:not([data-theme="dark"]) .tips-section .section-label,
+html:not([data-theme="dark"]) .tips-section .section-label-center,
+html:not([data-theme="dark"]) .tips-section .tagline,
+html:not([data-theme="dark"]) .tips-section .don-sub,
+html:not([data-theme="dark"]) .tips-section .partner-heading p,
+html:not([data-theme="dark"]) .tips-section .prog-email,
+html:not([data-theme="dark"]) .tips-section .give-header .eyebrow,
+html:not([data-theme="dark"]) .tips-section .dept-row a,
+html:not([data-theme="dark"]) .tips-section .info-block a.link-gold,
+html:not([data-theme="dark"]) .leadership-section .section-label,
+html:not([data-theme="dark"]) .leadership-section .section-label-center,
+html:not([data-theme="dark"]) .leadership-section .tagline,
+html:not([data-theme="dark"]) .leadership-section .don-sub,
+html:not([data-theme="dark"]) .leadership-section .partner-heading p,
+html:not([data-theme="dark"]) .leadership-section .prog-email,
+html:not([data-theme="dark"]) .leadership-section .give-header .eyebrow,
+html:not([data-theme="dark"]) .leadership-section .dept-row a,
+html:not([data-theme="dark"]) .leadership-section .info-block a.link-gold,
+html:not([data-theme="dark"]) .give-section .section-label,
+html:not([data-theme="dark"]) .give-section .section-label-center,
+html:not([data-theme="dark"]) .give-section .tagline,
+html:not([data-theme="dark"]) .give-section .don-sub,
+html:not([data-theme="dark"]) .give-section .partner-heading p,
+html:not([data-theme="dark"]) .give-section .prog-email,
+html:not([data-theme="dark"]) .give-section .give-header .eyebrow,
+html:not([data-theme="dark"]) .give-section .dept-row a,
+html:not([data-theme="dark"]) .give-section .info-block a.link-gold,
+html:not([data-theme="dark"]) .contact-section .section-label,
+html:not([data-theme="dark"]) .contact-section .section-label-center,
+html:not([data-theme="dark"]) .contact-section .tagline,
+html:not([data-theme="dark"]) .contact-section .don-sub,
+html:not([data-theme="dark"]) .contact-section .partner-heading p,
+html:not([data-theme="dark"]) .contact-section .prog-email,
+html:not([data-theme="dark"]) .contact-section .give-header .eyebrow,
+html:not([data-theme="dark"]) .contact-section .dept-row a,
+html:not([data-theme="dark"]) .contact-section .info-block a.link-gold,
+html:not([data-theme="dark"]) .reassure-note .section-label,
+html:not([data-theme="dark"]) .reassure-note .section-label-center,
+html:not([data-theme="dark"]) .reassure-note .tagline,
+html:not([data-theme="dark"]) .reassure-note .don-sub,
+html:not([data-theme="dark"]) .reassure-note .partner-heading p,
+html:not([data-theme="dark"]) .reassure-note .prog-email,
+html:not([data-theme="dark"]) .reassure-note .give-header .eyebrow,
+html:not([data-theme="dark"]) .reassure-note .dept-row a,
+html:not([data-theme="dark"]) .reassure-note .info-block a.link-gold,
+html:not([data-theme="dark"]) .reassure-note a,
+html:not([data-theme="dark"]) .reassure-note a:hover { color: var(--gold-text); }
+html:not([data-theme="dark"]) .region-header h2 span { color: var(--gold-text); }
+html:not([data-theme="dark"]) .prog-email svg { fill: var(--gold-text); }
+html:not([data-theme="dark"]) .prog-email:hover { border-color: var(--gold-text); }
+html:not([data-theme="dark"]) .dropdown-menu a[style*="--gold"] { color: var(--gold-text) !important; }
+html:not([data-theme="dark"]) .form-note, html:not([data-theme="dark"]) .form-field label span[style*="aaa"] { color: #667085 !important; }
+html:not([data-theme="dark"]) .badge-open { color: #17724a; }
+html:not([data-theme="dark"]) .sc-cover { color: #86550a; }
+html:not([data-theme="dark"]) .bootcamp-slider-title,
+html:not([data-theme="dark"]) .faq-teaser-cta a,
+html:not([data-theme="dark"]) .acc-body-inner a,
+html:not([data-theme="dark"]) .faq-teaser .faq-teaser-cta a,
+html:not([data-theme="dark"]) .main-section .section-label,
+html:not([data-theme="dark"]) .gains-section .section-label-center,
+html:not([data-theme="dark"]) .eligibility-section .section-label,
+html:not([data-theme="dark"]) .programs-section .section-label-center,
+html:not([data-theme="dark"]) .voices-section .section-label-center,
+html:not([data-theme="dark"]) .faq-section .section-label,
+html:not([data-theme="dark"]) .gallery-section .section-label,
+html:not([data-theme="dark"]) .cat-overview .section-label-center,
+html:not([data-theme="dark"]) .acc-trigger:hover .acc-q { color: var(--gold-text); }
+html:not([data-theme="dark"]) .attr-info span, html:not([data-theme="dark"]) .field .hint, html:not([data-theme="dark"]) .voice-name span, html:not([data-theme="dark"]) .faq-group-title span, html:not([data-theme="dark"]) .filter-label { color: #667085; }
+html:not([data-theme="dark"]) .eyebrow,
+html:not([data-theme="dark"]) .section-eyebrow,
+html:not([data-theme="dark"]) .module-label,
+html:not([data-theme="dark"]) .form-section-title,
+html:not([data-theme="dark"]) .section-tag,
+html:not([data-theme="dark"]) .mini-day,
+html:not([data-theme="dark"]) .section-label,
+html:not([data-theme="dark"]) .policy-card h2 .num,
+html:not([data-theme="dark"]) .testi-card:not(.cta-card) strong,
+html:not([data-theme="dark"]) .section-h2 span { color: var(--gold-text); }
+html:not([data-theme="dark"]) .tag,
+html:not([data-theme="dark"]) .si-tag,
+html:not([data-theme="dark"]) .uc-tag,
+html:not([data-theme="dark"]) .stag,
+html:not([data-theme="dark"]) .feat-quote,
+html:not([data-theme="dark"]) .si-quote,
+html:not([data-theme="dark"]) .uc-quote { color: #86550a; }
+html:not([data-theme="dark"]) .date,
+html:not([data-theme="dark"]) .si-date,
+html:not([data-theme="dark"]) .uc-date,
+html:not([data-theme="dark"]) .reading-time,
+html:not([data-theme="dark"]) .f-group label .opt,
+html:not([data-theme="dark"]) .form-note,
+html:not([data-theme="dark"]) .submit-note,
+html:not([data-theme="dark"]) .mini-text p { color: #667085; }
+/* White text on the gold newsletter band was ~2:1 → navy (both modes) */
+.subscribe-inner h2 { color: var(--navy) !important; }
+
+/* Desktop menu: hover/active text was white on gold (hard to read) → navy on a soft dark tint. Phones keep their own menu colours. */
+@media (min-width: 769px) {
+  nav .nav-links a:hover, nav .nav-links > li > button:hover, nav .nav-links a.active, nav .nav-links > li > button.active { color: var(--navy); background: rgba(13,27,46,.14); }
+}
+
+/* ═══ Theme button (same look in both modes: it lives on the gold bar) ═══ */
+#theme-toggle { position: relative; background: rgb(1, 11, 43) !important; border: 1.5px solid rgba(255,255,255,0.35) !important; border-top-left-radius: 20px; border-bottom-right-radius: 20px; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; outline: none; margin-left: 14px; transition: background .2s ease, border-color .2s ease; }
+#theme-toggle:hover { background: var(--gold) !important; border-color: var(--gold) !important; }
+#theme-toggle:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; box-shadow: 0 0 0 4px #fff; }
+#theme-toggle svg { width: 18px; height: 18px; fill: var(--gold); transition: fill .2s, transform .2s; }
+#theme-toggle:hover svg { fill: var(--navy); transform: rotate(15deg); }
+#theme-toggle::after { content: attr(data-tooltip); position: absolute; top: calc(100% + 8px); right: 0; background: #07111e; color: #fff; font-size: 0.72rem; font-weight: 700; font-family: 'Source Sans 3', sans-serif; letter-spacing: 0.5px; padding: 5px 10px; border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; transform: translateY(4px); transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.25); z-index: 1000; text-transform: uppercase; }
+#theme-toggle:hover::after { opacity: 1; transform: translateY(0); }
+@media (hover: none) { #theme-toggle::after { display: none; } }
+
+/* On phones the pages hide the whole .nav-socials block, which hid the theme button too.
+   Show ONLY the button, at the bottom of the open menu (social icons stay hidden, as you designed). */
+@media (max-width: 768px) {
+  nav .nav-socials { display: flex; width: 100%; margin-left: 0; padding: 14px 20px; justify-content: flex-start; }
+  nav .nav-socials .soc-btn { display: none; }
+  nav .nav-socials #theme-toggle { margin-left: 0; }
+  nav .nav-socials #theme-toggle::after { right: auto; left: 0; }
+}
+
+/* Smooth fade only while the button is being pressed (JS adds .theme-anim for ~0.4s) */
+.theme-anim, .theme-anim *, .theme-anim *::before, .theme-anim *::after { transition: background-color .3s ease, color .3s ease, border-color .3s ease, fill .3s ease, box-shadow .3s ease !important; }
+
+/* ── GLOBAL SCROLL PROGRESS INDICATOR ───────────────────────────────────────── */
+#global-scroll-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--white) 0%, var(--navy-mid) 100%); width: 0%; z-index: 99999; transition: width 0.08s ease-out; pointer-events: none; }
+
+
+/*THEME-PROTECT.css */
+/* ============================================================
+   theme-protect.css — Light 4 Refugee Content Protection
+   Link in every page <head> AFTER your main stylesheet.
+   Does NOT break accessibility, SEO, or user experience.
+   ============================================================ */
+
+/* ── 1. TRANSPARENT IMAGE OVERLAY
+   Sits on top of every img inside protected containers.
+   Blocks drag-off-page without hiding the image.
+   Applied to gallery, team photos, hero images.
+   ─────────────────────────────────────────────────────────── */
+.img-protect {
+  position: relative;
+  display: inline-block; /* or block — match your layout */
+}
+
+.img-protect img {
+  display: block;
+  pointer-events: none;          /* disables drag + right-click target */
+  -webkit-user-drag: none;       /* Safari/Chrome drag disable */
+  user-drag: none;
+  -webkit-touch-callout: none;   /* iOS long-press menu */
+}
+
+.img-protect::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  /* Fully transparent — invisible but intercepts mouse events */
+  background: transparent;
+  cursor: default;
+}
+
+/* ── 2. GALLERY GRIDS — apply overlay to all gallery images ── */
+.gallery-grid img,
+.ft-gallery-grid img,
+.ft-grid img,
+.team-detail img,
+.testi-photo-wrap img,
+.feat-img img,
+.si-img img,
+.uc-img img,
+.about-img-wrap img,
+.don-img-wrap img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-touch-callout: none;
+}
+
+/* ── 3. OVERLAY WRAPPERS for gallery / team / hero containers ── */
+.gallery-grid,
+.ft-gallery-grid,
+.ft-grid,
+.team-detail,
+.testi-photo-wrap,
+.feat-img,
+.si-img,
+.uc-img,
+.don-img-wrap {
+  position: relative;
+}
+
+.gallery-grid::after,
+.ft-gallery-grid::after,
+.ft-grid::after,
+.feat-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: transparent;
+  pointer-events: none; /* let normal clicks (links etc.) pass through */
+}
+
+/* ── 4. DISABLE TEXT SELECTION on decorative / brand elements
+   Only applied to logos, brand marks, hero titles.
+   Body text stays selectable — accessibility preserved.
+   ─────────────────────────────────────────────────────────── */
+.brand,
+.brand-logo,
+.hero-chip,
+.feat-badge,
+.day-pill,
+.si-day,
+.uc-prog-badge {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ── 5. COPYRIGHT WATERMARK on hover over image sections
+   Subtle — only appears on hover, fades out. Non-intrusive.
+   ─────────────────────────────────────────────────────────── */
+.gallery-grid:hover::before,
+.feat-img:hover::before {
+  content: '© Light 4 Refugee — light4refugee.org';
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  z-index: 10;
+  font-size: .65rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: .5px;
+  pointer-events: none;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+  font-family: 'Source Sans 3', sans-serif;
+  text-transform: uppercase;
+  animation: fadeWatermark .4s ease;
+}
+
+@keyframes fadeWatermark {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

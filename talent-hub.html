@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talent Hub | Light 4 Refugee — Connecting Employers with Ready Talent</title>
+<meta name="description" content="Talent Hub is Light4Refugee's consent-based introduction service connecting employers with trained scholars, mentees and skilled refugees in Rwanda for internships, jobs and short-term work. Free for employers and candidates.">
+<meta name="keywords" content="hire refugees Rwanda, refugee internships Rwanda, Light4Refugee Talent Hub, refugee employment East Africa, employer partnership refugees">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Light 4 Refugee">
+<meta name="theme-color" content="#0d1b2e">
+<link rel="canonical" href="https://light4refugee.org/talent-hub">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://light4refugee.org/talent-hub">
+<meta property="og:title" content="Talent Hub | Light 4 Refugee">
+<meta property="og:description" content="Consent-based introductions between employers and trained, motivated young people and skilled refugees in Rwanda.">
+<meta property="og:image" content="https://light4refugee.org/img/og-home.png">
+<meta property="og:site_name" content="Light 4 Refugee">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Talent Hub | Light 4 Refugee">
+<meta name="twitter:description" content="Ready talent, responsibly introduced. Free for employers and candidates.">
+<meta name="twitter:image" content="https://light4refugee.org/img/og-home.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Source+Sans+3:wght@400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="img/Logo.jpg">
+<link rel="stylesheet" href="theme-style.css">
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0d1b2e;--navy-mid:#162540;--navy-lt:#1e3258;
+  --gold:#f0a500;--gold-dk:#c98a00;--gold-pale:#fff8e6;
+  --white:#ffffff;--cream:#f5f0e8;--text:#1a1a1a;--muted:#666;
+  --green:#2d9e6b;--red:#e53935;--border:#e4e4e4;
+  --shadow:0 4px 24px rgba(13,27,46,.08);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Source Sans 3',sans-serif;background:var(--cream);overflow-x:hidden;color:var(--text)}
+
+/* SPINNER */
+#spinner{position:fixed;inset:0;z-index:9999;background:var(--white);display:flex;align-items:center;justify-content:center;transition:opacity .4s}
+#spinner.hide{opacity:0;pointer-events:none}
+.spin-ring{width:48px;height:48px;border-radius:50%;border:4px solid #ddd;border-top-color:var(--gold);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* TOPBAR */
+#topbar{background:var(--navy);padding:10px 40px;display:flex;align-items:center;transition:transform .35s ease,opacity .35s ease}
+#topbar.hidden{transform:translateY(-100%);opacity:0;pointer-events:none;position:absolute;width:100%}
+.topbar-inner{display:flex;align-items:center;width:100%;max-width:1320px;margin:0 auto}
+.brand-logo{height:60px;width:auto;display:block}
+.topbar-contacts{display:flex;gap:32px;margin-left:auto}
+.contact-item{display:flex;align-items:center;gap:10px}
+.contact-icon{width:36px;height:36px;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-icon svg{width:16px;height:16px;fill:var(--navy)}
+.contact-text p{font-size:.75rem;color:var(--gold);font-weight:600;margin-bottom:1px}
+.contact-text span{font-size:.8rem;color:var(--white)}
+
+/* NAVBAR */
+#nav-wrapper{background:var(--navy);padding:0 40px 12px;position:sticky;top:0;z-index:100;transition:padding .35s ease}
+#nav-wrapper.stuck{padding:0}
+nav{background:var(--gold);max-width:1320px;margin:0 auto;display:flex;align-items:stretch;transition:max-width .35s ease,border-radius .35s ease;border-radius:0 0 4px 4px;position:relative}
+#nav-wrapper.stuck nav{max-width:100%;border-radius:0}
+.nav-links{display:flex;align-items:stretch;list-style:none}
+.nav-links a,.nav-links>li>button{display:flex;align-items:center;padding:14px 20px;color:var(--navy);font-family:'Source Sans 3',sans-serif;font-size:.95rem;font-weight:600;text-decoration:none;background:none;border:none;cursor:pointer;transition:color .2s,background .2s}
+.nav-links a:hover,.nav-links>li>button:hover,.nav-links a.active{color:var(--white);background:rgba(0,0,0,.15)}
+.dropdown{position:relative}
+.dropdown-menu{display:none;position:absolute;top:100%;left:0;background:var(--white);min-width:200px;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:200}
+.dropdown:hover .dropdown-menu{display:block}
+.dropdown-menu a{display:block;padding:10px 18px;color:var(--text);font-size:.9rem;text-decoration:none;transition:background .2s,color .2s}
+.dropdown-menu a:hover{background:var(--gold);color:var(--navy)}
+.nav-caret{margin-left:4px;font-size:.7rem}
+.nav-socials{margin-left:auto;display:flex;align-items:center;gap:6px;padding-right:14px}
+.soc-btn{width:34px;height:34px;background:var(--navy);display:flex;align-items:center;justify-content:center;border-radius:2px;text-decoration:none;transition:background .2s}
+.soc-btn:hover{background:#1a2d4a}
+.soc-btn svg{width:16px;height:16px;fill:var(--white)}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:12px 16px;margin-left:auto}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--navy);margin:5px 0;transition:.3s}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-collapse{display:contents}
+
+
+/* ===== TALENT HUB PAGE ===== */
+:root{--th-a:#fff;--th-b:#f5f0e8;--th-card:#fff;--th-line:#e4e4e4;--th-ink:#0d1b2e;--th-body:#4f5b6d;--th-gold:#956100;--th-pale:#fff8e6;--th-field:#fff}
+html[data-theme="dark"]{--th-a:#0a1524;--th-b:#0e1d33;--th-card:#14294a;--th-line:rgba(255,255,255,.12);--th-ink:#e8eef7;--th-body:#a8b8cc;--th-gold:#f0a500;--th-pale:rgba(240,165,0,.1);--th-field:#0a1524}
+body{background:var(--th-b)}
+.th-wrap{max-width:1320px;margin:0 auto}
+.th-sec{padding:80px 40px;background:var(--th-a)}
+.th-sec.alt{background:var(--th-b)}
+.th-eyebrow{display:flex;align-items:center;gap:12px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--th-gold);margin-bottom:16px}
+.th-eyebrow::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--gold),transparent);max-width:220px}
+.th-h2{font-family:'Oswald',sans-serif;font-size:clamp(1.6rem,3vw,2.1rem);color:var(--th-ink);line-height:1.15;margin-bottom:14px}
+.th-lead{font-size:1rem;color:var(--th-body);line-height:1.8;max-width:720px;margin-bottom:34px}
+.th-lead strong,.th-card p strong{color:var(--th-ink)}
+
+/* hero */
+.page-hero{background:var(--navy);padding:90px 40px 0;position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(240,165,0,.1) 0%,transparent 60%)}
+.hero-inner{max-width:1320px;margin:0 auto;position:relative;z-index:1;display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center;padding-bottom:70px}
+.breadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:.85rem;color:#a8b8cc;margin-bottom:20px}
+.breadcrumb a{color:var(--gold);text-decoration:none}
+.breadcrumb span{color:#7d8ca3}
+.hero-chip{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--navy);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;padding:5px 14px;margin-bottom:20px}
+.page-hero h1{font-family:'Oswald',sans-serif;font-size:clamp(2.2rem,4.8vw,4rem);font-weight:700;color:#fff;text-transform:uppercase;line-height:1.05;margin-bottom:16px}
+.page-hero h1 em{color:var(--gold);font-style:normal}
+.page-hero .sub{font-size:1.02rem;color:#c3cfdf;max-width:560px;line-height:1.75;margin-bottom:28px}
+.hero-btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn-gold,.btn-line{display:inline-flex;align-items:center;gap:9px;padding:13px 26px;font-weight:700;font-size:.95rem;text-decoration:none;font-family:'Source Sans 3',sans-serif;transition:background .2s,color .2s,border-color .2s}
+.btn-gold{background:var(--gold);color:var(--navy);border:2px solid var(--gold)}
+.btn-gold:hover{background:var(--gold-dk);border-color:var(--gold-dk)}
+.btn-line{border:2px solid rgba(255,255,255,.45);color:#fff}
+.btn-line:hover{border-color:var(--gold);color:var(--gold)}
+.hero-card{background:rgba(255,255,255,.06);border:1px solid rgba(240,165,0,.25);padding:30px 28px}
+.hero-card .hc-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:14px}
+.hero-card h3{font-family:'Oswald',sans-serif;font-size:1.3rem;color:#fff;margin-bottom:16px;line-height:1.25}
+.hc-row{display:flex;gap:12px;align-items:flex-start;font-size:.92rem;color:#c3cfdf;line-height:1.55;margin-bottom:12px}
+.hc-row svg{width:18px;height:18px;fill:var(--gold);flex-shrink:0;margin-top:2px}
+.hc-row strong{color:#fff}
+.hero-accent{height:6px;background:linear-gradient(90deg,var(--gold) 0%,var(--gold-dk) 50%,var(--navy) 100%)}
+
+/* cards */
+.th-grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.th-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.th-card{background:var(--th-card);border:1px solid var(--th-line);border-top:4px solid var(--gold);padding:30px 28px}
+.th-card.lane2{border-top-color:var(--navy)}
+html[data-theme="dark"] .th-card.lane2{border-top-color:#6b86ad}
+.th-card .tag{display:inline-block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.6px;color:var(--th-gold);margin-bottom:10px}
+.th-card h3{font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--th-ink);margin-bottom:10px;line-height:1.2}
+.th-card p{font-size:.93rem;color:var(--th-body);line-height:1.75;margin-bottom:12px}
+.th-card ul{list-style:none;margin:6px 0 16px}
+.th-card li{position:relative;padding-left:22px;font-size:.9rem;color:var(--th-body);line-height:1.6;margin-bottom:7px}
+.th-card li::before{content:'';position:absolute;left:2px;top:.5em;width:8px;height:8px;background:var(--gold)}
+.th-link{display:inline-flex;align-items:center;gap:6px;color:var(--th-gold);font-weight:700;font-size:.9rem;text-decoration:none;border-bottom:2px solid var(--gold);padding-bottom:1px}
+.th-link:hover{color:var(--th-ink)}
+.th-note{background:var(--th-pale);border-left:5px solid var(--gold);padding:18px 22px;margin-top:26px;font-size:.92rem;color:var(--th-body);line-height:1.7}
+.th-note strong{color:var(--th-ink)}
+
+/* pool: collapsible groups */
+.th-det{background:var(--th-card);border:1px solid var(--th-line);margin-bottom:10px}
+.th-det summary{display:flex;justify-content:space-between;align-items:center;gap:14px;cursor:pointer;padding:18px 22px;font-weight:700;color:var(--th-ink);font-size:1rem;list-style:none}
+.th-det summary::-webkit-details-marker{display:none}
+.th-det summary small{display:block;font-weight:400;color:var(--th-body);font-size:.84rem;margin-top:2px}
+.th-det summary::after{content:'+';font-size:1.5rem;color:var(--th-gold);line-height:1;flex-shrink:0}
+.th-det[open] summary::after{content:'\2212'}
+.th-det[open] summary{border-bottom:1px solid var(--th-line)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:18px 22px 22px}
+.chip{background:var(--th-pale);border:1px solid rgba(240,165,0,.45);color:var(--th-ink);font-size:.85rem;padding:6px 13px}
+
+/* steps */
+.th-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;counter-reset:s}
+.th-step{background:var(--th-card);border:1px solid var(--th-line);padding:24px 20px;position:relative}
+.th-step .n{width:42px;height:42px;background:var(--navy);color:var(--gold);font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+html[data-theme="dark"] .th-step .n{background:var(--gold);color:var(--navy)}
+.th-step h4{font-family:'Oswald',sans-serif;font-size:.98rem;color:var(--th-ink);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.th-step p{font-size:.87rem;color:var(--th-body);line-height:1.65}
+
+/* promise */
+.th-ticks{list-style:none;margin:0}
+.th-ticks li{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--th-line);font-size:.93rem;color:var(--th-body);line-height:1.6}
+.th-ticks li:last-child{border-bottom:none}
+.th-ticks svg{width:18px;height:18px;fill:var(--gold);flex-shrink:0;margin-top:3px}
+.th-ticks strong{color:var(--th-ink)}
+
+/* request form */
+.th-form-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px;align-items:start}
+.th-side .th-h2{margin-bottom:12px}
+.th-next{margin-top:22px}
+.th-next div{display:flex;gap:14px;align-items:flex-start;margin-bottom:14px;font-size:.92rem;color:var(--th-body);line-height:1.6}
+.th-next b{width:30px;height:30px;flex-shrink:0;background:var(--navy);color:var(--gold);font-family:'Oswald',sans-serif;display:flex;align-items:center;justify-content:center}
+html[data-theme="dark"] .th-next b{background:var(--gold);color:var(--navy)}
+.th-next strong{color:var(--th-ink)}
+.th-form{background:var(--th-card);border:1px solid var(--th-line);overflow:hidden}
+.th-form-h{background:var(--navy);padding:24px 28px}
+.th-form-h h3{font-family:'Oswald',sans-serif;font-size:1.4rem;color:#fff;margin-bottom:4px}
+.th-form-h p{font-size:.85rem;color:#a8b8cc}
+.th-form-b{padding:28px}
+.th-fs{font-family:'Oswald',sans-serif;font-size:.9rem;color:var(--th-gold);text-transform:uppercase;letter-spacing:1.5px;margin:22px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--th-line)}
+.th-fs:first-child{margin-top:0}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:.82rem;font-weight:700;color:var(--th-ink);margin-bottom:6px}
+.fg label .req{color:var(--th-gold)}
+.fg label .opt{font-weight:400;color:var(--th-body)}
+.fi{width:100%;padding:11px 14px;border:1.5px solid var(--th-line);font-size:.92rem;font-family:'Source Sans 3',sans-serif;color:var(--th-ink);background:var(--th-field);outline:none;transition:border-color .2s,box-shadow .2s;border-radius:0}
+html:not([data-theme="dark"]) .fi{border-color:#cfd6e1}
+.fi:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(240,165,0,.18)}
+.fi.err{border-color:#e53935}
+.ferr{font-size:.76rem;color:#c62828;margin-top:4px;display:none}
+html[data-theme="dark"] .ferr{color:#ff8a80}
+.fi.err~.ferr,.fg.err .ferr{display:block}
+select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%230d1b2e' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:20px;padding-right:40px}
+textarea.fi{min-height:96px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.agree{display:flex;gap:10px;align-items:flex-start;font-size:.86rem;color:var(--th-body);line-height:1.6;cursor:pointer}
+.agree input{width:17px;height:17px;accent-color:var(--gold);flex-shrink:0;margin-top:3px}
+.agree strong{color:var(--th-ink)}
+.th-submit{width:100%;padding:15px;background:var(--navy);color:#fff;border:2px solid var(--navy);font-size:.97rem;font-weight:700;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:background .2s,color .2s;margin-top:12px;display:flex;align-items:center;justify-content:center;gap:10px}
+.th-submit:hover{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.th-submit:disabled{opacity:.7;cursor:wait}
+.th-submit svg{width:17px;height:17px;fill:currentColor}
+html[data-theme="dark"] .th-submit{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+html[data-theme="dark"] .th-submit:hover{background:#ffc233}
+.th-fnote{font-size:.76rem;color:var(--th-body);text-align:center;margin-top:10px;line-height:1.6}
+.th-fmsg{display:none;background:#fdecea;border-left:4px solid #e53935;color:#7f1d1d;padding:12px 16px;font-size:.88rem;line-height:1.55;margin-top:14px}
+html[data-theme="dark"] .th-fmsg{background:rgba(229,57,53,.14);color:#ffb4ab}
+.th-ok{display:none;text-align:center;padding:52px 28px}
+.th-ok .ic{width:68px;height:68px;background:var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.th-ok .ic svg{width:34px;height:34px;fill:var(--navy)}
+.th-ok h4{font-family:'Oswald',sans-serif;font-size:1.7rem;color:var(--th-ink);margin-bottom:10px}
+.th-ok p{font-size:.95rem;color:var(--th-body);line-height:1.75;max-width:400px;margin:0 auto 8px}
+.th-ok .ref{display:inline-block;margin-top:8px;padding:6px 14px;background:var(--th-pale);border:1px solid rgba(240,165,0,.45);color:var(--th-ink);font-weight:700;letter-spacing:1px}
+
+/* FAQ */
+.th-faq{max-width:880px;margin:0 auto}
+.th-faq-h{text-align:center;margin-bottom:34px}
+.th-faq-h .th-h2{margin-bottom:8px}
+.th-faq-h p{color:var(--th-body);font-size:.95rem}
+.faq-item{background:var(--th-card);border:1px solid var(--th-line);margin-bottom:8px;overflow:hidden}
+.faq-q{display:flex;width:100%;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;gap:16px;font-weight:700;font-size:.95rem;color:var(--th-ink);background:none;border:none;text-align:left;font-family:'Source Sans 3',sans-serif;transition:background .2s}
+.faq-q:hover{background:var(--th-pale)}
+.faq-q.open{background:var(--navy);color:var(--gold)}
+.faq-arrow{width:20px;height:20px;flex-shrink:0;transition:transform .3s;fill:currentColor}
+.faq-q.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease;font-size:.92rem;color:var(--th-body);line-height:1.78}
+.faq-a.open{max-height:520px;padding:16px 20px 18px}
+
+/* support band (always navy, gold) */
+.th-band{background:var(--navy);padding:60px 40px}
+.th-band-in{max-width:1320px;margin:0 auto;display:flex;flex-wrap:wrap;gap:30px;align-items:center;justify-content:space-between}
+.th-band h2{font-family:'Oswald',sans-serif;font-size:1.8rem;color:#fff;margin-bottom:8px;line-height:1.2}
+.th-band h2 em{color:var(--gold);font-style:normal}
+.th-band p{color:#c3cfdf;max-width:640px;line-height:1.75;font-size:.97rem}
+html[data-theme="dark"] select.fi{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23e8eef7' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E")}
+@media(max-width:1100px){.th-steps{grid-template-columns:repeat(2,1fr)}.th-grid3{grid-template-columns:1fr}}
+@media(max-width:1024px){.footer-grid{grid-template-columns:repeat(2,1fr)}.hero-inner{grid-template-columns:1fr;padding-bottom:50px}.th-form-grid{grid-template-columns:1fr;gap:34px}}
+@media(max-width:900px){.topbar-contacts{display:none}#topbar{padding:10px 16px}.page-hero,.th-sec,.th-band{padding-left:20px;padding-right:20px}.th-grid2{grid-template-columns:1fr}.th-sec{padding-top:56px;padding-bottom:56px}}
+@media(max-width:600px){.th-steps{grid-template-columns:1fr}.row2{grid-template-columns:1fr}.th-form-b{padding:20px 16px}.hero-btns a{width:100%;justify-content:center}}
+.fg label.agree{display:flex;font-weight:400;font-size:.86rem;margin-bottom:0;color:var(--th-body)}
+.th-card .th-ticks li{padding-left:0}
+.th-card .th-ticks li::before{display:none}
+.chips-label{padding:18px 22px 0;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:1.6px;color:var(--th-gold)}
+.chips.chips-tight{padding-top:10px;padding-bottom:6px}
+.chips.chips-tight:last-child{padding-bottom:22px}
+
+
+/* ════════════════════════════
+   FOOTER
+════════════════════════════ */
+footer{background:var(--navy);padding:60px 40px 0;color:#a8b8cc;font-size:.92rem;line-height:1.75}
+.footer-grid{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.1)}
+.footer-col h4{color:var(--white);font-size:1.1rem;font-weight:600;margin-bottom:18px}
+.footer-col p{margin-bottom:6px;display:flex;align-items:flex-start;gap:10px}
+.footer-col p svg{width:15px;height:15px;fill:var(--gold);flex-shrink:0;margin-top:4px}
+.footer-links{display:flex;flex-direction:column;gap:4px}
+.footer-links a{color:#a8b8cc;text-decoration:none;padding:3px 0;display:flex;align-items:center;gap:8px;transition:color .2s,padding-left .2s}
+.footer-links a::before{content:'›';color:var(--gold);font-size:1.1rem}
+.footer-links a:hover{color:var(--gold);padding-left:4px}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.gallery-grid img{width:100%;aspect-ratio:1;object-fit:cover;display:block;transition:opacity .2s}
+.gallery-grid img:hover{opacity:.75}
+.gallery-grid .gal-placeholder{width:100%;aspect-ratio:1;background:var(--navy-lt);display:block}
+.footer-socials{display:flex;gap:8px;margin-top:16px}
+.fsoc{width:36px;height:36px;background:var(--gold);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:background .2s}
+.fsoc:hover{background:var(--gold-dk)}
+.fsoc svg{width:15px;height:15px;fill:var(--navy)}
+.copyright{max-width:1320px;margin:0 auto;padding:20px 0;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;font-size:.85rem;color:#7a8fa6}
+.copyright a{color:var(--gold);text-decoration:none}
+.copyright a:hover{text-decoration:underline}
+#back-top{position:fixed;bottom:28px;right:28px;width:44px;height:44px;background:var(--gold);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;z-index:500;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s}
+#back-top.show{opacity:1;pointer-events:auto}
+#back-top:hover{background:var(--gold-dk);transform:translateY(-3px)}
+#back-top svg{width:20px;height:20px;fill:var(--navy)}
+
+
+/* RESPONSIVE (menu) */
+@media(max-width:768px){
+  #nav-wrapper{padding:0}
+  nav{width:100%;flex-wrap:wrap;border-radius:0}
+  .nav-brand-mobile{font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--navy);font-weight:700;padding:12px 16px;display:flex;align-items:center}
+  .nav-toggle{display:flex;flex-direction:column}
+  .nav-collapse{display:none;width:100%;flex-direction:column;background:var(--navy-mid);contents:unset}
+  .nav-collapse.open{display:flex}
+  .nav-links{flex-direction:column;width:100%}
+  .nav-links a,.nav-links>li>button{color:var(--white);padding:12px 20px;width:100%;border-bottom:1px solid rgba(255,255,255,.06)}
+  .nav-links a:hover,.nav-links>li>button:hover{background:rgba(255,255,255,.08);color:var(--gold)}
+  .nav-links a.active{color:var(--gold);background:rgba(255,255,255,.06)}
+  .dropdown-menu{position:static;box-shadow:none;background:rgba(0,0,0,.2)}
+  .dropdown-menu a{color:#ccc;padding-left:36px}
+  .dropdown-menu a:hover{color:var(--gold);background:transparent}
+  .dropdown:hover .dropdown-menu{display:none}
+  .dropdown.open .dropdown-menu{display:block}
+  .nav-socials{display:none}
+  footer{padding:40px 16px 0}
+  .footer-grid{grid-template-columns:1fr;gap:28px}
+  .copyright{flex-direction:column;text-align:center;gap:12px}
+  #back-top{bottom:16px;right:16px}
+  .row-2{grid-template-columns:1fr}
+  .skills-grid{grid-template-columns:1fr}
+}
+@media(min-width:769px){.nav-brand-mobile{display:none}}
+</style>
+<!-- EN | FR switch: tiny script, French is only downloaded when someone picks FR -->
+<script>(function(){try{var m=/[?&]lang=(en|fr)\b/.exec(location.search),l=m?m[1]:localStorage.getItem('lang');if(l==='fr'){var d=document.documentElement,s=document.createElement('style');s.textContent='html.fr-wait body{opacity:0}';document.head.appendChild(s);d.className+=' fr-wait';setTimeout(function(){d.className=d.className.replace(' fr-wait','')},2500)}}catch(e){}})();</script>
+<script src="lang.js?v=1" defer></script>
+</head>
+<body id="top">
+<div id="global-scroll-bar"></div>
+<div id="spinner"><div class="spin-ring"></div></div>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="topbar-inner">
+    <a href="index.html">
+      <img src="img/Logocolored.png" alt="Light 4 Refugee" class="brand-logo"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <span style="display:none;font-family:'Oswald',sans-serif;font-size:1.5rem;color:var(--gold);font-weight:700">Light 4 Refugee</span>
+    </a>
+    <div class="topbar-contacts">
+      <div class="contact-item"><div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg></div><div class="contact-text"><p>Call Us</p><span>+250 792 052 725</span></div></div>
+      <div class="contact-item"><div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div><div class="contact-text"><p>Mail Us</p><span>info@light4refugee.org</span></div></div>
+      <div class="contact-item"><div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div><div class="contact-text"><p>Address</p><span>Mahama Refugee Camp, Kirehe, Rwanda</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<div id="nav-wrapper">
+  <nav>
+    <span class="nav-brand-mobile">L4R Menu</span>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <div class="nav-collapse" id="nav-collapse">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        
+        <!-- 1. Unique ID for About Us -->
+        <li class="dropdown" id="dd-about">
+          <button onclick="toggleDD('dd-about')">About Us<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="about-us.html">About What We Do</a>
+            <a href="team.html">About Our Team</a>
+            <a href="gallery.html">About L4R Gallery</a>
+            <a href="testimonies.html">Testimonials</a>
+          </div>
+        </li>
+        
+        <!-- 2. Unique ID for Programs -->
+        <li class="dropdown" id="dd-programs">
+          <button onclick="toggleDD('dd-programs')" class="active">Programs<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="programs.html">iSpeakLead & iLaunch</a>
+            <a href="applications-hub.html">Applications Hub</a>
+            <a href="complementary-pathways.html">Complementary Pathways</a>
+            <a href="talent-hub.html" style="color:var(--gold);font-weight:700;">Talent Hub</a>
+          </div>
+        </li>
+        
+        <!-- 3. Unique ID for Get Involved -->
+        <li class="dropdown" id="dd-involved">
+          <button onclick="toggleDD('dd-involved')">Get Involved<span class="nav-caret">▼</span></button>
+          <div class="dropdown-menu">
+            <a href="become-a-mentor.html">Become a Mentor</a>
+            <a href="become-a-mentee.html">Become a Mentee</a>
+            <a href="partners.html">Partners</a>
+          </div>
+        </li>
+        
+        <li><a href="news-stories.html">News &amp; Stories</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact-us.html">Contact</a></li>
+        <li><a href="donate.html" style="background:var(--navy);color:var(--gold);font-weight:700;border-radius:5px;">Donate</a></li>
+      </ul>
+      <div class="nav-socials">
+        <button id="theme-toggle" aria-label="Toggle Theme Mode"></button>
+        <a class="soc-btn" href="https://www.facebook.com/61574731480102" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="soc-btn" href="https://instagram.com/light4refugee" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="var(--white)" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="var(--white)"/></svg></a>
+        <a class="soc-btn" href="https://linkedin.com/company/light4refugee/posts" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- ════ HERO ════ -->
+<div class="page-hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><a href="programs.html">Programs</a><span>›</span><span style="color:#fff">Talent Hub</span></div>
+      <div class="hero-chip">Employers &amp; Opportunity Partners</div>
+      <h1>Talent <em>Hub</em></h1>
+      <p class="sub">Trained, motivated young people and skilled refugees in Rwanda, introduced to employers by people who know them. Consent-based, free of charge, and handled with care from the first message to the first day at work.</p>
+      <div class="hero-btns">
+        <a class="btn-gold" href="#request">Request candidates</a>
+        <a class="btn-line" href="#how">See how it works</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-label">Why employers use Talent Hub</div>
+      <h3>One contact. Prepared candidates. No surprises.</h3>
+      <div class="hc-row"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg><span><strong>Prepared by L4R.</strong> Candidates come through our programs, career guidance and English training.</span></div>
+      <div class="hc-row"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg><span><strong>Introduced with consent.</strong> A candidate is introduced only after saying yes to your opportunity.</span></div>
+      <div class="hc-row"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg><span><strong>Free to use.</strong> We charge no fee to employers or to candidates.</span></div>
+      <div class="hc-row"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg><span><strong>We stay involved.</strong> We follow up with you and the candidate in the first months.</span></div>
+    </div>
+  </div>
+</div>
+<div class="hero-accent"></div>
+
+<!-- ════ TWO LANES ════ -->
+<section class="th-sec" id="lanes">
+  <div class="th-wrap">
+    <div class="th-eyebrow">Two lanes, one clear purpose</div>
+    <h2 class="th-h2">Opportunities close to home, and pathways abroad</h2>
+    <p class="th-lead">Light4Refugee focuses on <strong>local and regional opportunities</strong>, where we can introduce, support and follow up. International pathways are led by UNHCR and its partners, and we prepare candidates for them.</p>
+    <div class="th-grid2">
+      <div class="th-card">
+        <span class="tag">Led by Light4Refugee</span>
+        <h3>Local &amp; Regional Opportunities</h3>
+        <p>Internships, jobs and short-term work in Rwanda, and in other East African countries where the law and the employer allow it.</p>
+        <ul>
+          <li>Anonymous shortlist first, introduction only with the candidate's yes</li>
+          <li>Employers verified before they receive any candidate information</li>
+          <li>Follow-up with employer and candidate after placement</li>
+        </ul>
+        <a class="th-link" href="#request">Request candidates &rarr;</a>
+      </div>
+      <div class="th-card lane2">
+        <span class="tag">Led by UNHCR and partners</span>
+        <h3>International Pathways</h3>
+        <p>Resettlement, scholarships and labour mobility abroad are run by UNHCR and its partners. We help eligible candidates prepare, and we never broker these placements ourselves.</p>
+        <ul>
+          <li>Skills and qualifications gathered through our Complementary Pathways program</li>
+          <li>Verified by the UNHCR Lead Reviewer before any sharing</li>
+        </ul>
+        <a class="th-link" href="complementary-pathways.html">Learn about Complementary Pathways &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ WHO IS IN THE POOL ════ -->
+<section class="th-sec alt" id="talent">
+  <div class="th-wrap">
+    <div class="th-eyebrow">Our talent pool</div>
+    <h2 class="th-h2">Who you could meet</h2>
+    <p class="th-lead">Everyone in Talent Hub is an adult who has chosen to join. These are examples of the skills we see, and availability changes, so tell us what you need and we will tell you honestly what we have.</p>
+
+    <details class="th-det" open>
+      <summary><span>Scholars and mentees<small>From secondary school graduates to university students</small></span></summary>
+      <div class="chips"><span class="chip">English communication</span><span class="chip">Tutoring &amp; teaching support</span><span class="chip">Office &amp; administration</span><span class="chip">Digital skills</span><span class="chip">Customer service</span><span class="chip">Community outreach</span><span class="chip">Content &amp; social media</span><span class="chip">Data entry</span></div>
+    </details>
+    <details class="th-det">
+      <summary><span>Skilled and experienced refugees (Complementary Pathways)<small>From trade skills to university and postgraduate degrees, with years of work experience</small></span></summary>
+      <div class="chips-label">Professionals and degree holders</div>
+      <div class="chips chips-tight"><span class="chip">Master's and bachelor's graduates</span><span class="chip">Years of professional experience</span><span class="chip">Management &amp; coordination</span><span class="chip">Teaching, training &amp; research</span><span class="chip">Technical &amp; engineering</span><span class="chip">Health &amp; community work</span></div>
+      <div class="chips-label">Trades and vocational skills</div>
+      <div class="chips chips-tight"><span class="chip">Driving</span><span class="chip">Tailoring</span><span class="chip">Hairdressing &amp; salon work</span><span class="chip">Catering &amp; hospitality</span><span class="chip">Cleaning services</span><span class="chip">Construction &amp; welding</span><span class="chip">Carpentry</span><span class="chip">Farming &amp; agribusiness</span></div>
+    </details>
+    <details class="th-det">
+      <summary><span>How we prepare candidates<small>Before they ever meet an employer</small></span></summary>
+      <div class="chips"><span class="chip">iSpeakLead &amp; English Club</span><span class="chip">iLaunch career readiness</span><span class="chip">CV and interview coaching</span><span class="chip">Workplace conduct</span><span class="chip">Mentor support</span></div>
+    </details>
+  </div>
+</section>
+
+<!-- ════ HOW IT WORKS ════ -->
+<section class="th-sec" id="how">
+  <div class="th-wrap">
+    <div class="th-eyebrow">How it works</div>
+    <h2 class="th-h2">Five steps, with a person on both sides</h2>
+    <p class="th-lead">Nothing is automatic. A real member of our team reviews each request, and each candidate decides for themselves.</p>
+    <div class="th-steps">
+      <div class="th-step"><div class="n">1</div><h4>Tell us what you need</h4><p>Send the request form below with the role, skills and place.</p></div>
+      <div class="th-step"><div class="n">2</div><h4>We get to know you</h4><p>We check your organisation and share our Talent Partner Agreement for signing.</p></div>
+      <div class="th-step"><div class="n">3</div><h4>Anonymous shortlist</h4><p>You see skills, education and language level. No names or contacts yet.</p></div>
+      <div class="th-step"><div class="n">4</div><h4>The candidate says yes</h4><p>We introduce only candidates who agree to your opportunity.</p></div>
+      <div class="th-step"><div class="n">5</div><h4>You interview and decide</h4><p>You choose, then we check in with you and the candidate over the first months.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ PROMISES ════ -->
+<section class="th-sec alt" id="promises">
+  <div class="th-wrap">
+    <div class="th-eyebrow">Safe for everyone</div>
+    <h2 class="th-h2">Built on consent and fair work</h2>
+    <p class="th-lead">Refugees are often treated as numbers. Talent Hub is designed so that they are treated as people who choose.</p>
+    <div class="th-grid2">
+      <div class="th-card">
+        <h3>For candidates</h3>
+        <ul class="th-ticks">
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg><span><strong>You choose.</strong> Joining is optional, and you say yes or no to every opportunity.</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg><span><strong>You stay private.</strong> Employers first see only your skills. Your name, camp and contacts stay hidden until you agree.</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg><span><strong>You never pay.</strong> Nobody may charge you to be considered, introduced or hired.</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg><span><strong>You can leave any time</strong> without losing any support from L4R.</span></li>
+        </ul>
+      </div>
+      <div class="th-card">
+        <h3>For employers</h3>
+        <ul class="th-ticks">
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg><span><strong>Fair pay and safe work.</strong> A written offer, fair pay or stipend, and a safe workplace.</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg><span><strong>Adults only.</strong> Candidates are 18 or older.</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg><span><strong>Data respected.</strong> Candidate information is used only for your opportunity and deleted if there is no hire.</span></li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg><span><strong>Honest follow-up.</strong> Short check-ins in the first months, so every placement has a chance to succeed.</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="th-note"><strong>Want to do more?</strong> Employers who wish to may also support our scholars, for example by sponsoring a place, offering mentors or hosting interns. This is always optional and never affects who we introduce.</div>
+  </div>
+</section>
+
+<!-- ════ REQUEST FORM ════ -->
+<section class="th-sec" id="request">
+  <div class="th-wrap th-form-grid">
+    <div class="th-side">
+      <div class="th-eyebrow">For employers and opportunity partners</div>
+      <h2 class="th-h2">Request candidates</h2>
+      <p class="th-lead" style="margin-bottom:10px">Tell us who you are and what you are looking for. A member of our partnerships team will reply by email.</p>
+      <div class="th-next">
+        <div><b>1</b><span><strong>We confirm by email</strong> that your request arrived, with a reference number.</span></div>
+        <div><b>2</b><span><strong>We reach out</strong> to learn about your organisation and the opportunity.</span></div>
+        <div><b>3</b><span><strong>We tell you honestly</strong> whether we have candidates who fit, and how to proceed.</span></div>
+      </div>
+      <p class="th-fnote" style="text-align:left;margin-top:18px">Prefer email? Write to <a href="mailto:partnerships@light4refugee.org" style="color:var(--th-gold);font-weight:700">partnerships@light4refugee.org</a>.</p>
+    </div>
+
+    <div class="th-form" id="th-form-card">
+      <div class="th-form-h"><h3>Talent request</h3><p>Fields marked * are required</p></div>
+      <div class="th-form-b" id="th-form-wrap">
+        <div class="th-fs">Your organisation</div>
+        <div class="fg"><label for="th_org">Organisation name <span class="req">*</span></label><input class="fi" id="th_org" maxlength="160" autocomplete="organization"><div class="ferr">Please tell us the name of your organisation.</div></div>
+        <div class="row2">
+          <div class="fg"><label for="th_type">Type of organisation</label>
+            <select class="fi" id="th_type"><option value="">Choose…</option><option>Company</option><option>NGO or non-profit</option><option>Government or UN agency</option><option>School or university</option><option>Faith or community group</option><option>Individual or small business</option><option>Other</option></select></div>
+          <div class="fg"><label for="th_country">Country <span class="req">*</span></label><input class="fi" id="th_country" maxlength="80" placeholder="e.g. Rwanda" autocomplete="country-name"><div class="ferr">Please tell us the country.</div></div>
+        </div>
+        <div class="fg"><label for="th_web">Website <span class="opt">(optional)</span></label><input class="fi" id="th_web" maxlength="190" placeholder="www.example.com"><div class="ferr">The website address looks wrong. Leave it empty if you are unsure.</div></div>
+
+        <div class="th-fs">Contact person</div>
+        <div class="row2">
+          <div class="fg"><label for="th_name">Full name <span class="req">*</span></label><input class="fi" id="th_name" maxlength="120" autocomplete="name"><div class="ferr">Please tell us your name.</div></div>
+          <div class="fg"><label for="th_role">Position <span class="opt">(optional)</span></label><input class="fi" id="th_role" maxlength="100" autocomplete="organization-title"></div>
+        </div>
+        <div class="row2">
+          <div class="fg"><label for="th_email">Work email <span class="req">*</span></label><input class="fi" id="th_email" type="email" maxlength="190" autocomplete="email"><div class="ferr">Please enter a valid email so we can reply.</div></div>
+          <div class="fg"><label for="th_phone">Phone <span class="opt">(optional)</span></label><input class="fi" id="th_phone" type="tel" maxlength="40" autocomplete="tel"><div class="ferr">Use digits, spaces and + only.</div></div>
+        </div>
+
+        <div class="th-fs">The opportunity</div>
+        <div class="row2">
+          <div class="fg"><label for="th_kind">Type <span class="req">*</span></label>
+            <select class="fi" id="th_kind"><option value="">Choose…</option><option>Internship</option><option>Job</option><option>Short-term or casual work</option><option>More than one type</option></select><div class="ferr">Please choose a type.</div></div>
+          <div class="fg"><label for="th_where">Where is the work? <span class="req">*</span></label>
+            <select class="fi" id="th_where"><option value="">Choose…</option><option>In Rwanda</option><option>Another East African country</option><option>Not sure yet</option></select><div class="ferr">Please choose where the work is.</div></div>
+        </div>
+        <div class="fg"><label for="th_roles">Roles and skills you need <span class="req">*</span></label><textarea class="fi" id="th_roles" maxlength="1500" placeholder="For example: 2 office assistants with good English, or 1 driver with a valid licence"></textarea><div class="ferr">Please describe the roles or skills (at least a few words).</div></div>
+        <div class="row2">
+          <div class="fg"><label for="th_places">Number of places <span class="opt">(optional)</span></label><input class="fi" id="th_places" maxlength="20" placeholder="e.g. 2"></div>
+          <div class="fg"><label for="th_start">Expected start <span class="opt">(optional)</span></label><input class="fi" id="th_start" maxlength="60" placeholder="e.g. January 2027"></div>
+        </div>
+        <div class="fg"><label for="th_pay">Pay or stipend, and other support <span class="opt">(optional)</span></label><input class="fi" id="th_pay" maxlength="300" placeholder="e.g. monthly stipend plus transport"></div>
+
+        <div class="fg" id="th_agree_g" style="margin-top:18px">
+          <label class="agree"><input type="checkbox" id="th_agree"><span>I understand that L4R introduces candidates <strong>only with their consent</strong>, charges <strong>no fees</strong>, and that my organisation will be asked to sign the <strong>Talent Partner Agreement</strong> before receiving candidate information. <span class="req" style="color:var(--th-gold)">*</span></span></label>
+          <div class="ferr">Please tick the box to continue.</div>
+        </div>
+        <div class="th-fmsg" id="th_msg" role="alert"></div>
+        <button class="th-submit" id="th_send" type="button" onclick="submitTalent()">
+          <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg><span>Send request</span>
+        </button>
+        <p class="th-fnote">We use your details only to respond to this request, and we never sell or share them.</p>
+      </div>
+      <div class="th-ok" id="th-ok" role="status">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></div>
+        <h4>Request received</h4>
+        <p>Thank you. Our partnerships team will reach out to you by email. A confirmation is on its way to your inbox.</p>
+        <span class="ref" id="th-ref" style="display:none"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ FAQ ════ -->
+<section class="th-sec alt" id="faq">
+  <div class="th-faq">
+    <div class="th-faq-h"><div class="th-eyebrow" style="justify-content:center">Questions</div><h2 class="th-h2">Frequently asked</h2><p>Short answers to what employers and candidates ask most.</p></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Does Talent Hub cost anything?<svg class="faq-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button><div class="faq-a">No. Introductions are free for employers and for candidates. Employers may choose to support our scholars, but that is optional and never affects who is shortlisted.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Are you a recruitment agency?<svg class="faq-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button><div class="faq-a">No. We are a non-profit that prepares young people and refugees and introduces them to opportunities. The employer chooses whom to interview and hire, and is responsible for the work, the pay and the workplace.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What will I see about a candidate?<svg class="faq-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button><div class="faq-a">First, only an anonymous profile: skills, education, language level and the programs completed. Name, contacts and CV are shared only after the candidate agrees to your opportunity.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can refugees work outside Rwanda through Talent Hub?<svg class="faq-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button><div class="faq-a">In other East African countries, yes, where the work is lawful and the employer confirms the right permits. The candidate also confirms their travel and work rights with UNHCR. We do not decide immigration matters. Pathways beyond East Africa are led by UNHCR and its partners.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How long does it take?<svg class="faq-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button><div class="faq-a">It depends on the role and on whether we have suitable candidates. We reply by email first, and will tell you honestly if we do not have a good match yet.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">I am a scholar or mentee. How do I join?<svg class="faq-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></button><div class="faq-a">Talk to your L4R contact or Career Services. Joining is optional and for adults (18+). You will be given a consent form that explains each choice, and you can change your mind at any time.</div></div>
+  </div>
+</section>
+
+<!-- ════ SUPPORT BAND ════ -->
+<div class="th-band">
+  <div class="th-band-in">
+    <div><h2>Help us open <em>more doors</em></h2><p>Every placement starts with a scholar who was trained, mentored and prepared. Partner with us or support a scholar's journey.</p></div>
+    <div class="hero-btns"><a class="btn-gold" href="partners.html">Partner with us</a><a class="btn-line" href="donate.html">Donate</a></div>
+  </div>
+</div>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Our Operational Locations</h4>
+      <p><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Mahama &amp; Kiziba Refugee Camps,<br>Kirehe &amp; Karongi Districts, Rwanda</p>
+      <p><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>+250 792 052 725</p>
+      <p><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>info@light4refugee.org</p>
+      <div class="footer-socials">
+        <a class="fsoc" href="https://www.facebook.com/61574731480102" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a class="fsoc" href="https://www.youtube.com/channel/UCKFczxvUGOmq7e7tJQ65HxA" target="_blank"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+        <a class="fsoc" href="https://instagram.com/light4refugee" target="_blank"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="var(--navy)" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="var(--navy)" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="var(--navy)"/></svg></a>
+        <a class="fsoc" href="https://linkedin.com/company/light4refugee/posts" target="_blank"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+      <br>
+      <a href="index.html"><img src="img/logowhite.png" alt="Light 4 Refugee" style="height:55px;width:auto;display:block;opacity:.85"></a>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about-us.html">About Us</a>
+        <a href="team.html">Our Team</a>
+        <a href="news-stories.html">News &amp; Stories</a>
+        <a href="applications-hub.html">Applications Hub</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact-us.html">Contact Us</a>
+        <a href="donate.html">Donate</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Our Programs</h4>
+      <div class="footer-links">
+        <a href="about-us.html">Academic Preparation</a>
+        <a href="about-us.html">College Counseling</a>
+        <a href="about-us.html">Career Guidance</a>
+        <h4 style="margin-top:14px;margin-bottom:10px">Get Involved</h4>
+        <a href="programs.html">Light Club (ECP &amp; iSpeakLead)</a>
+        <a href="complementary-pathways.html">Complementary Pathways</a>
+        <a href="talent-hub.html">Talent Hub</a>
+        <a href="become-a-mentor.html">Become a Mentor</a>
+        <a href="become-a-mentee.html">Become a Mentee</a>
+        <a href="partners.html">Partner With Us</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Gallery</h4>
+      <div class="gallery-grid">
+        <a href="gallery.html"><img src="img/gallery-1.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-2.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-3.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-4.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-5.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+        <a href="gallery.html"><img src="img/gallery-6.jpg" alt="" onerror="this.outerHTML='<span class=\'gal-placeholder\'></span>'"></a>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">
+    <span>&copy; 2026 <a href="https://light4refugee.org" target="_blank">Light 4 Refugee</a>, All Rights Reserved.</span>
+    <span style="display:inline-flex;gap:12px;">
+      <a href="terms-conditions.html">Terms/Conditions</a> |
+      <a href="privacy-policy.html">Privacy Policy</a>
+    </span>
+    <span>Designed By <a href="https://yvesnickylirf.com" target="_blank">Yves Nicky Lirf</a></span>
+  </div>
+</footer>
+
+<button id="back-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+</button>
+<script src="theme-logic.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var sp = document.getElementById('spinner'); sp.classList.add('hide'); setTimeout(function () { sp.remove(); }, 500);
+});
+var topbar = document.getElementById('topbar'), navWrap = document.getElementById('nav-wrapper'), tbH = topbar.offsetHeight;
+window.addEventListener('scroll', function () {
+  var s = window.scrollY > tbH;
+  topbar.classList.toggle('hidden', s); navWrap.classList.toggle('stuck', s);
+  document.getElementById('back-top').classList.toggle('show', window.scrollY > 300);
+}, { passive: true });
+document.getElementById('nav-toggle').addEventListener('click', function () {
+  this.classList.toggle('open'); document.getElementById('nav-collapse').classList.toggle('open');
+});
+function toggleDD(id) { if (window.innerWidth > 768) return; document.getElementById(id).classList.toggle('open'); }
+
+function toggleFaq(btn) {
+  var a = btn.nextElementSibling, open = btn.classList.contains('open');
+  document.querySelectorAll('.faq-q.open').forEach(function (b) { b.classList.remove('open'); b.nextElementSibling.classList.remove('open'); });
+  if (!open) { btn.classList.add('open'); a.classList.add('open'); }
+}
+
+/* ---- Talent Hub request: sent to the L4R Internal Management System (partnerships inbox) ---- */
+var L4R_IMS = 'https://ims.light4refugee.org';
+var l4rOpened = Date.now();
+function l4rSend(kind, data, done) {
+  var NAME = 'l4r_intake_frame', fr = document.getElementsByName(NAME)[0];
+  if (!fr) {
+    fr = document.createElement('iframe'); fr.name = NAME; fr.title = ''; fr.tabIndex = -1;
+    fr.setAttribute('aria-hidden', 'true'); fr.style.cssText = 'display:none;width:0;height:0;border:0';
+    document.body.appendChild(fr);
+  }
+  var f = document.createElement('form');
+  f.method = 'post'; f.action = L4R_IMS + '/intake/receive.php'; f.target = NAME; f.acceptCharset = 'UTF-8'; f.style.display = 'none';
+  data.form = kind; data.ts = String(l4rOpened); data.company_site = '';
+  Object.keys(data).forEach(function (k) {
+    var i = document.createElement('input'); i.type = 'hidden'; i.name = k; i.value = data[k]; f.appendChild(i);
+  });
+  document.body.appendChild(f);
+  var over = false, timer;
+  function end(ok, res) {
+    if (over) return; over = true; clearTimeout(timer);
+    window.removeEventListener('message', on); f.remove(); done(ok, res || {});
+  }
+  function on(ev) {
+    if (ev.origin !== L4R_IMS || !ev.data || ev.data.source !== 'l4r-ims' || ev.data.form !== kind) return;
+    end(!!ev.data.ok, ev.data);
+  }
+  window.addEventListener('message', on);
+  timer = setTimeout(function () { end(false, { errors: ['This is taking too long. Please try again, or email info@light4refugee.org.'] }); }, 25000);
+  f.submit();
+}
+
+
+function thVal(id) { return (document.getElementById(id).value || '').trim(); }
+function thFail(id, bad) {
+  var el = document.getElementById(id), g = el.closest('.fg');
+  el.classList.toggle('err', bad); if (g) g.classList.toggle('err', bad);
+  return bad;
+}
+function submitTalent() {
+  var bad = false, msg = document.getElementById('th_msg'); msg.style.display = 'none';
+  var email = thVal('th_email'), phone = thVal('th_phone'), web = thVal('th_web');
+  bad = thFail('th_org', thVal('th_org') === '') || bad;
+  bad = thFail('th_country', thVal('th_country') === '') || bad;
+  bad = thFail('th_name', thVal('th_name') === '') || bad;
+  bad = thFail('th_email', !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) || bad;
+  bad = thFail('th_phone', phone !== '' && !/^[0-9 +()\-.]{5,40}$/.test(phone)) || bad;
+  bad = thFail('th_web', web !== '' && !/^(https?:\/\/)?[^\s.]+\.[^\s]{2,}$/i.test(web)) || bad;
+  bad = thFail('th_kind', thVal('th_kind') === '') || bad;
+  bad = thFail('th_where', thVal('th_where') === '') || bad;
+  bad = thFail('th_roles', thVal('th_roles').length < 5) || bad;
+  var ag = document.getElementById('th_agree'), ago = !ag.checked;
+  document.getElementById('th_agree_g').classList.toggle('err', ago); bad = ago || bad;
+  if (bad) {
+    var first = document.querySelector('#th-form-wrap .err'); if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+  var btn = document.getElementById('th_send'), label = btn.querySelector('span');
+  btn.disabled = true; label.textContent = 'Sending request…';
+  var lines = ['TALENT HUB REQUEST', 'Opportunity type: ' + thVal('th_kind'), 'Where the work is: ' + thVal('th_where')];
+  if (thVal('th_places')) lines.push('Number of places: ' + thVal('th_places'));
+  if (thVal('th_start')) lines.push('Expected start: ' + thVal('th_start'));
+  if (thVal('th_pay')) lines.push('Pay or stipend and support: ' + thVal('th_pay'));
+  lines.push('', 'Roles and skills needed:', thVal('th_roles'), '', 'Agreed: introductions only with candidate consent, no fees, Talent Partner Agreement to be signed.');
+  l4rSend('partner', {
+    name: thVal('th_name'), email: email, phone: phone, organisation: thVal('th_org'),
+    org_type: thVal('th_type'), role: thVal('th_role'), country: thVal('th_country'), website: web,
+    how: ('Talent Hub: ' + thVal('th_kind')).slice(0, 100), message: lines.join('\n')
+  }, function (ok, res) {
+    btn.disabled = false; label.textContent = 'Send request';
+    if (ok) {
+      document.getElementById('th-form-wrap').style.display = 'none';
+      var okb = document.getElementById('th-ok'); okb.style.display = 'block';
+      if (res && res.ref) { var r = document.getElementById('th-ref'); r.textContent = 'Reference ' + res.ref; r.style.display = 'inline-block'; }
+      document.getElementById('th-form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      msg.textContent = (res && res.errors && res.errors.length) ? res.errors.join(' ') : 'We could not send your request. Please check your connection and try again, or email partnerships@light4refugee.org.';
+      msg.style.display = 'block';
+    }
+  });
+}
+</script>
+
+</body>
+</html>
