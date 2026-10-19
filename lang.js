@@ -41,6 +41,7 @@
   function skip(el) {
     return !el || SKIP[el.tagName.toUpperCase()] || !!(el.closest && el.closest('[translate="no"],.notranslate'));
   }
+  function skipAttr(el) { return !el || !!(el.closest && el.closest('[translate="no"],.notranslate')); }
   function hasText(el) { return LETTERS.test(el.textContent || ''); }
   function norm(s) { return s.replace(/\s+/g, ' ').trim(); }
   function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
@@ -215,7 +216,7 @@
     var list = Array.prototype.slice.call(els);
     if (scope.nodeType === 1) list.unshift(scope);
     list.forEach(function (el) {
-      if (skip(el)) return;
+      if (skipAttr(el)) return;
       ATTRS.forEach(function (a) {
         var v = el.getAttribute && el.getAttribute(a);
         if (!v || !LETTERS.test(v)) return;
@@ -341,6 +342,7 @@
     '@media (min-width:1201px){html[lang=fr] .nav-links a,html[lang=fr] .nav-links>li>button{white-space:nowrap}}' +
     '@media (min-width:1101px) and (max-width:1360px){html[lang=fr] .nav-links a,html[lang=fr] .nav-links>li>button{padding:14px 11px;font-size:.9rem}}' +
     '@media (max-width:560px){.group-label{flex-wrap:wrap}.group-label h3{flex-shrink:1;letter-spacing:1px}a[href^="mailto:"]{overflow-wrap:anywhere}html[lang=fr] .form-header,html[lang=fr] .form-header *{overflow-wrap:anywhere;min-width:0}}' +
+    '@media (max-width:768px){.top-ctl{margin-left:auto;display:flex;align-items:center;gap:10px;flex:none}.top-ctl .lang-sw{margin:0}.top-ctl #theme-toggle{margin:0!important}html.ctl-top nav .nav-socials{display:none!important}}' +
     'html.fr-wait body{opacity:0}body{transition:opacity .15s}';
   function build() {
     var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
@@ -354,6 +356,20 @@
       if (s) s.insertBefore(box, s.firstChild);
       else { box.style.cssText += ';position:fixed;top:10px;right:10px;z-index:99999'; document.body.appendChild(box); }
     }
+    /* phones: EN|FR and the theme button live in the top navy bar, so they are visible without opening the menu */
+    try {
+      var tbIn = document.querySelector('#topbar .topbar-inner'), th = document.getElementById('theme-toggle'), mq = window.matchMedia('(max-width:768px)');
+      if (tbIn && th) {
+        var home = th.parentNode, homeNext = th.nextSibling, ctl = document.createElement('div');
+        ctl.className = 'top-ctl';
+        var place = function () {
+          if (mq.matches) { ctl.appendChild(box); ctl.appendChild(th); tbIn.appendChild(ctl); document.documentElement.classList.add('ctl-top'); }
+          else { home.insertBefore(th, homeNext && homeNext.parentNode === home ? homeNext : null); home.insertBefore(box, th); if (ctl.parentNode) ctl.parentNode.removeChild(ctl); document.documentElement.classList.remove('ctl-top'); }
+        };
+        place();
+        if (mq.addEventListener) mq.addEventListener('change', place); else if (mq.addListener) mq.addListener(place);
+      }
+    } catch (e) {}
     box.addEventListener('click', function (e) {
       var b = e.target.closest && e.target.closest('button[data-lang]');
       if (!b) return;
@@ -381,7 +397,7 @@
       walk(document.body);
       var out = Object.keys(missed);
       var t = norm(origTitle); if (LETTERS.test(t)) out.push(esc(t));
-      document.querySelectorAll('[alt],[title],[placeholder],[aria-label]').forEach(function (el) { if (skip(el)) return; ATTRS.forEach(function (a) { var v = el.getAttribute(a); if (v && LETTERS.test(v)) out.push(esc(norm(v))); }); });
+      document.querySelectorAll('[alt],[title],[placeholder],[aria-label]').forEach(function (el) { if (skipAttr(el)) return; ATTRS.forEach(function (a) { var v = el.getAttribute(a); if (v && LETTERS.test(v)) out.push(esc(norm(v))); }); });
       document.querySelectorAll('input[type=submit],input[type=button]').forEach(function (el) { if (el.value && LETTERS.test(el.value)) out.push(esc(norm(el.value))); });
       document.querySelectorAll('meta[name="description"],meta[name="keywords"],meta[property="og:title"],meta[property="og:description"],meta[name="twitter:title"],meta[name="twitter:description"]').forEach(function (m) { var v = m.getAttribute('content'); if (v && LETTERS.test(v)) out.push(esc(norm(v))); });
       dict = save; missed = oldMiss; extracting = false;
