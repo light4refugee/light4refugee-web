@@ -361,7 +361,7 @@ footer{background:var(--navy);padding:60px 40px 0;color:#a8b8cc;font-size:.92rem
 </style>
 <!-- EN | FR switch: tiny script, French is only downloaded when someone picks FR -->
 <script>(function(){try{var m=/[?&]lang=(en|fr)\b/.exec(location.search),l=m?m[1]:localStorage.getItem('lang');if(l==='fr'){var d=document.documentElement,s=document.createElement('style');s.textContent='html.fr-wait body{opacity:0}';document.head.appendChild(s);d.className+=' fr-wait';setTimeout(function(){d.className=d.className.replace(' fr-wait','')},2500)}}catch(e){}})();</script>
-<script src="lang.js?v=1" defer></script>
+<script src="lang.js?v=2" defer></script>
 </head>
 <body id="top">
 <div id="global-scroll-bar"></div>
@@ -410,6 +410,7 @@ footer{background:var(--navy);padding:60px 40px 0;color:#a8b8cc;font-size:.92rem
             <a href="programs.html">iSpeakLead & iLaunch</a>
             <a href="applications-hub.html">Applications Hub</a>
             <a href="complementary-pathways.html" style="color:var(--gold);font-weight:700;">Complementary Pathways</a>
+            <a href="talent-hub.html">Talent Hub</a>
           </div>
         </li>
         
@@ -630,8 +631,14 @@ footer{background:var(--navy);padding:60px 40px 0;color:#a8b8cc;font-size:.92rem
     .doc-add:hover{border-color:var(--gold)}
     .f-formerr{display:none;background:#fdecea;border-left:4px solid var(--red);color:#7a1c19;padding:12px 14px;font-size:.86rem;line-height:1.55;margin:6px 0 12px}
     .hp-field{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-    .cp-req{margin-top:20px;border:1.5px solid var(--border);background:var(--white)}
-    .cp-req summary{cursor:pointer;padding:13px 16px;font-size:.88rem;font-weight:700;color:var(--navy)}
+    .cp-req-head{margin-top:24px}
+    .cp-req-head h4{font-family:'Oswald',sans-serif;font-size:1.05rem;color:var(--navy);margin-bottom:4px}
+    .cp-req-head p{font-size:.84rem;color:var(--muted);line-height:1.6}
+    .cp-req{margin-top:10px;border:2px solid var(--gold);background:var(--gold-pale)}
+    .cp-req summary{cursor:pointer;padding:13px 16px;font-size:.92rem;font-weight:700;color:var(--navy);display:flex;align-items:center;justify-content:space-between;gap:10px;list-style:none}
+    .cp-req summary::-webkit-details-marker{display:none}
+    .cp-req summary::after{content:'▼';font-size:.7rem;color:var(--gold-dk);transition:transform .2s}
+    .cp-req[open] summary::after{transform:rotate(180deg)}
     .cp-req-body{padding:4px 16px 16px}
     .cp-req-body .f-group{margin-bottom:10px}
     .cp-req-body button.req-send{padding:11px 18px;background:var(--navy);color:var(--white);border:none;font-weight:700;cursor:pointer;font-family:inherit}
@@ -672,6 +679,10 @@ footer{background:var(--navy);padding:60px 40px 0;color:#a8b8cc;font-size:.92rem
         <p>Personal details — including your UNHCR case number, phone number, and nationality — are stored securely and never displayed publicly. They are accessed only by the L4R team and shared with UNHCR Rwanda in accordance with established data protection protocols. You may request to update or remove your profile at any time by contacting <strong>complementary-pathways@light4refugee.org</strong>.</p>
       </div>
 
+      <div class="cp-req-head">
+        <h4>Already registered?</h4>
+        <p>Need to change your details or remove your profile? Open the box below and tell us.</p>
+      </div>
       <details class="cp-req" id="cp-request">
         <summary>Update or remove my profile</summary>
         <div class="cp-req-body">
@@ -752,8 +763,9 @@ footer{background:var(--navy);padding:60px 40px 0;color:#a8b8cc;font-size:.92rem
             <div class="f-err">Required</div>
           </div>
           <div class="f-group">
-            <label>Email Address <span class="opt">(optional but recommended)</span></label>
+            <label>Email Address <span class="req">*</span></label>
             <input type="email" class="f-input" id="f_email" placeholder="your@email.com">
+            <div class="f-err">Required</div>
           </div>
           <div class="f-group">
             <label>Current Camp / Location <span class="req">*</span></label>
@@ -769,8 +781,9 @@ footer{background:var(--navy);padding:60px 40px 0;color:#a8b8cc;font-size:.92rem
             </select>
           </div>
           <div class="f-group">
-            <label>UNHCR Case Number <span class="opt">(optional — helps with verification)</span></label>
+            <label>UNHCR Case Number <span class="req">*</span></label>
             <input type="text" class="f-input" id="f_case" placeholder="e.g. RWA-00000-00000">
+            <div class="f-err">Required</div>
             <div style="font-size:.72rem;color:#aaa;margin-top:4px">This is kept confidential and used only for UNHCR coordination purposes.</div>
           </div>
 
@@ -1266,7 +1279,7 @@ function submitForm() {
   var age = cpAge();
   var minor = age !== null && age >= 15 && age < 18;
   var unacc = minor && document.getElementById('f_unacc').checked;
-  var required = ['f_first','f_last','f_gender','f_dob','f_nationality','f_phone','f_phone_owner','f_location','f_edu_level','f_edu_field','f_category','f_skill_primary'];
+  var required = ['f_first','f_last','f_gender','f_dob','f_nationality','f_phone','f_phone_owner','f_location','f_email','f_case','f_edu_level','f_edu_field','f_category','f_skill_primary'];
   if (minor && !unacc) { required = required.concat(['f_g_name','f_g_rel','f_g_phone','f_g_proof']); }
   var ok = true, first = null;
   required.forEach(function (id) {
